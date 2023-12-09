@@ -30,9 +30,6 @@ def extract_info(file_path):
                         'content': entry
                     })
                     break
-                else:
-                    
-                    break
 
                     
             # print(relevant_data)
@@ -47,7 +44,7 @@ def save_to_json(data, output_folder, filename):
     print(f"Data saved to {output_file_path}")
 
 def process_files(output_folder):
-    file_path = r'D:\Me\concordia\Notes\Prof-Diego\MSR-DataChallenge\Implementation\git-folder-MSR\MSR-RR_Mining_Challenge2023\Data_Creation\Contains_library_code_import\file_sharings_import_output.json'
+    file_path = r'D:\Me\concordia\Notes\Prof-Diego\MSR-DataChallenge\Implementation\git-folder-MSR\MSR-RR_Mining_Challenge2023\Data_Creation\Contains_library_code_import\file_sharings.json'
 
     relevant_data = extract_info(file_path)
     if relevant_data:

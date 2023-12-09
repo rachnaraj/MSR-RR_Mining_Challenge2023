@@ -29,12 +29,7 @@ def extract_info(file_path):
                         'Contains_version': True,
                         'content': entry
                     })
-                    break
-                else:
-                    relevant_data.append({
-                        'Contains_keyword': 'version',
-                        'content': entry
-                    })
+                    # break
 
                     
             # print(relevant_data)

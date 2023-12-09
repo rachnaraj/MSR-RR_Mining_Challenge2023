@@ -30,8 +30,7 @@ def extract_info(file_path):
                         'content': entry
                     })
                     break
-                else:
-                    break
+
 
                     
             # print(relevant_data)

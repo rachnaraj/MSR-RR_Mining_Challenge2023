@@ -15,13 +15,15 @@ def extract_info(file_path):
         relevant_conversations = []
         for source in data.get('Sources', []):
             source_type = source.get('Type', '')
-            SourceURL = source.get('URL', '')
             Author = source.get('Author', '')
             Title = source.get('Title', '')
             
             
             for chatgpt_sharing in source.get('ChatgptSharing', []):
                 if chatgpt_sharing.get('Conversations'):
+                    gpt_URL = chatgpt_sharing.get('URL', '')
+                    NumberOfPrompts = chatgpt_sharing.get('NumberOfPrompts', '')
+                    gpt_model_version = chatgpt_sharing.get('Model', '')
                     for conversation in chatgpt_sharing['Conversations']:
                         if conversation.get('ListOfCode') != []:
                             # Check if any code block in the conversation meets the condition
@@ -36,7 +38,9 @@ def extract_info(file_path):
                                     'ID': unique_id,
                                     'source_type': source_type,
                                     'Author': Author,
-                                    'SourceURL' : SourceURL,
+                                    'SourceURL' : gpt_URL,
+                                    'NumberOfPrompts' : NumberOfPrompts,
+                                    'gpt_model_version' : gpt_model_version,
                                     'Title' : Title, 
                                     'Conversation':  chatgpt_sharing['Conversations']
                                 })
