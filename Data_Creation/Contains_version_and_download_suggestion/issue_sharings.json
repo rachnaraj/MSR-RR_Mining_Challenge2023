@@ -1,0 +1,86 @@
+[
+  {
+    "content": {
+      "ID": 8,
+      "source_type": "issue",
+      "Author": "michael-navazhylau-vu",
+      "SourceURL": "https://chat.openai.com/share/3206c648-1ee9-449f-ab38-96e68501096b",
+      "RepoName": "VU-Code-For-Good/farmersmarkets-for-all",
+      "Title": "[FEATURE REQUEST] Your Feature Title",
+      "Body": "https://chat.openai.com/share/3206c648-1ee9-449f-ab38-96e68501096b\r\n\r\nScrape data into the backend from this link:\r\nwww.usdalocalfoodportal.com",
+      "State": "OPEN",
+      "NumberOfPrompts": 1,
+      "gpt_model_version": "Default (GPT-3.5)",
+      "Conversation": [
+        {
+          "Prompt": "Convert this to a python script to download the farmers market directory\n\n$session = New-Object Microsoft.PowerShell.Commands.WebRequestSession\n$session.UserAgent = \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36\"\nInvoke-WebRequest -UseBasicParsing -Uri \"https://www.usdalocalfoodportal.com/api/download_by_directory?directory=farmersmarket\" `\n-WebSession $session `\n-Headers @{\n\"authority\"=\"www.usdalocalfoodportal.com\"\n  \"method\"=\"GET\"\n  \"path\"=\"/api/download_by_directory/?directory=farmersmarket\"\n  \"scheme\"=\"https\"\n  \"accept\"=\"application/json, text/javascript, */*; q=0.01\"\n  \"accept-encoding\"=\"gzip, deflate, br\"\n  \"accept-language\"=\"en-US,en;q=0.9\"\n  \"referer\"=\"https://www.usdalocalfoodportal.com/fe/datasharing/\"\n  \"sec-ch-ua\"=\"`\"Google Chrome`\";v=`\"117`\", `\"Not;A=Brand`\";v=`\"8`\", `\"Chromium`\";v=`\"117`\"\"\n  \"sec-ch-ua-mobile\"=\"?0\"\n  \"sec-ch-ua-platform\"=\"`\"Windows`\"\"\n  \"sec-fetch-dest\"=\"empty\"\n  \"sec-fetch-mode\"=\"cors\"\n  \"sec-fetch-site\"=\"same-origin\"\n  \"x-requested-with\"=\"XMLHttpRequest\"\n}",
+          "Answer": "ChatGPTYou can achieve the same functionality in Python using the requests library. Here's a Python script that replicates the PowerShell code you provided:[CODE_BLOCK_0]This Python script sets up a session with custom headers, sends a GET request to the specified URL, and saves the response content to a file named \"farmers_market_directory.json\" if the request is successful. Make sure to have the requests library installed, which you can install using pip install requests if it's not already installed.",
+          "ListOfCode": [
+            {
+              "ReplaceString": "[CODE_BLOCK_0]",
+              "Type": "python",
+              "Content": "import requests\n\n# Create a session with custom headers\nsession = requests.Session()\nsession.headers.update({\n    \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36\",\n    \"Referer\": \"https://www.usdalocalfoodportal.com/fe/datasharing/\",\n    \"sec-ch-ua\": '\"Google Chrome\";v=\"117\", \"Not;A=Brand\";v=\"8\", \"Chromium\";v=\"117\"',\n    \"sec-ch-ua-mobile\": \"?0\",\n    \"sec-ch-ua-platform\": '\"Windows\"',\n    \"sec-fetch-dest\": \"empty\",\n    \"sec-fetch-mode\": \"cors\",\n    \"sec-fetch-site\": \"same-origin\",\n    \"x-requested-with\": \"XMLHttpRequest\",\n})\n\n# Make the GET request\nurl = \"https://www.usdalocalfoodportal.com/api/download_by_directory?directory=farmersmarket\"\nresponse = session.get(url)\n\n# Check if the request was successful\nif response.status_code == 200:\n    # Save the response content to a file\n    with open(\"farmers_market_directory.json\", \"wb\") as file:\n        file.write(response.content)\n    print(\"Farmers market directory downloaded successfully.\")\nelse:\n    print(f\"Error: {response.status_code} - {response.text}\")\n"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "content": {
+      "ID": 38,
+      "source_type": "issue",
+      "Author": "civsiv",
+      "SourceURL": "https://chat.openai.com/share/b8e2bc63-1ea1-4503-aa6f-15f668355932",
+      "RepoName": "openactive/dataset-utils",
+      "Title": "Add tests to https://github.com/openactive/dataset-utils and publish to NPM",
+      "Body": "See example tests here: https://chat.openai.com/share/b8e2bc63-1ea1-4503-aa6f-15f668355932",
+      "State": "CLOSED",
+      "NumberOfPrompts": 1,
+      "gpt_model_version": "GPT-4",
+      "Conversation": [
+        {
+          "Prompt": "I have a simple JavaScript library that I want to publish to NPM, two files in the root directory as follows:\n\nindex.js\n\n```\nconst { default: axios } = require('axios');\nconst { Handler } = require('htmlmetaparser');\nconst { Parser } = require('htmlparser2');\n\n/**\n * This is a recursive function that returns an array of dataset site URLs.\n * If the URL supplied is a data catalog collection, it takes all the part collections in hasPart and crawls them.\n * If the URL supplied is a data catalog, it takes the dataset array and flattens them. \n * If the URL is not supplied, the OA Data Catalog (https://openactive.io/data-catalogs/data-catalog-collection.jsonld) is used.\n * \n * @param {string} [dataCatalogUrl]\n * @returns {Promise<string[]>}\n */\nasync function getAllDatasetSiteUrls(dataCatalogUrl = 'https://openactive.io/data-catalogs/data-catalog-collection.jsonld') {\n  let catalog;\n  try {\n    catalog = (await axios.get(dataCatalogUrl, {timeout: 5000})).data;\n  } catch (error) {\n    console.error(`Error getting catalog or catalog collection, url: ${dataCatalogUrl}`)\n    return [];\n  }\n\n  // If catalog has hasPart, the part catalog must be fetched and the datasets got from the part catalog\n  // The part catalog could have a part catalog within in, which is why this function must be recursive.\n  if (catalog.hasPart) {\n    const datasetArray = await Promise.all(catalog.hasPart.map(partCatalogUrl => getAllDatasetSiteUrls(partCatalogUrl)));\n    return [].concat(...datasetArray);\n  }\n\n  // If the catalog has dataset, it does not have any further part catalogs and the datasets can be got from them\n  if (catalog.dataset) {\n    return catalog.dataset;\n  }\n\n  // If the catalog has neither hasPart or dataset, return [] as it does not have the information we want\n  return [];\n}\n\n/**\n * This function extracts JSONLD metadata from dataset HTML\n * \n * @param {string} url \n * @param {string} html \n */\nfunction extractJSONLDfromHTML(url, html) {\n  let jsonld = null;\n\n  const handler = new Handler(\n    (err, result) => {\n      if (!err && typeof result === 'object') {\n        const jsonldArray = result.jsonld;\n        // Use the first JSON-LD block on the page\n        if (Array.isArray(jsonldArray) && jsonldArray.length > 0) {\n          [jsonld] = jsonldArray;\n        }\n      }\n    },\n    {\n      url, // The HTML pages URL is used to resolve relative URLs.\n    },\n  );\n\n  // Create a HTML parser with the handler.\n  const parser = new Parser(handler, {\n    decodeEntities: true,\n  });\n  parser.write(html);\n  parser.done();\n\n  return jsonld;\n}\n\n/**\n * This function recursively crawls through a data catalog, fetches datasets, and extracts JSONLD\n * from dataset HTML.\n * This combines getAllDatasetSiteUrls() and extractJSONLDfromHTML().\n * If dataCatalogUrl is not supplied, the default OA Data Catalog (https://openactive.io/data-catalogs/data-catalog-collection.jsonld) is used.\n * \n * @param {string} [dataCatalogUrl]\n */\nasync function getAllDatasets(dataCatalogUrl = 'https://openactive.io/data-catalogs/data-catalog-collection.jsonld') {\n  // Get Dataset URLs\n  const datasetUrls = await getAllDatasetSiteUrls(dataCatalogUrl);\n\n  const jsonldFromDatasetUrls = (await Promise.all(datasetUrls.map(async (datasetUrl) => {\n    let dataset;\n    try {\n      // Get JSONLD from dataset URLs\n      dataset = (await axios.get(datasetUrl)).data;\n    } catch (error) {\n      console.error(`getAllDatasets() - ${datasetUrl} could not be fetched`);\n      return null;\n    }\n\n    const jsonld = extractJSONLDfromHTML(datasetUrl, dataset);\n    return jsonld;\n  })))\n    // Filter out datasets that do not have valid dataset\n    .filter((x) => !!x);\n\n  return jsonldFromDatasetUrls;\n}\n\nmodule.exports = {\n  getAllDatasetSiteUrls,\n  extractJSONLDfromHTML,\n  getAllDatasets\n};\n```\n\npackage.json\n\n```\n{\n  \"name\": \"@openactive/dataset-utils\",\n  \"version\": \"1.0.0\",\n  \"description\": \"Crawls OpenActive data-catalogs and returns an array of dataset sites\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/openactive/dataset-utils.git\"\n  },\n  \"keywords\": [\n    \"dataset-utils\",\n    \"openactive\"\n  ],\n  \"author\": \"Civ Sivakumaran\",\n  \"license\": \"MIT\",\n  \"bugs\": {\n    \"url\": \"https://github.com/openactive/dataset-utils/issues\"\n  },\n  \"homepage\": \"https://github.com/openactive/dataset-utils#readme\",\n  \"dependencies\": {\n    \"axios\": \"^1.4.0\",\n    \"htmlmetaparser\": \"^2.1.2\",\n    \"htmlparser2\": \"^6.0.1\"\n  },\n  \"devDependencies\": {\n    \"@types/node\": \"^17.0.41\",\n    \"typescript\": \"^5.0.4\"\n  }\n}\n```\n\nAdd some tests for this. Tell me what files to update and add.",
+          "Answer": "ChatGPTTo add tests to your project, you'll want to use a testing framework. For this example, I'll use jest which is a widely used testing library in the JavaScript community.Steps to follow:Install required packages:Install jest and its necessary dependencies:[CODE_BLOCK_0]Configure Jest:Add a jest configuration in your package.json:[CODE_BLOCK_1]Update your scripts in package.json:[CODE_BLOCK_2]Write Tests:Create a new directory named __tests__ in your root directory.Inside __tests__, create a file dataset-utils.test.js (or dataset-utils.test.ts if you're using TypeScript).__tests__/dataset-utils.test.js:[CODE_BLOCK_3]Mocking network requests:Since your library makes HTTP requests using axios, it's a good idea to mock those requests in your tests. This way, your tests won't be making real HTTP requests which can slow down testing and might cause unintended side effects.Install jest-mock-axios:[CODE_BLOCK_4]At the top of your test file, import and mock axios:[CODE_BLOCK_5]Now you can use mockAxios.mockResponse() and mockAxios.mockError() in your tests to mock axios responses and errors respectively.Run your tests:[CODE_BLOCK_6]This will give you a basic testing setup for your library. Remember to add more comprehensive tests for different use cases and possible edge cases. Adjust the mock responses as needed for different test scenarios.",
+          "ListOfCode": [
+            {
+              "ReplaceString": "[CODE_BLOCK_0]",
+              "Type": "sql",
+              "Content": "npm install jest @types/jest ts-jest --save-dev\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_1]",
+              "Type": "json",
+              "Content": "\"jest\": {\n  \"transform\": {\n    \"^.+\\\\.ts?$\": \"ts-jest\"\n  },\n  \"testEnvironment\": \"node\"\n}\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_2]",
+              "Type": "json",
+              "Content": "\"scripts\": {\n  \"test\": \"jest\"\n},\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_3]",
+              "Type": "javascript",
+              "Content": "const { getAllDatasetSiteUrls, extractJSONLDfromHTML, getAllDatasets } = require('../index.js');\n\ndescribe('dataset-utils', () => {\n\n  test('getAllDatasetSiteUrls returns an array of URLs', async () => {\n    const result = await getAllDatasetSiteUrls();\n    expect(Array.isArray(result)).toBe(true);\n  });\n\n  // This is a basic test, you might want to add more assertions based on your expected output.\n  test('extractJSONLDfromHTML extracts JSONLD from given HTML', () => {\n    const html = '<script type=\"application/ld+json\">{ \"name\": \"test\" }</script>';\n    const result = extractJSONLDfromHTML('http://example.com', html);\n    expect(result).toHaveProperty('name', 'test');\n  });\n\n  test('getAllDatasets returns an array of datasets', async () => {\n    const result = await getAllDatasets();\n    expect(Array.isArray(result)).toBe(true);\n  });\n\n  // Add more tests as needed...\n\n});\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_4]",
+              "Type": "css",
+              "Content": "npm install jest-mock-axios --save-dev\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_5]",
+              "Type": "javascript",
+              "Content": "import mockAxios from 'jest-mock-axios';\nafterAll(() => {\n    // cleaning up the mess left behind the previous test\n    mockAxios.reset();\n});\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_6]",
+              "Type": "bash",
+              "Content": "npm test\n"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

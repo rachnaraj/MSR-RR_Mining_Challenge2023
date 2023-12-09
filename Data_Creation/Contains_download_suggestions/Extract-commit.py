@@ -27,11 +27,10 @@ def extract_info(file_path):
             for content in list_of_code:
                 code = content.get('Content', '')
                 if (contains_install_keywords(answer) or contains_install_keywords(code)):
-                    if any(is_semantic_version(match) for match in re.finditer(r'\b\d+\.\d+\.\d+(-\w+(\.\d+)?)?\b', answer)) or any(is_semantic_version(match) for match in re.finditer(r'\b\d+\.\d+\.\d+(-\w+(\.\d+)?)?\b', prompt)) or any(is_semantic_version(match) for match in re.finditer(r'\b\d+\.\d+\.\d+(-\w+(\.\d+)?)?\b', code)):
-                        relevant_data.append({
-                            'content': entry
-                        })
-                        break
+                    relevant_data.append({
+                        'content': entry
+                    })
+                    break
             break
 
                     
@@ -60,6 +59,6 @@ def process_files(output_folder):
 
 if __name__ == "__main__":
     # base_folder = r'D:\Me\concordia\Notes\Prof-Diego\MSR-DataChallenge\Implementation\Phase-four-Implementation'
-    output_folder_path = r'D:\Me\concordia\Notes\Prof-Diego\MSR-DataChallenge\Implementation\git-folder-MSR\MSR-RR_Mining_Challenge2023\Data_Creation\Contains_version_and_download_suggestion' # Replace with the desired output folder
+    output_folder_path = r'D:\Me\concordia\Notes\Prof-Diego\MSR-DataChallenge\Implementation\git-folder-MSR\MSR-RR_Mining_Challenge2023\Data_Creation\Contains_download_suggestions' # Replace with the desired output folder
     
     process_files(output_folder_path)
