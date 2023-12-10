@@ -9,6 +9,13 @@ def generate_unique_id():
     global id_counter
     id_counter += 1
     return id_counter
+
+
+def contains_install_keywords(text):
+    install_keywords = ["pip install", "conda install", "npm install", "mvn install"]
+    return any(keyword in text for keyword in install_keywords)
+
+
 def extract_info(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         data = json.load(file)
@@ -31,26 +38,35 @@ def extract_info(file_path):
                         if conversation.get('ListOfCode') != []:
                             # Check if any code block in the conversation meets the condition
                             if any(
-                                'Type' in code_block and
-                                re.search(r'\bimport\b', code_block.get('Content', '')) and
                                 code_block['Type'] in ['java', 'javascript', 'python', 'typescript']
                                 for code_block in conversation.get('ListOfCode', [])
                             ):
-                                unique_id = generate_unique_id()
-                                relevant_conversations.append({
-                                    'ID': unique_id,
-                                    'source_type': source_type,
-                                    'Author': Author,
-                                    'SourceURL' : gpt_URL,
-                                    'RepoName' : RepoName,
-                                    'Title' : Title, 
-                                    'Body': Body,
-                                    'State':State,
-                                    'NumberOfPrompts':NumberOfPrompts,
-                                    'gpt_model_version':gpt_model_version,
-                                    'Conversation':  chatgpt_sharing['Conversations']
-                                })
-                                break
+                                for code_block in conversation.get('ListOfCode', []):
+                                    prompt = conversation.get('Prompt', '')
+                                    # print(prompt)
+                                    answer = conversation.get('Answer', '')
+                                    if re.search(r'\bimport\b',answer) or re.search(r'\bimport\b',prompt) or contains_install_keywords(answer) or contains_install_keywords(prompt):
+                                            
+                                        if re.search(r'\bimport\b',code_block['Content']) or contains_install_keywords(code_block['Content']):
+                                            unique_id = generate_unique_id()
+                                            relevant_conversations.append({
+                                                'ID': unique_id,
+                                                'source_type': source_type,
+                                                'Author': Author,
+                                                'SourceURL' : gpt_URL,
+                                                'RepoName' : RepoName,
+                                                'Title' : Title, 
+                                                'Body': Body,
+                                                'State':State,
+                                                'NumberOfPrompts':NumberOfPrompts,
+                                                'gpt_model_version':gpt_model_version,
+                                                'Conversation':  chatgpt_sharing['Conversations']
+                                            })
+                                            break
+                                    # break
+
+            
+            
                             
     return relevant_conversations
 

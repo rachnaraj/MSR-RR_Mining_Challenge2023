@@ -2,9 +2,31 @@ import json
 import re
 import os
 
-def is_semantic_version(version_string):
-    return re.match(r'^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$', version_string.group()) is not None
+def capture_version(input_text):
+    pattern = r'"(\d+\.\d+\.\d+(?:[^"]*\\)?)\"'  # For versions within double quotes
+    match = re.search(pattern, input_text)
+    
+    if match:
+        return match.group(1)
+    
+    # Additional cases for semantic versions in Java, Python, and JavaScript
+    java_pattern = r'\bversion\s*=\s*["\'](\d+\.\d+\.\d+)["\']'  # Java
+    python_pattern = r'\bversion\s*=\s*["\'](\d+\.\d+\.\d+)["\']'  # Python
+    js_pattern = r'\bversion\s*:\s*["\'](\d+\.\d+\.\d+)["\']'  # JavaScript
 
+    java_match = re.search(java_pattern, input_text, re.IGNORECASE)
+    python_match = re.search(python_pattern, input_text, re.IGNORECASE)
+    js_match = re.search(js_pattern, input_text, re.IGNORECASE)
+
+    if java_match:
+        return java_match.group(1)
+    elif python_match:
+        return python_match.group(1)
+    elif js_match:
+        return js_match.group(1)
+    else:
+        return False
+    
 
 
 def extract_info(file_path):
@@ -24,12 +46,15 @@ def extract_info(file_path):
              
             if re.search(r'\bversion\b',answer):
                 # print("yes!!")
-                if any(is_semantic_version(match) for match in re.finditer(r'\b\d+\.\d+\.\d+(-\w+(\.\d+)?)?\b', answer)) or any(is_semantic_version(match) for match in re.finditer(r'\b\d+\.\d+\.\d+(-\w+(\.\d+)?)?\b', prompt)):
-                    relevant_data.append({
-                        'Contains_version': True,
-                        'content': entry
-                    })
-                    break
+                if (re.search(r'\bversion\b', answer) or re.search(r'\bversion\b', answer)):
+                    if ((capture_version(answer) or capture_version(prompt))):
+                        version_obtained = capture_version(answer)
+                        print(version_obtained)
+                        relevant_data.append({
+                            'Contains_version': True,
+                            'content': entry
+                        })
+                        break
 
 
                     
@@ -45,7 +70,7 @@ def save_to_json(data, output_folder, filename):
     print(f"Data saved to {output_file_path}")
 
 def process_files(output_folder):
-    file_path = r'D:\Me\concordia\Notes\Prof-Diego\MSR-DataChallenge\Implementation\git-folder-MSR\MSR-RR_Mining_Challenge2023\Data_Creation\Contains_library_code_import\pr_sharings.json'
+    file_path = r'D:\Me\concordia\Notes\Prof-Diego\MSR-DataChallenge\Implementation\git-folder-MSR\MSR-RR_Mining_Challenge2023\Data_Creation\Contain_lib_code_import_2\pr_sharings.json'
    
     relevant_data = extract_info(file_path)
     # print("&&&&&&&&&&&&&&&&&&&&&&&&&&" , relevant_data)

@@ -1,7 +1,7 @@
 [
   {
     "content": {
-      "ID": 2,
+      "ID": 11,
       "source_type": "pull request",
       "Author": "Okuro3499",
       "SourceURL": "https://chat.openai.com/share/f194daa6-1c52-4934-8b45-3907ab938954",
@@ -69,7 +69,7 @@
   },
   {
     "content": {
-      "ID": 3,
+      "ID": 15,
       "source_type": "pull request",
       "Author": "Okuro3499",
       "SourceURL": "https://chat.openai.com/share/f194daa6-1c52-4934-8b45-3907ab938954",
@@ -137,7 +137,7 @@
   },
   {
     "content": {
-      "ID": 5,
+      "ID": 18,
       "source_type": "pull request",
       "Author": "thgh",
       "SourceURL": "https://chat.openai.com/share/8a08b0c6-d5c4-476d-a086-a0053cd8c185",
@@ -184,7 +184,86 @@
   },
   {
     "content": {
-      "ID": 17,
+      "ID": 35,
+      "source_type": "pull request",
+      "Author": "knoll3",
+      "SourceURL": "https://chat.openai.com/share/f612708b-692b-487f-861b-7081f8bec5c5",
+      "RepoName": "sarcophagus-org/sarcophagus-v2-sdk",
+      "Title": "Fix libp2p error in tests",
+      "Body": "Fixes the libp2p import error we were getting in the tests. I had to add some stuff to the jest config file to tell jest to use the mocked libp2p module. See the ChatGPT conversation that led me to this solution here: https://chat.openai.com/share/f612708b-692b-487f-861b-7081f8bec5c5.\r\n\r\n```\r\nmodule.exports = {\r\n  preset: 'ts-jest',\r\n  testMatch: ['**/test/**/*.test.ts', '**/test/**/*.integration.ts'],\r\n  // https://chat.openai.com/share/f612708b-692b-487f-861b-7081f8bec5c5\r\n  moduleNameMapper: {\r\n    libp2p: '<rootDir>/test/__mocks__/libp2pMock.ts',\r\n  },\r\n};\r\n```\r\n\r\nI also updated the node version in the github action from 14 to 18.",
+      "State": "MERGED",
+      "NumberOfPrompts": 4,
+      "gpt_model_version": "GPT-4",
+      "Conversation": [
+        {
+          "Prompt": "import Bundlr from '@bundlr-network/client/build/cjs/node/bundlr';\nimport { ethers, Signer } from 'ethers';\nimport { sarcoClientInitSchema, SarcoInitParams } from '../shared/helpers/validation';\nimport { Libp2p } from 'libp2p';\nimport { bootLip2p } from '../shared/libp2p_node';\nimport { SarcoNetworkConfig } from '../shared/types';\nimport { Api } from '../shared/Api';\nimport { ArchaeologistApi } from '../shared/ArchaeologistApi';\nimport { goerliNetworkConfig, mainnetNetworkConfig, sepoliaNetworkConfig } from '../shared/networkConfig';\nimport { Token } from '../shared/Token';\n\nexport interface NodeSarcoClientConfig {\n  privateKey: string;\n  providerUrl: string;\n}\n\nexport class NodeSarcoClient {\n  api!: Api;\n  token!: Token;\n  archaeologist!: ArchaeologistApi;\n  signer: Signer;\n  bundlr!: Bundlr;\n  isInitialised: boolean = false;\n\n  private providerUrl!: string;\n  private etherscanApiKey: string = '';\n  private p2pNode!: Libp2p;\n  private networkConfig!: SarcoNetworkConfig;\n  private privateKey: string;\n\n  constructor(config: NodeSarcoClientConfig) {\n    const customProvider = new ethers.providers.JsonRpcProvider(config.providerUrl);\n    this.signer = new ethers.providers.Web3Provider(customProvider as any).getSigner();\n    this.privateKey = config.privateKey;\n  }\n\n  async init(initParams: SarcoInitParams, onInit = (_: Libp2p) => {}): Promise<void> {\n    const params = await sarcoClientInitSchema.validate(initParams);\n\n    const networkConfigByChainId = new Map<number, SarcoNetworkConfig>([\n      [1, mainnetNetworkConfig(this.providerUrl, initParams.etherscanApiKey)],\n      [5, goerliNetworkConfig(this.providerUrl, initParams.etherscanApiKey)],\n      [11155111, sepoliaNetworkConfig(this.providerUrl, initParams.etherscanApiKey)],\n    ]);\n\n    const networkConfig = networkConfigByChainId.get(params.chainId);\n    if (!networkConfig) {\n      throw new Error(`Unsupported chainId: ${params.chainId}`);\n    }\n\n    this.bundlr = new Bundlr(networkConfig.bundlr.nodeUrl, networkConfig.bundlr.currencyName, this.privateKey, {\n      providerUrl: networkConfig.bundlr.providerUrl,\n    });\n\n    this.networkConfig = networkConfig;\n    this.etherscanApiKey = params.etherscanApiKey ?? '';\n\n    this.api = new Api(this.networkConfig.diamondDeployAddress, this.signer, this.networkConfig.subgraphUrl);\n    this.token = new Token(this.networkConfig.sarcoTokenAddress, this.networkConfig.diamondDeployAddress, this.signer);\n\n    this.p2pNode = await bootLip2p();\n    // TODO: Allow client to choose when to start/stop libp2p node\n    await this.startLibp2pNode();\n\n    this.archaeologist = new ArchaeologistApi(\n      this.networkConfig.diamondDeployAddress,\n      this.signer,\n      this.networkConfig.subgraphUrl,\n      this.p2pNode\n    );\n\n    this.isInitialised = true;\n    onInit(this.p2pNode);\n  }\n\n  async startLibp2pNode() {\n    console.log(`LibP2P node starting with peerID: ${this.p2pNode.peerId.toString()}`);\n    return this.p2pNode.start();\n  }\n\n  async stopLibp2pNode() {\n    return this.p2pNode.stop();\n  }\n}\n---\nimport Bundlr from '@bundlr-network/client/build/cjs/node/bundlr';\nimport { privateKey } from './api/test-data';\nimport { ethers } from 'ethers';\nimport { NodeSarcoClient } from '../src/node/NodeSarcoClient';\n\n// Mocks\njest.mock('@bundlr-network/client/build/cjs/node/bundlr');\njest.mock('../src/shared/Api', () => {\n  // Mock class\n  return {\n    Api: jest.fn().mockImplementation(() => {\n      return { someApiMethod: jest.fn() }; // Mock the methods as needed\n    }),\n  };\n});\njest.mock('ethers', () => {\n  const ethersMock = jest.requireActual('ethers');\n  return {\n    ...ethersMock,\n    ethers: {\n      ...ethersMock.ethers,\n      providers: {\n        ...ethersMock.ethers.providers,\n        JsonRpcProvider: jest.fn(),\n        getDefaultProvider: jest.fn(),\n        Web3Provider: jest.fn().mockImplementation(() => {\n          return { getSigner: jest.fn() };\n        }),\n      },\n    },\n  };\n});\njest.mock('../src/shared/Token', () => {\n  // Mock class\n  return {\n    Token: jest.fn().mockImplementation(() => {\n      return { someTokenMethod: jest.fn() }; // Mock the methods as needed\n    }),\n  };\n});\n\nconst BundlrMock = Bundlr as jest.Mocked<typeof Bundlr>;\nconst JsonRpcProviderMock = ethers.providers.JsonRpcProvider as jest.MockedClass<\n  typeof ethers.providers.JsonRpcProvider\n>;\nconst Web3ProviderMock = ethers.providers.Web3Provider as jest.MockedClass<typeof ethers.providers.Web3Provider>;\n\n// Test setup\ndescribe('NodeSarcoClient', () => {\n  afterEach(() => {\n    jest.clearAllMocks();\n  });\n\n  describe('constructor', () => {\n    it('should initialize with a private key', () => {\n      const mockProviderUrl = 'mockProviderUrl';\n      // Set up your mocks\n      const mockJsonRpcProvider = {};\n      const mockWeb3Provider = { getSigner: jest.fn() };\n      JsonRpcProviderMock.mockReturnValue(mockJsonRpcProvider as any);\n      Web3ProviderMock.mockReturnValue(mockWeb3Provider as any);\n\n      const sarco = new NodeSarcoClient({ privateKey, providerUrl: mockProviderUrl });\n\n      expect(sarco).toBeDefined();\n      expect(JsonRpcProviderMock).toHaveBeenCalledWith(mockProviderUrl);\n      expect(Web3ProviderMock).toHaveBeenCalledWith(mockJsonRpcProvider);\n      expect(mockWeb3Provider.getSigner).toHaveBeenCalled();\n      expect(BundlrMock).toHaveBeenCalledWith('https://node1.bundlr.network', 'ethereum', privateKey, {\n        providerUrl: mockProviderUrl,\n      });\n    });\n  });\n});\n---\n FAIL  test/NodeSarcoClient.test.ts\n  \u25cf Test suite failed to run\n\n    Cannot find module 'libp2p' from 'src/shared/libp2p_node/index.ts'\n\n    Require stack:\n      src/shared/libp2p_node/index.ts\n      src/node/NodeSarcoClient.ts\n      test/NodeSarcoClient.test.ts\n\n    > 1 | import { Libp2p, createLibp2p } from 'libp2p';\n        | ^\n      2 | import { p2pNodeConfig } from './p2pNodeConfig';\n      3 |\n      4 | const idTruncateLimit = 5;\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)\n      at Object.<anonymous> (src/shared/libp2p_node/index.ts:1:1)\n      at Object.<anonymous> (src/node/NodeSarcoClient.ts:5:1)\n      at Object.<anonymous> (test/NodeSarcoClient.test.ts:4:1)\n---\nDo you have any idea why I am getting this error?",
+          "Answer": "ChatGPTThe error message \"Cannot find module 'libp2p'\" means that Jest, the test runner, is unable to find the 'libp2p' module when running your tests.This could happen for several reasons:The 'libp2p' module is not installed: You can check if 'libp2p' module is in your 'node_modules' directory, and if it's not there, you need to install it with npm install libp2p or yarn add libp2p command.The module is not correctly imported: Make sure that the import statement in your file matches the exact name and location of the 'libp2p' module. If the module is located in a different directory, you may need to adjust the path accordingly.Jest configuration issues: If 'libp2p' is a native module (which it is), or it uses native code under the hood, you may need to adjust your Jest configuration to mock these native dependencies. Jest runs in a Node environment, and it does not have access to native modules, hence they need to be mocked.You can create a manual mock for 'libp2p' module by following these steps:In your __mocks__ directory, create a file called 'libp2p.ts'.In this file, export a mocked version of the 'libp2p' module. This might look something like this:[CODE_BLOCK_0]Then in your test file, you can tell Jest to use the mocked version of 'libp2p' like so:[CODE_BLOCK_1]Remember, the actual implementation of the mock depends on how 'libp2p' is used in your code.The error may also arise if the module is installed globally but not locally in your project. Jest may not be able to pick up globally installed modules. In this case, installing the module locally should resolve the issue.You are using a version of 'libp2p' that is not compatible with your version of Node.js or Jest. Try installing a different version of the 'libp2p' module.There is an issue with your Node.js or npm/yarn setup. You can try deleting the 'node_modules' folder and package-lock.json or yarn.lock file and reinstalling your packages.If none of these solutions works, please provide additional context about your project setup.",
+          "ListOfCode": [
+            {
+              "ReplaceString": "[CODE_BLOCK_0]",
+              "Type": "ts",
+              "Content": "module.exports = {\n  // Mock methods here\n};\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_1]",
+              "Type": "ts",
+              "Content": "jest.mock('libp2p');\n"
+            }
+          ]
+        },
+        {
+          "Prompt": "So why am I getting this error? I'm mocking the libp2p module so why is it still looking for it? \n FAIL  test/NodeSarcoClient.test.ts\n  \u25cf Test suite failed to run\n\n    Cannot find module 'libp2p' from 'test/NodeSarcoClient.test.ts'\n\n       5 |\n       6 | // Mocks\n    >  7 | jest.mock('libp2p', () => {\n         |      ^\n       8 |   return {\n       9 |     Libp2p: jest.fn(),\n      10 |   };\n",
+          "Answer": "ChatGPTIt appears you're running into an issue because of how Node.js and Jest handle module resolution. When you call jest.mock('libp2p'), Jest tries to resolve the 'libp2p' module before applying the mock implementation. This is done so Jest can automatically hoist jest.mock calls to the top of the file. This means Jest will try to find the 'libp2p' module even though you provide a mock implementation.To bypass the module resolution, you have a couple of options:1. Inline Manual MockingYou can directly mock the functionalities that 'libp2p' provides in your test file. The mock implementation will be inlined in the same test file. Here is a simple example:[CODE_BLOCK_0]2. Using jest.doMock instead of jest.mockjest.doMock is not hoisted to the top of the file, so the module resolution does not occur until the doMock statement is encountered in the code. This means that if you have installed 'libp2p' locally, but Jest is still having trouble finding it, using doMock may bypass the error:[CODE_BLOCK_1]3. Manual Mocking in a Mocks DirectoryCreate a 'mocks' directory in the same level as your 'node_modules' directory. Inside 'mocks', create a file with the same name as the module you want to mock (in this case 'libp2p.js'). Jest will automatically check this directory for manual mocks when mocking a package.In __mocks__/libp2p.js:[CODE_BLOCK_2]And then in your test file:[CODE_BLOCK_3]Note: These solutions are general suggestions and might need to be adapted based on your specific use of the 'libp2p' module.",
+          "ListOfCode": [
+            {
+              "ReplaceString": "[CODE_BLOCK_0]",
+              "Type": "ts",
+              "Content": "jest.mock('libp2p', () => ({\n  Libp2p: jest.fn().mockImplementation(() => ({\n    // methods and properties of Libp2p\n  })),\n}));\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_1]",
+              "Type": "ts",
+              "Content": "jest.doMock('libp2p', () => ({\n  Libp2p: jest.fn(),\n}));\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_2]",
+              "Type": "js",
+              "Content": "module.exports = {\n  Libp2p: jest.fn(),\n};\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_3]",
+              "Type": "ts",
+              "Content": "jest.mock('libp2p');\n"
+            }
+          ]
+        },
+        {
+          "Prompt": "No matter how I try to mock this module the same error occurs",
+          "Answer": "ChatGPTThis issue seems to be related to how the TypeScript transpiler handles imports and exports. TypeScript does a static analysis of all import statements before running the code. This is unlike JavaScript (and Jest, which runs in a JS environment), where modules are loaded dynamically at runtime. Therefore, when TypeScript sees an import statement for a module that does not exist in your node_modules directory, it throws an error before the code has a chance to run.One way to solve this issue could be by using a TypeScript Path Alias in conjunction with Jest module mapper.Firstly, create a new mock file for the libp2p module, let's call it libp2pMock.ts, and place it somewhere in your project, for example inside the __mocks__ directory:mocks/libp2pMock.ts:[CODE_BLOCK_0]Now, in your tsconfig.json (or tsconfig.test.json if you have a separate configuration file for tests), add a new path alias:[CODE_BLOCK_1]This will tell TypeScript to look for the libp2p module in __mocks__/libp2pMock.ts instead of node_modules.Next, you need to tell Jest to do the same. In your Jest configuration file (usually it's either jest.config.js or inside your package.json), add the following:[CODE_BLOCK_2]Now both TypeScript and Jest should be able to find the libp2p module.Please note that the path in \"moduleNameMapper\" and \"paths\" should be modified according to where you place your libp2pMock.ts file.",
+          "ListOfCode": [
+            {
+              "ReplaceString": "[CODE_BLOCK_0]",
+              "Type": "typescript",
+              "Content": "const Libp2p = jest.fn().mockImplementation(() => {\n    // add your custom implementation here or just leave it as is\n});\n\nexport default Libp2p;\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_1]",
+              "Type": "json",
+              "Content": "{\n  \"compilerOptions\": {\n    \"paths\": {\n      \"libp2p\": [\"__mocks__/libp2pMock.ts\"]\n    },\n    // your other options\n  }\n}\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_2]",
+              "Type": "javascript",
+              "Content": "{\n  \"moduleNameMapper\": {\n    \"libp2p\": \"<rootDir>/__mocks__/libp2pMock.ts\"\n  },\n  // your other Jest configurations\n}\n"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "content": {
+      "ID": 40,
       "source_type": "pull request",
       "Author": "maorfr",
       "SourceURL": "https://chat.openai.com/share/440407a1-df1c-4f1e-84b9-76ffec9fd918",
@@ -249,7 +328,7 @@
   },
   {
     "content": {
-      "ID": 18,
+      "ID": 44,
       "source_type": "pull request",
       "Author": "lucemia",
       "SourceURL": "https://chat.openai.com/share/704e3274-e669-49b1-a108-2a10a1da2ca3",
@@ -286,7 +365,7 @@
   },
   {
     "content": {
-      "ID": 20,
+      "ID": 47,
       "source_type": "pull request",
       "Author": "KilianFt",
       "SourceURL": "https://chat.openai.com/share/ea0acac8-6f59-4762-9fc0-764acbbd4119",
@@ -318,7 +397,7 @@
   },
   {
     "content": {
-      "ID": 23,
+      "ID": 50,
       "source_type": "pull request",
       "Author": "nisyad-ms",
       "SourceURL": "https://chat.openai.com/share/9841c3a6-3be4-4450-b3a5-b6d7cbe81250",
@@ -365,7 +444,34 @@
   },
   {
     "content": {
-      "ID": 35,
+      "ID": 71,
+      "source_type": "pull request",
+      "Author": "amankumarrr",
+      "SourceURL": "https://chat.openai.com/share/ca2eab25-4e1e-4688-9be5-43a179a0ec4f",
+      "RepoName": "SSWConsulting/SSW.Website",
+      "Title": "\ud83c\udf1fTraining - Event booking component ",
+      "Body": "Fixes #918 \r\n\r\n**Description:**\r\nCreated a new event booking component for the following Div.\r\n<img width=\"429\" alt=\"image\" src=\"https://github.com/SSWConsulting/SSW.Website/assets/71385247/9e7f4a9c-3d0b-4ee0-8084-f5cf455fc292\">\r\n**Figure: Existing Event Booking Component** \r\n\r\n**New component screenshots:**\r\n\r\n<img width=\"662\" alt=\"image\" src=\"https://github.com/SSWConsulting/SSW.Website/assets/71385247/ee5b348a-b676-450f-8b35-49e88b9260f9\">\r\n\r\n**Figure: Full screen in Desktop view** \r\n\r\n<img width=\"661\" alt=\"image\" src=\"https://github.com/SSWConsulting/SSW.Website/assets/71385247/2a54b54c-5e62-4e4a-a150-2cb3dd1b7f35\">\r\n\r\n**Figure: Full screen in Desktop view with 4 events** \r\n\r\n<img width=\"661\" alt=\"image\" src=\"https://github.com/SSWConsulting/SSW.Website/assets/71385247/2373c708-92c1-400c-8a5d-f44d6ab6df37\">\r\n\r\n**Figure: Full screen in Desktop view with 5 events** \r\n\r\n<img width=\"662\" alt=\"image\" src=\"https://github.com/SSWConsulting/SSW.Website/assets/71385247/beeeee75-ca10-4739-9e77-f7878b1ce940\">\r\n\r\n**Figure: Full screen in Desktop view with 6 events** \r\n\r\n<img width=\"274\" alt=\"image\" src=\"https://github.com/SSWConsulting/SSW.Website/assets/71385247/e8917dbc-6de0-4fc0-8c8a-dcb45c02f373\">\r\n\r\n**Figure: Mobile view** \r\n\r\n\r\n<img width=\"609\" alt=\"image\" src=\"https://github.com/SSWConsulting/SSW.Website/assets/71385247/fbe16790-84ed-4151-b76b-a281168d283e\">\r\n\r\n**Figure: iPad or mid screen view** \r\n",
+      "State": "MERGED",
+      "NumberOfPrompts": 1,
+      "gpt_model_version": "Default (GPT-3.5)",
+      "Conversation": [
+        {
+          "Prompt": "Can i replicate this functionality with DayJS?\n\nmoment(event.date).format(\"Do (ddd) MMMM YYYY\")",
+          "Answer": "ChatGPTYes, you can replicate the functionality of formatting a date using the \"Do (ddd) MMMM YYYY\" format with DayJS. DayJS is a lightweight JavaScript library for parsing, manipulating, and formatting dates.To achieve the same result as the moment.js code you provided, you can use DayJS's format() function. Here's an example:[CODE_BLOCK_0]Make sure you have DayJS installed in your project by running npm install dayjs. Also, don't forget to import the locale you want to use if you need to localize the output.This code snippet will format the event.date using the specified format string and store the result in the formattedDate variable. Finally, it will log the formatted date to the console.",
+          "ListOfCode": [
+            {
+              "ReplaceString": "[CODE_BLOCK_0]",
+              "Type": "javascript",
+              "Content": "const dayjs = require('dayjs');\nrequire('dayjs/locale/en'); // Import the locale you want to use (e.g., 'en' for English)\n\nconst formattedDate = dayjs(event.date).format(\"Do (ddd) MMMM YYYY\");\nconsole.log(formattedDate);\n"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "content": {
+      "ID": 78,
       "source_type": "pull request",
       "Author": "aliabid94",
       "SourceURL": "https://chat.openai.com/share/dc4b8dd7-faf3-43f6-98df-ea8d7da23fcc",
@@ -418,7 +524,133 @@
   },
   {
     "content": {
-      "ID": 38,
+      "ID": 88,
+      "source_type": "pull request",
+      "Author": "hoshotakamoto",
+      "SourceURL": "https://chat.openai.com/share/eb107b81-4e26-48fc-a4fb-d2c1e315bae1",
+      "RepoName": "hoshotakamoto/banzukesurfing",
+      "Title": "Unit Test Setup: jest",
+      "Body": "https://chat.openai.com/share/eb107b81-4e26-48fc-a4fb-d2c1e315bae1\r\n\r\nI have these files (below) but I can't run the unit test. Set up the files I need to run the unit test.\r\n\r\n```\r\nindex.html\r\n<!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <title>Banzuke Surfing Game</title>\r\n    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js\"></script>\r\n    <!-- Link to the external CSS file -->\r\n    <!-- Uncomment this if you have styles to include -->\r\n    <!-- <link rel=\"stylesheet\" href=\"styles.css\"> -->\r\n</head>\r\n<body>\r\n    <h1>Welcome to Banzuke Surfing Game!</h1>\r\n    <p>Select your Rikishi and start playing!</p>\r\n    <select id=\"rikishi\">\r\n        <option value=\"1\">Rikishi 1</option>\r\n        <option value=\"2\">Rikishi 2</option>\r\n        <!-- more options here -->\r\n    </select>\r\n    <button onclick=\"startPlaying()\">Start Playing</button>\r\n    <!-- Link to the external JavaScript file -->\r\n    <script src=\"game.js\"></script>\r\n</body>\r\n</html>\r\n\r\ngame.js\r\nfunction startPlaying() {\r\n    var rikishi = $('#rikishi').val();\r\n    // This is where you'd connect to your game logic\r\n    // For example:\r\n    // sendRikishiToServer(rikishi);\r\n    alert(\"You selected: \" + rikishi);\r\n}\r\n\r\ngame.test.js\r\nconst { startPlaying } = require('./game');\r\n\r\ntest('check if startPlaying is defined', () => {\r\n  expect(startPlaying).toBeDefined();\r\n});\r\n```\r\n\r\nChatGPT\r\nTo run unit tests, you can use a testing library like Jest, a JavaScript Testing Framework. It allows you to create, run and structure tests.\r\n\r\nHere are the steps to set up Jest:\r\n\r\nFirstly, initialize a Node.js project by creating a package.json. You can do this by running the command npm init -y in your project root directory. This will automatically create a package.json file with default values.\r\n\r\nThen, you need to install Jest. You can install it using the npm package manager with the following command: npm install --save-dev jest.\r\n\r\nYour package.json should then look like this:\r\n\r\n```json\r\n{\r\n  \"name\": \"banzuke-surfing-game\",\r\n  \"version\": \"1.0.0\",\r\n  \"description\": \"\",\r\n  \"main\": \"index.js\",\r\n  \"scripts\": {\r\n    \"test\": \"jest\"\r\n  },\r\n  \"keywords\": [],\r\n  \"author\": \"\",\r\n  \"license\": \"ISC\",\r\n  \"devDependencies\": {\r\n    \"jest\": \"^27.0.6\"\r\n  }\r\n}\r\n```\r\n\r\nNext, update your game.js file to make it module-friendly (so that it can be imported in other js files). You can do this by modifying it as shown below:\r\n\r\n```javascript\r\nfunction startPlaying() {\r\n    var rikishi = $('#rikishi').val();\r\n    alert(\"You selected: \" + rikishi);\r\n}\r\n\r\n// Add this line to make this function accessible in other js files\r\nmodule.exports = { startPlaying };\r\n```\r\n\r\nYour game.test.js file seems fine, it will import the startPlaying function and checks if it's defined.\r\n\r\nFinally, run the test by using the following command: npm run test.\r\n\r\nHowever, since you're using jQuery in the code, you might face issues with the Jest environment because it doesn't have access to the DOM. In that case, you would need to use something like jsdom (a JavaScript based headless browser that can create a realistic testing environment) and mock the jQuery syntax.\r\n\r\nHere is a simple example of how you could test your startPlaying function:\r\n\r\n```javascript\r\nglobal.$ = jest.fn(() => ({\r\n    val: jest.fn(() => '1')\r\n}));\r\n\r\nconst { startPlaying } = require('./game');\r\n\r\ntest('check if startPlaying is defined and returns expected value', () => {\r\n    const result = startPlaying();\r\n    expect(result).toBe(\"You selected: 1\");\r\n});\r\n```\r\n\r\nThis code creates a mock for jQuery and then calls startPlaying. It then checks if the function is working as expected and returns the correct result.\r\n\r\nRemember to install jest and jsdom in your project using npm:\r\n\r\n```shell\r\nnpm install --save-dev jest jsdom\r\n```\r\n\r\nPlease note that running a front-end unit test without a browser context can be tricky, and the given mock example is a simplification of the reality. In a more complex scenario, you would probably use tools such as Jest with additional libraries (like Enzyme or Testing Library) that help handle React components, virtual DOM and many other things to provide a more complete testing environment.\r\n\r\n\r\n```\r\nnpm test\r\n\r\n> banzukesurfing@1.0.0 test\r\n> jest\r\n\r\n FAIL  ./game.test.js\r\n  \u2715 check if startPlaying is defined and returns expected value\r\n\r\n  \u25cf check if startPlaying is defined and returns expected value\r\n\r\n    ReferenceError: alert is not defined\r\n\r\n      4 |     // For example:\r\n      5 |     // sendRikishiToServer(rikishi);\r\n    > 6 |     alert(\"You selected: \" + rikishi);\r\n        |     ^\r\n      7 | }\r\n      8 |\r\n      9 | module.exports = { startPlaying };\r\n\r\n      at alert (game.js:6:5)\r\n      at Object.startPlaying (game.test.js:8:20)\r\n\r\nTest Suites: 1 failed, 1 total\r\nTests:       1 failed, 1 total\r\nSnapshots:   0 total\r\nTime:        0.189 s\r\nRan all test suites.\r\n\r\n```\r\nChatGPT\r\nThe error \"ReferenceError: alert is not defined\" happens because the alert function is part of the window object in a browser environment. When running Jest, it uses a Node.js environment, which does not have a window object or any of its methods (like alert).\r\n\r\nIn a test environment, it's best to avoid using these kinds of functions that rely on the browser. But if you absolutely need to use something like alert, you can mock it out for testing. However, a better approach might be to refactor your code to not rely on such methods.\r\n\r\nLet's refactor your code to return the string message instead of alerting it, which will allow us to test the result.\r\n\r\nHere's your updated game.js:\r\n\r\n```javascript\r\nfunction startPlaying() {\r\n    var rikishi = $('#rikishi').val();\r\n    var message = \"You selected: \" + rikishi;\r\n    return message;\r\n}\r\n\r\nmodule.exports = { startPlaying };\r\n```\r\n\r\nAnd the test file game.test.js would look like this:\r\n\r\n```javascript\r\nglobal.$ = jest.fn(() => ({\r\n    val: jest.fn(() => '1')\r\n}));\r\n\r\nconst { startPlaying } = require('./game');\r\n\r\ntest('check if startPlaying is defined and returns expected value', () => {\r\n    const result = startPlaying();\r\n    expect(result).toBe(\"You selected: 1\");\r\n});\r\n```\r\n\r\nNow when you run npm run test, Jest will call the function startPlaying and compare the return value with the expected string \"You selected: 1\".\r\n\r\nPlease note that such kind of changes where we change our original code to accommodate testing are not always the best solution. In real projects, you would want to structure your code in a way that makes it easy to test and avoid functions that are difficult to test like alert.",
+      "State": "MERGED",
+      "NumberOfPrompts": 2,
+      "gpt_model_version": "GPT-4",
+      "Conversation": [
+        {
+          "Prompt": "I have these files (below) but I can't run the unit test. Set up the files I need to run the unit test.\n\nindex.html\n<!DOCTYPE html>\n<html>\n<head>\n    <title>Banzuke Surfing Game</title>\n    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js\"></script>\n    <!-- Link to the external CSS file -->\n    <!-- Uncomment this if you have styles to include -->\n    <!-- <link rel=\"stylesheet\" href=\"styles.css\"> -->\n</head>\n<body>\n    <h1>Welcome to Banzuke Surfing Game!</h1>\n    <p>Select your Rikishi and start playing!</p>\n    <select id=\"rikishi\">\n        <option value=\"1\">Rikishi 1</option>\n        <option value=\"2\">Rikishi 2</option>\n        <!-- more options here -->\n    </select>\n    <button onclick=\"startPlaying()\">Start Playing</button>\n    <!-- Link to the external JavaScript file -->\n    <script src=\"game.js\"></script>\n</body>\n</html>\n\ngame.js\nfunction startPlaying() {\n    var rikishi = $('#rikishi').val();\n    // This is where you'd connect to your game logic\n    // For example:\n    // sendRikishiToServer(rikishi);\n    alert(\"You selected: \" + rikishi);\n}\n\ngame.test.js\nconst { startPlaying } = require('./game');\n\ntest('check if startPlaying is defined', () => {\n  expect(startPlaying).toBeDefined();\n});",
+          "Answer": "ChatGPTTo run unit tests, you can use a testing library like Jest, a JavaScript Testing Framework. It allows you to create, run and structure tests.Here are the steps to set up Jest:Firstly, initialize a Node.js project by creating a package.json. You can do this by running the command npm init -y in your project root directory. This will automatically create a package.json file with default values.Then, you need to install Jest. You can install it using the npm package manager with the following command: npm install --save-dev jest.Your package.json should then look like this:[CODE_BLOCK_0]Next, update your game.js file to make it module-friendly (so that it can be imported in other js files). You can do this by modifying it as shown below:[CODE_BLOCK_1]Your game.test.js file seems fine, it will import the startPlaying function and checks if it's defined.Finally, run the test by using the following command: npm run test.However, since you're using jQuery in the code, you might face issues with the Jest environment because it doesn't have access to the DOM. In that case, you would need to use something like jsdom (a JavaScript based headless browser that can create a realistic testing environment) and mock the jQuery syntax.Here is a simple example of how you could test your startPlaying function:[CODE_BLOCK_2]This code creates a mock for jQuery and then calls startPlaying. It then checks if the function is working as expected and returns the correct result.Remember to install jest and jsdom in your project using npm:[CODE_BLOCK_3]Please note that running a front-end unit test without a browser context can be tricky, and the given mock example is a simplification of the reality. In a more complex scenario, you would probably use tools such as Jest with additional libraries (like Enzyme or Testing Library) that help handle React components, virtual DOM and many other things to provide a more complete testing environment.",
+          "ListOfCode": [
+            {
+              "ReplaceString": "[CODE_BLOCK_0]",
+              "Type": "json",
+              "Content": "{\n  \"name\": \"banzuke-surfing-game\",\n  \"version\": \"1.0.0\",\n  \"description\": \"\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"test\": \"jest\"\n  },\n  \"keywords\": [],\n  \"author\": \"\",\n  \"license\": \"ISC\",\n  \"devDependencies\": {\n    \"jest\": \"^27.0.6\"\n  }\n}\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_1]",
+              "Type": "javascript",
+              "Content": "function startPlaying() {\n    var rikishi = $('#rikishi').val();\n    alert(\"You selected: \" + rikishi);\n}\n\n// Add this line to make this function accessible in other js files\nmodule.exports = { startPlaying };\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_2]",
+              "Type": "javascript",
+              "Content": "global.$ = jest.fn(() => ({\n    val: jest.fn(() => '1')\n}));\n\nconst { startPlaying } = require('./game');\n\ntest('check if startPlaying is defined and returns expected value', () => {\n    const result = startPlaying();\n    expect(result).toBe(\"You selected: 1\");\n});\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_3]",
+              "Type": "shell",
+              "Content": "npm install --save-dev jest jsdom\n"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "content": {
+      "ID": 89,
+      "source_type": "pull request",
+      "Author": "bsmth",
+      "SourceURL": "https://chat.openai.com/share/67f598d7-89c2-491a-9a7b-a027120e6acf",
+      "RepoName": "mdn/content",
+      "Title": "chore(CI): disable prettier check on pull requests",
+      "Body": "Disabling the Prettier check on pull requests due to some speedbumps in reviewing\r\n\r\n### Motivation\r\n\r\nWe have some contributors hitting this which is causing some friction, particularly on PRs opened from GitHub's UI. There is no option to [downgrade the errors to warnings](https://prettier.io/docs/en/cli.html#exit-codes) that I'm aware of.\r\n\r\n### Additional details\r\n\r\nWe <strike>may want to instead</strike> already have this scheduled auto fix PR run Prettier instead:\r\n\r\nhttps://github.com/mdn/content/blob/main/.github/workflows/markdown-lint-fix.yml#L30 \r\n\r\ni.e.:\r\n\r\n```yaml\r\n      - name: Lint markdown files\r\n        run: |\r\n          yarn fix:md\r\n          yarn fix:fm\r\n```\r\n\r\nhttps://github.com/mdn/content/blob/main/package.json#L17\r\n\r\n\r\n### Related issues and pull requests\r\n\r\n* PR that introduced this check https://github.com/mdn/content/pull/20674\r\n* https://github.com/mdn/content/pull/26888\r\n* https://github.com/mdn/content/pull/27017\r\n",
+      "State": "MERGED",
+      "NumberOfPrompts": 1,
+      "gpt_model_version": "Default (GPT-3.5)",
+      "Conversation": [
+        {
+          "Prompt": "How to program a GitHub bot that reacts to \"/format\" messages on a PR by checking out the PR branch, running `prettier -w` and committing and pushing the changes?",
+          "Answer": "ChatGPTTo program a GitHub bot that reacts to \"/format\" messages on a Pull Request (PR) and performs the specified actions, you can follow these steps:Set up a GitHub App:Go to the GitHub Developer settings and create a new GitHub App.Specify the necessary details for your app, such as the name, description, and homepage URL.Configure the app permissions to have access to the repositories where you want the bot to operate.Generate a private key for your GitHub App.Create a new repository for your bot code:Initialize a new Git repository on your local machine.Create a new directory for your bot code and navigate to it.Initialize the directory as a new Git repository using git init.Create a new file, e.g., bot.js, and open it in your preferred code editor.Install the required dependencies:Initialize a new Node.js project using npm init.Install the probot framework, which provides tools and utilities for building GitHub Apps:[CODE_BLOCK_0]Implement the bot logic:In the bot.js file, import the necessary modules and create a new Probot app:[CODE_BLOCK_1]Create an event listener that triggers when a comment is created on a PR:[CODE_BLOCK_2]Start the Probot app:[CODE_BLOCK_3]Set up the bot on GitHub:Commit and push your code to the repository you created for your bot.Deploy your bot code to a server or use a cloud-based solution.Register your bot as a GitHub App by providing the necessary details.Install the bot app on the repositories where you want it to operate.Once the bot is installed on the repositories, it will listen for new comments on PRs. When a comment with the \"/format\" message is created, the",
+          "ListOfCode": [
+            {
+              "ReplaceString": "[CODE_BLOCK_0]",
+              "Type": null,
+              "Content": "npm install probot\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_1]",
+              "Type": "javascript",
+              "Content": "const { Probot } = require('probot');\nconst exec = require('child_process').exec;\n\nconst app = new Probot();\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_2]",
+              "Type": "javascript",
+              "Content": "app.on('issue_comment.created', async (context) => {\n  const { comment, issue, repository } = context.payload;\n\n  if (issue.pull_request && comment.body.trim() === '/format') {\n    const { head } = issue.pull_request;\n    const cloneUrl = repository.clone_url;\n    const branchName = head.ref;\n\n    // Clone the repository\n    exec(`git clone ${cloneUrl}`, (err, stdout, stderr) => {\n      if (err) {\n        console.error(err);\n        return;\n      }\n\n      // Change to the cloned repository's directory\n      const repoDir = `${branchName}`;\n      process.chdir(repoDir);\n\n      // Checkout the PR branch\n      exec(`git checkout ${branchName}`, (err, stdout, stderr) => {\n        if (err) {\n          console.error(err);\n          return;\n        }\n\n        // Run prettier\n        exec('prettier -w', (err, stdout, stderr) => {\n          if (err) {\n            console.error(err);\n            return;\n          }\n\n          // Commit and push the changes\n          exec('git commit -a -m \"Format code\"', (err, stdout, stderr) => {\n            if (err) {\n              console.error(err);\n              return;\n            }\n\n            exec(`git push origin ${branchName}`, (err, stdout, stderr) => {\n              if (err) {\n                console.error(err);\n                return;\n              }\n\n              console.log('Code formatted and pushed.');\n            });\n          });\n        });\n      });\n    });\n  }\n});\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_3]",
+              "Type": "javascript",
+              "Content": "app.start();\n"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "content": {
+      "ID": 90,
+      "source_type": "pull request",
+      "Author": "bsmth",
+      "SourceURL": "https://chat.openai.com/share/67f598d7-89c2-491a-9a7b-a027120e6acf",
+      "RepoName": "mdn/content",
+      "Title": "chore(CI): disable prettier check on pull requests",
+      "Body": "Disabling the Prettier check on pull requests due to some speedbumps in reviewing\r\n\r\n### Motivation\r\n\r\nWe have some contributors hitting this which is causing some friction, particularly on PRs opened from GitHub's UI. There is no option to [downgrade the errors to warnings](https://prettier.io/docs/en/cli.html#exit-codes) that I'm aware of.\r\n\r\n### Additional details\r\n\r\nWe <strike>may want to instead</strike> already have this scheduled auto fix PR run Prettier instead:\r\n\r\nhttps://github.com/mdn/content/blob/main/.github/workflows/markdown-lint-fix.yml#L30 \r\n\r\ni.e.:\r\n\r\n```yaml\r\n      - name: Lint markdown files\r\n        run: |\r\n          yarn fix:md\r\n          yarn fix:fm\r\n```\r\n\r\nhttps://github.com/mdn/content/blob/main/package.json#L17\r\n\r\n\r\n### Related issues and pull requests\r\n\r\n* PR that introduced this check https://github.com/mdn/content/pull/20674\r\n* https://github.com/mdn/content/pull/26888\r\n* https://github.com/mdn/content/pull/27017\r\n",
+      "State": "MERGED",
+      "NumberOfPrompts": 1,
+      "gpt_model_version": "Default (GPT-3.5)",
+      "Conversation": [
+        {
+          "Prompt": "How to program a GitHub bot that reacts to \"/format\" messages on a PR by checking out the PR branch, running `prettier -w` and committing and pushing the changes?",
+          "Answer": "ChatGPTTo program a GitHub bot that reacts to \"/format\" messages on a Pull Request (PR) and performs the specified actions, you can follow these steps:Set up a GitHub App:Go to the GitHub Developer settings and create a new GitHub App.Specify the necessary details for your app, such as the name, description, and homepage URL.Configure the app permissions to have access to the repositories where you want the bot to operate.Generate a private key for your GitHub App.Create a new repository for your bot code:Initialize a new Git repository on your local machine.Create a new directory for your bot code and navigate to it.Initialize the directory as a new Git repository using git init.Create a new file, e.g., bot.js, and open it in your preferred code editor.Install the required dependencies:Initialize a new Node.js project using npm init.Install the probot framework, which provides tools and utilities for building GitHub Apps:[CODE_BLOCK_0]Implement the bot logic:In the bot.js file, import the necessary modules and create a new Probot app:[CODE_BLOCK_1]Create an event listener that triggers when a comment is created on a PR:[CODE_BLOCK_2]Start the Probot app:[CODE_BLOCK_3]Set up the bot on GitHub:Commit and push your code to the repository you created for your bot.Deploy your bot code to a server or use a cloud-based solution.Register your bot as a GitHub App by providing the necessary details.Install the bot app on the repositories where you want it to operate.Once the bot is installed on the repositories, it will listen for new comments on PRs. When a comment with the \"/format\" message is created, the",
+          "ListOfCode": [
+            {
+              "ReplaceString": "[CODE_BLOCK_0]",
+              "Type": null,
+              "Content": "npm install probot\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_1]",
+              "Type": "javascript",
+              "Content": "const { Probot } = require('probot');\nconst exec = require('child_process').exec;\n\nconst app = new Probot();\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_2]",
+              "Type": "javascript",
+              "Content": "app.on('issue_comment.created', async (context) => {\n  const { comment, issue, repository } = context.payload;\n\n  if (issue.pull_request && comment.body.trim() === '/format') {\n    const { head } = issue.pull_request;\n    const cloneUrl = repository.clone_url;\n    const branchName = head.ref;\n\n    // Clone the repository\n    exec(`git clone ${cloneUrl}`, (err, stdout, stderr) => {\n      if (err) {\n        console.error(err);\n        return;\n      }\n\n      // Change to the cloned repository's directory\n      const repoDir = `${branchName}`;\n      process.chdir(repoDir);\n\n      // Checkout the PR branch\n      exec(`git checkout ${branchName}`, (err, stdout, stderr) => {\n        if (err) {\n          console.error(err);\n          return;\n        }\n\n        // Run prettier\n        exec('prettier -w', (err, stdout, stderr) => {\n          if (err) {\n            console.error(err);\n            return;\n          }\n\n          // Commit and push the changes\n          exec('git commit -a -m \"Format code\"', (err, stdout, stderr) => {\n            if (err) {\n              console.error(err);\n              return;\n            }\n\n            exec(`git push origin ${branchName}`, (err, stdout, stderr) => {\n              if (err) {\n                console.error(err);\n                return;\n              }\n\n              console.log('Code formatted and pushed.');\n            });\n          });\n        });\n      });\n    });\n  }\n});\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_3]",
+              "Type": "javascript",
+              "Content": "app.start();\n"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "content": {
+      "ID": 95,
       "source_type": "pull request",
       "Author": "josecelano",
       "SourceURL": "https://chat.openai.com/share/99d2ebdc-613c-4a84-8281-bfc2fe82bc14",
@@ -514,7 +746,7 @@
   },
   {
     "content": {
-      "ID": 40,
+      "ID": 98,
       "source_type": "pull request",
       "Author": "hoshotakamoto",
       "SourceURL": "https://chat.openai.com/share/b57df6eb-4eea-4466-8fdc-e4e7431313d8",

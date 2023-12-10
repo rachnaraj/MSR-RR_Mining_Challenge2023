@@ -33,7 +33,7 @@
   },
   {
     "content": {
-      "ID": 6,
+      "ID": 9,
       "source_type": "issue",
       "Author": "ariel1985",
       "SourceURL": "https://chat.openai.com/share/e5079f09-2835-4952-a0e6-b1b26823b7e0",
@@ -75,7 +75,7 @@
   },
   {
     "content": {
-      "ID": 8,
+      "ID": 17,
       "source_type": "issue",
       "Author": "michael-navazhylau-vu",
       "SourceURL": "https://chat.openai.com/share/3206c648-1ee9-449f-ab38-96e68501096b",
@@ -102,7 +102,7 @@
   },
   {
     "content": {
-      "ID": 25,
+      "ID": 43,
       "source_type": "issue",
       "Author": "Takuzen",
       "SourceURL": "https://chat.openai.com/share/f44fdac2-da91-428b-b0dc-b7dcbcfbb605",
@@ -154,7 +154,39 @@
   },
   {
     "content": {
-      "ID": 31,
+      "ID": 47,
+      "source_type": "issue",
+      "Author": "moom0o",
+      "SourceURL": "https://chat.openai.com/share/0bcad0f9-29fc-4caa-bed5-a8717d4d8808",
+      "RepoName": "moom0o/PhotoSphereStudio",
+      "Title": "Need implementation of writing metadata",
+      "Body": "Google requires at least one or two exif tags to be accepted as a 360 photo.\r\n\r\nI've been able to upload a 360 drone photo just by using\r\n```\r\nPS D:\\cs\\cghgcvfhgfv> .\\exiftool.exe -ProjectionType=equirectangular .\\360.jpg\r\n    1 image files updated\r\nPS D:\\cs\\cghgcvfhgfv> .\\exiftool.exe -UsePanoramaViewer=true .\\360.jpg\r\n    1 image files updated\r\n```\r\n\r\nIt'd be great if someone could find a better way to implement this, ideally client side, otherwise I'm just going to start running shell commands...\r\n\r\n@WinsDominoes @j-calvert Thanks in advance if you are able to find anything.\r\n\r\nMore info: https://developers.google.com/streetview/spherical-metadata",
+      "State": "OPEN",
+      "NumberOfPrompts": 2,
+      "gpt_model_version": "GPT-4",
+      "Conversation": [
+        {
+          "Prompt": "Is there a way to write exif data to a jpg using javascript.",
+          "Answer": "ChatGPTYes, you can manipulate EXIF data in a JPG file using JavaScript. You need to use a library such as exif-js or piexifjs. Here's an example using the piexifjs library:Firstly, install the library using npm:[CODE_BLOCK_0]And here's an example of how you can use it:[CODE_BLOCK_1]Remember to replace path_to_your_image.jpg and path_to_output_image.jpg with the appropriate paths for your use case.Please note, however, that the above code is designed for server-side use with Node.js. If you need to manipulate EXIF data client-side, for example in a web browser, you will need to work with the File API and ArrayBuffer, and then convert to a Blob for download or upload. Make sure the library you choose is compatible with the environment you're using.",
+          "ListOfCode": [
+            {
+              "ReplaceString": "[CODE_BLOCK_0]",
+              "Type": "bash",
+              "Content": "npm install piexifjs\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_1]",
+              "Type": "javascript",
+              "Content": "const fs = require('fs');\nconst piexif = require(\"piexifjs\");\n\nlet jpeg = fs.readFileSync(\"path_to_your_image.jpg\");\nlet data = jpeg.toString(\"binary\");\n\nlet zeroth = {};\nlet exif = {};\nlet gps = {};\n\nzeroth[piexif.ImageIFD.Make] = \"Canon\";\nexif[piexif.ExifIFD.DateTimeOriginal] = \"2023:07:28 09:00:00\";\ngps[piexif.GPSIFD.GPSVersionID] = [7, 1, 3, 0];\nlet exifObj = {\"0th\":zeroth, \"Exif\":exif, \"GPS\":gps};\n\nlet exifbytes = piexif.dump(exifObj);\ndata = piexif.insert(exifbytes, data);\nlet newData = Buffer.from(data, \"binary\");\n\nfs.writeFileSync(\"path_to_output_image.jpg\", newData);\n"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "content": {
+      "ID": 55,
       "source_type": "issue",
       "Author": "Dawinartor",
       "SourceURL": "https://chat.openai.com/share/cb1578c4-f538-46e4-9f75-f14dabfb6f39",
@@ -207,7 +239,7 @@
   },
   {
     "content": {
-      "ID": 35,
+      "ID": 62,
       "source_type": "issue",
       "Author": "rensanrenren",
       "SourceURL": "https://chat.openai.com/share/f0012281-2068-4927-ae38-dc45a4955fb6",
@@ -780,7 +812,7 @@
   },
   {
     "content": {
-      "ID": 38,
+      "ID": 69,
       "source_type": "issue",
       "Author": "civsiv",
       "SourceURL": "https://chat.openai.com/share/b8e2bc63-1ea1-4503-aa6f-15f668355932",
@@ -837,7 +869,44 @@
   },
   {
     "content": {
-      "ID": 42,
+      "ID": 77,
+      "source_type": "issue",
+      "Author": "niwanowa",
+      "SourceURL": "https://chat.openai.com/share/62824c33-eb32-44c9-89fb-8e85c42749da",
+      "RepoName": "niwanowa/niwanowa-ideas",
+      "Title": "Actions\u3067Issue\u304c\u8ffd\u52a0\u3055\u308c\u308b\u305f\u3073\u306bREADME\u3092\u66f4\u65b0\u3057\u305f\u3044",
+      "Body": "Actions\u3067Issue\u304c\u8ffd\u52a0\u3055\u308c\u308b\u305f\u3073\u306bREADME\u3092\u66f4\u65b0\u3057\u305f\u3044\r\n\r\nIssue\u304c\u66f4\u65b0\u3055\u308c\u308b\u3068Actions\u304c\u52d5\u304d\u3001README\u306bIssue\u306e\u5185\u5bb9\u3092\u8ffd\u52a0\u3057\u305f\u3044\u3002\r\nREADME\u3067\u306fIssue\u306e\u4e00\u89a7\u3092\u8868\u793a\u3059\u308b\u3088\u3046\u306b\u3057\u305f\u3044\u3002",
+      "State": "CLOSED",
+      "NumberOfPrompts": 1,
+      "gpt_model_version": "Default (GPT-3.5)",
+      "Conversation": [
+        {
+          "Prompt": "github\u30a2\u30af\u30b7\u30e7\u30f3\u3092\u7528\u3044\u3066\u3001issue\u304c\u8ffd\u52a0\u3055\u308c\u308b\u305f\u3073\u306bREADME.md\u3092\u66f4\u65b0\u3057\nissue\u306e\u4e00\u89a7\u3092\u8868\u793a\u3055\u305b\u305f\u3044\u3067\u3059\u3002",
+          "Answer": "ChatGPTGitHub Actions\u3092\u4f7f\u7528\u3057\u3066\u3001\u65b0\u3057\u3044Issue\u304c\u8ffd\u52a0\u3055\u308c\u308b\u305f\u3073\u306bREADME.md\u3092\u66f4\u65b0\u3057\u3001Issue\u306e\u4e00\u89a7\u3092\u8868\u793a\u3059\u308b\u306b\u306f\u3001\u4ee5\u4e0b\u306e\u624b\u9806\u3092\u8e0f\u307f\u307e\u3059\u3002\u30ea\u30dd\u30b8\u30c8\u30ea\u5185\u306b.github/workflows\u30c7\u30a3\u30ec\u30af\u30c8\u30ea\u3092\u4f5c\u6210\u3057\u307e\u3059\u3002\u305d\u306e\u30c7\u30a3\u30ec\u30af\u30c8\u30ea\u5185\u306b\u3001\u4f8b\u3048\u3070update_readme.yml\u3068\u3044\u3046\u540d\u524d\u306eYAML\u30d5\u30a1\u30a4\u30eb\u3092\u4f5c\u6210\u3057\u307e\u3059\u3002\u4ee5\u4e0b\u306e\u30b3\u30fc\u30c9\u3092update_readme.yml\u306b\u8ffd\u52a0\u3057\u307e\u3059\u3002[CODE_BLOCK_0]\u30ea\u30dd\u30b8\u30c8\u30ea\u5185\u306bupdate_readme.js\u3068\u3044\u3046\u540d\u524d\u306eNode.js\u30b9\u30af\u30ea\u30d7\u30c8\u3092\u4f5c\u6210\u3057\u307e\u3059\u3002\u4ee5\u4e0b\u306e\u30b3\u30fc\u30c9\u3092update_readme.js\u306b\u8ffd\u52a0\u3057\u307e\u3059\u3002[CODE_BLOCK_1]README.md\u5185\u3067Issue\u306e\u4e00\u89a7\u3092\u8868\u793a\u3055\u305b\u308b\u90e8\u5206\u3092\u4ee5\u4e0b\u306e\u3088\u3046\u306b\u30b3\u30e1\u30f3\u30c8\u3067\u56f2\u307f\u307e\u3059\u3002[CODE_BLOCK_2]\u5909\u66f4\u3092\u30b3\u30df\u30c3\u30c8\u3057\u3001\u30ea\u30dd\u30b8\u30c8\u30ea\u306b\u30d7\u30c3\u30b7\u30e5\u3057\u307e\u3059\u3002\u3053\u308c\u306b\u3088\u308a\u3001\u65b0\u3057\u3044Issue\u304c\u8ffd\u52a0\u3055\u308c\u308b\u305f\u3073\u306b\u3001GitHub Actions\u304c\u30c8\u30ea\u30ac\u30fc\u3055\u308c\u3001update_readme.js\u304c\u5b9f\u884c\u3055\u308c\u3066README.md\u304c\u66f4\u65b0\u3055\u308c\u307e\u3059\u3002\u66f4\u65b0\u3055\u308c\u308b\u90e8\u5206\u306f<!-- ISSUE_LIST_START -->\u304b\u3089<!-- ISSUE_LIST_END -->\u307e\u3067\u306e\u9593\u3067\u3059\u3002\u6ce8\u610f\u4e8b\u9805\uff1a\u3053\u306e\u624b\u6cd5\u306f\u65b0\u3057\u3044Issue\u304c\u4f5c\u6210\u307e\u305f\u306f\u7de8\u96c6\u3055\u308c\u305f\u3068\u304d\u306b\u306e\u307f\u52d5\u4f5c\u3057\u307e\u3059\u3002\u30a4\u30d9\u30f3\u30c8\u30c7\u30fc\u30bf\u304cJSON\u5f62\u5f0f\u3067\u63d0\u4f9b\u3055\u308c\u3001\u30b9\u30af\u30ea\u30d7\u30c8\u5185\u3067process.env.GITHUB_EVENT_PATH\u3092\u4f7f\u7528\u3057\u3066\u3044\u307e\u3059\u3002\u3053\u308c\u306b\u3088\u308a\u3001Issue\u306e\u4e00\u89a7\u304c\u81ea\u52d5\u7684\u306bREADME.md\u306b\u8868\u793a\u3055\u308c\u308b\u3088\u3046\u306b\u306a\u308a\u307e\u3059\u3002",
+          "ListOfCode": [
+            {
+              "ReplaceString": "[CODE_BLOCK_0]",
+              "Type": "yaml",
+              "Content": "name: Update README with Issue List\non:\n  issues:\n    types:\n      - opened\n      - edited\n\njobs:\n  update_readme:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Checkout Repository\n        uses: actions/checkout@v2\n\n      - name: Set up Node.js\n        uses: actions/setup-node@v2\n        with:\n          node-version: '14'\n\n      - name: Install Dependencies\n        run: npm install\n\n      - name: Update README\n        run: node update_readme.js\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_1]",
+              "Type": "javascript",
+              "Content": "const fs = require('fs');\n\nconst issues = JSON.parse(process.env.GITHUB_EVENT_PATH);\n\nlet readmeContent = fs.readFileSync('README.md', 'utf-8');\n\nconst issueList = issues.map(issue => `- [${issue.title}](${issue.html_url})`);\n\nreadmeContent = readmeContent.replace(/<!-- ISSUE_LIST_START -->[\\s\\S]*<!-- ISSUE_LIST_END -->/, `<!-- ISSUE_LIST_START -->\\n${issueList.join('\\n')}\\n<!-- ISSUE_LIST_END -->`);\n\nfs.writeFileSync('README.md', readmeContent);\n\nconsole.log('README.md updated with the latest issues.');\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_2]",
+              "Type": "markdown",
+              "Content": "<!-- ISSUE_LIST_START -->\n<!-- This section will be automatically updated by the GitHub Action -->\n<!-- ISSUE_LIST_END -->\n"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "content": {
+      "ID": 85,
       "source_type": "issue",
       "Author": "liyongsea",
       "SourceURL": "https://chat.openai.com/share/be5a2fa0-b8da-41d5-9e87-8f4beec691e6",
@@ -884,7 +953,7 @@
   },
   {
     "content": {
-      "ID": 43,
+      "ID": 86,
       "source_type": "issue",
       "Author": "CakeCrusher",
       "SourceURL": "https://chat.openai.com/share/cda16915-b97e-48de-836b-62501ab93041",
@@ -1192,7 +1261,7 @@
   },
   {
     "content": {
-      "ID": 48,
+      "ID": 96,
       "source_type": "issue",
       "Author": "ymerkos",
       "SourceURL": "https://chat.openai.com/share/95f63b24-fbfb-4a3c-a179-dd74740658ac",
@@ -1661,7 +1730,7 @@
   },
   {
     "content": {
-      "ID": 50,
+      "ID": 98,
       "source_type": "issue",
       "Author": "CakeCrusher",
       "SourceURL": "https://chat.openai.com/share/0233d7e5-7286-4416-9f51-150c77dafe80",
@@ -1714,7 +1783,7 @@
   },
   {
     "content": {
-      "ID": 56,
+      "ID": 107,
       "source_type": "issue",
       "Author": "Yukizyh",
       "SourceURL": "https://chat.openai.com/share/a9e30c79-f70a-456d-8e54-2ded88bacab0",
@@ -1746,7 +1815,7 @@
   },
   {
     "content": {
-      "ID": 57,
+      "ID": 108,
       "source_type": "issue",
       "Author": "eric-volz",
       "SourceURL": "https://chat.openai.com/share/5aceca75-426a-42e9-bce1-3c90ce467586",
@@ -1778,7 +1847,7 @@
   },
   {
     "content": {
-      "ID": 58,
+      "ID": 109,
       "source_type": "issue",
       "Author": "theoryshaw",
       "SourceURL": "https://chat.openai.com/share/06eddbf4-48c9-4f27-8959-0ddf27da88ef",
@@ -1810,7 +1879,7 @@
   },
   {
     "content": {
-      "ID": 66,
+      "ID": 127,
       "source_type": "issue",
       "Author": "simonw",
       "SourceURL": "https://chat.openai.com/share/b937e7e8-1c09-4c96-be08-27551f70c1f4",
@@ -1852,7 +1921,44 @@
   },
   {
     "content": {
-      "ID": 70,
+      "ID": 132,
+      "source_type": "issue",
+      "Author": "FahimMontasir",
+      "SourceURL": "https://chat.openai.com/share/3b58ad55-add3-43ef-beda-29c2070caf02",
+      "RepoName": "FahimMontasir/english-sphere",
+      "Title": "@server: auth (app & dashboard)",
+      "Body": "move timezone country logic gender detection from app to server\n\n**Secure auth routes with an API key. which will send from the app to the backend using api-key headers. store API key in the app and backend securely.**\n\n\nCheck this express guide: https://expressjs.com/en/advanced/best-practice-security.html#prevent-brute-force-attacks-against-authorization\n\nalso check firebase auth accesstoken to verify its from our app\nread this doc for security: https://stackoverflow.com/questions/64916923/react-native-storing-api-key\nchatGpt guideline: https://chat.openai.com/share/3b58ad55-add3-43ef-beda-29c2070caf02",
+      "State": "CLOSED",
+      "NumberOfPrompts": 1,
+      "gpt_model_version": "Default (GPT-3.5)",
+      "Conversation": [
+        {
+          "Prompt": "how to protect express login/register api. that can only be called  a specific react native app not anywhere else",
+          "Answer": "ChatGPTTo protect your Express login/register API so that it can only be called from a specific React Native app and not from anywhere else, you can implement an authentication mechanism that verifies the origin of the requests. One way to achieve this is by using a combination of the following techniques:API Key or Secret: Embed an API key or secret in your React Native app. This key will be sent along with the API requests as a header or a parameter.Cross-Origin Resource Sharing (CORS): Configure your Express server to only allow requests from specific origins (i.e., your React Native app's domain).User Agent Header: Check the User-Agent header in the API requests to ensure they are originating from your React Native app's user agent.Here's a step-by-step guide on how to implement these techniques:Generate and Embed API Key:Generate a unique API key or secret for your React Native app.Embed this key in your React Native app's code, either in a configuration file or as a constant within the app.Set Up CORS:Install the 'cors' package for Express if you haven't already:[CODE_BLOCK_0]Add the following code to your Express server:[CODE_BLOCK_1]Include API Key in Requests:In your React Native app's code, include the API key or secret in the request headers or parameters when making API calls to your Express server.Check User Agent Header:On the server-side, check the User-Agent header to ensure that requests are coming from your React Native app.[CODE_BLOCK_2]Secure Communication:Consider using HTTPS to secure the communication between your React Native app and the Express server to prevent potential man-in-the-middle attacks.By combining these techniques, you can ensure that your Express login/register API can only be called from your specific React Native app and not from any other origin. However, it's essential to note that no solution is entirely foolproof, and determined attackers might still attempt to mimic your app's behavior. So, while these measures add an extra layer of security, they should be complemented with proper authentication and authorization mechanisms on the server-side to ensure a robust security posture.",
+          "ListOfCode": [
+            {
+              "ReplaceString": "[CODE_BLOCK_0]",
+              "Type": "bash",
+              "Content": "npm install cors\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_1]",
+              "Type": "javascript",
+              "Content": "const express = require('express');\nconst cors = require('cors');\nconst app = express();\n\n// Allow requests from your specific React Native app's domain\nconst allowedOrigins = ['https://your-react-native-app-domain.com'];\napp.use(cors({\n  origin: (origin, callback) => {\n    if (!origin || allowedOrigins.indexOf(origin) !== -1) {\n      callback(null, true);\n    } else {\n      callback(new Error('Not allowed by CORS'));\n    }\n  }\n}));\n\n// ... Other routes and configurations ...\n\n// Start the server\nconst port = 3000; // Replace with your desired port\napp.listen(port, () => {\n  console.log(`Server is running on port ${port}`);\n});\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_2]",
+              "Type": "javascript",
+              "Content": "// Middleware to check User-Agent\nfunction checkUserAgent(req, res, next) {\n  const userAgent = req.get('User-Agent');\n  if (userAgent && userAgent.includes('Your_React_Native_App_User_Agent')) {\n    next();\n  } else {\n    return res.status(403).json({ message: 'Unauthorized request.' });\n  }\n}\n\n// Usage\napp.post('/login', checkUserAgent, (req, res) => {\n  // Your login logic\n});\n\napp.post('/register', checkUserAgent, (req, res) => {\n  // Your register logic\n});\n\n// ... Other routes ...\n"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "content": {
+      "ID": 135,
       "source_type": "issue",
       "Author": "nghiatm341",
       "SourceURL": "https://chat.openai.com/share/25578bff-305b-4427-8798-ec7aa6c3ec06",
@@ -1894,7 +2000,7 @@
   },
   {
     "content": {
-      "ID": 77,
+      "ID": 146,
       "source_type": "issue",
       "Author": "CakeCrusher",
       "SourceURL": "https://chat.openai.com/share/cd181779-6d66-4e6c-9a4c-4bfd25db80b0",
@@ -1947,7 +2053,7 @@
   },
   {
     "content": {
-      "ID": 80,
+      "ID": 149,
       "source_type": "issue",
       "Author": "cdrini",
       "SourceURL": "https://chat.openai.com/share/33867c63-5def-4c0a-9ad0-19317f737515",
@@ -1985,7 +2091,49 @@
   },
   {
     "content": {
-      "ID": 84,
+      "ID": 153,
+      "source_type": "issue",
+      "Author": "tkancf",
+      "SourceURL": "https://chat.openai.com/share/dc10aa3f-d285-497e-bfd2-cce255d8b142",
+      "RepoName": "tkancf/p",
+      "Title": "2023/09\ud83c\udf0d",
+      "Body": "# 2023\u5e749\u6708\u306e\u30e1\u30e2\r\n\r\n\u30e1\u30e2\u3042\u308b\u3044\u306fTwitter",
+      "State": "CLOSED",
+      "NumberOfPrompts": 2,
+      "gpt_model_version": "GPT-4",
+      "Conversation": [
+        {
+          "Prompt": "GitHub isssue\u306e\u30b3\u30e1\u30f3\u30c8\u3092\u53d6\u5f97\u3057\u3066\u8868\u793a\u3059\u308bsveltekit\u306e web\u30a2\u30d7\u30ea\u306e\u30bd\u30fc\u30b9\u30b3\u30fc\u30c9\u3092\u6559\u3048\u3066\u304f\u3060\u3055\u3044",
+          "Answer": "ChatGPTGitHub\u306eIssue\u306e\u30b3\u30e1\u30f3\u30c8\u3092\u53d6\u5f97\u3057\u3066\u8868\u793a\u3059\u308b\u305f\u3081\u306eSvelteKit\u306eWeb\u30a2\u30d7\u30ea\u3092\u4f5c\u6210\u3059\u308b\u624b\u9806\u306f\u4ee5\u4e0b\u306e\u901a\u308a\u3067\u3059\u3002\u3053\u306e\u4f8b\u3067\u306fGitHub\u306e\u516c\u958bAPI\u3092\u4f7f\u7528\u3057\u307e\u3059\u304c\u3001API\u306e\u5229\u7528\u56de\u6570\u306b\u306f\u5236\u9650\u304c\u3042\u308b\u305f\u3081\u3001\u5b9f\u969b\u306e\u5229\u7528\u30b7\u30fc\u30f3\u3067\u983b\u7e41\u306b\u53d6\u5f97\u3059\u308b\u5834\u5408\u306f\u3001\u8a8d\u8a3c\u3084\u30ad\u30e3\u30c3\u30b7\u30e5\u306e\u691c\u8a0e\u304c\u5fc5\u8981\u3067\u3059\u3002\u30bb\u30c3\u30c8\u30a2\u30c3\u30d7:\nSvelteKit\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3092\u65b0\u305f\u306b\u30bb\u30c3\u30c8\u30a2\u30c3\u30d7\u3057\u307e\u3059\u3002[CODE_BLOCK_0]API\u547c\u3073\u51fa\u3057\u95a2\u6570\u306e\u4f5c\u6210:\nsrc/lib \u306b api.js \u3092\u4f5c\u6210\u3057\u307e\u3059\u3002[CODE_BLOCK_1]Svelte\u30b3\u30f3\u30dd\u30fc\u30cd\u30f3\u30c8\u306e\u4f5c\u6210:\nsrc/routes \u306b IssueComments.svelte \u3092\u4f5c\u6210\u3057\u307e\u3059\u3002[CODE_BLOCK_2]\u30a2\u30d7\u30ea\u306e\u8d77\u52d5:[CODE_BLOCK_3]\u3053\u306e\u30b3\u30fc\u30c9\u306f\u30b7\u30f3\u30d7\u30eb\u306a\u4f8b\u3067\u3001\u30a8\u30e9\u30fc\u30cf\u30f3\u30c9\u30ea\u30f3\u30b0\u3084\u30da\u30fc\u30b8\u30cd\u30fc\u30b7\u30e7\u30f3\u3001\u30ad\u30e3\u30c3\u30b7\u30e5\u306a\u3069\u306e\u51e6\u7406\u306f\u7701\u7565\u3057\u3066\u3044\u307e\u3059\u3002\u5b9f\u969b\u306e\u30a2\u30d7\u30ea\u30b1\u30fc\u30b7\u30e7\u30f3\u3067\u306e\u5229\u7528\u3092\u8003\u3048\u308b\u5834\u5408\u3001\u3053\u308c\u3089\u306e\u70b9\u3082\u8003\u616e\u3059\u308b\u5fc5\u8981\u304c\u3042\u308a\u307e\u3059\u3002",
+          "ListOfCode": [
+            {
+              "ReplaceString": "[CODE_BLOCK_0]",
+              "Type": "bash",
+              "Content": "npm init svelte@next my-app\ncd my-app\nnpm install\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_1]",
+              "Type": "javascript",
+              "Content": "// src/lib/api.js\nexport async function getIssueComments(owner, repo, issueNumber) {\n    const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}/comments`);\n    if (!response.ok) {\n        throw new Error('Failed to fetch comments');\n    }\n    return response.json();\n}\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_2]",
+              "Type": "svelte",
+              "Content": "<!-- src/routes/IssueComments.svelte -->\n<script>\n    import { onMount } from 'svelte';\n    import { getIssueComments } from '../lib/api.js';\n    \n    let comments = [];\n    let owner = 'octocat';\n    let repo = 'Hello-World';\n    let issueNumber = 1;\n    \n    onMount(async () => {\n        try {\n            comments = await getIssueComments(owner, repo, issueNumber);\n        } catch (error) {\n            console.error(error);\n        }\n    });\n</script>\n\n<h1>Comments for Issue #{issueNumber} in {owner}/{repo}</h1>\n\n{#if comments.length === 0}\n    <p>Loading...</p>\n{:else}\n    <ul>\n    {#each comments as comment}\n        <li>\n            <strong>{comment.user.login}</strong>: {comment.body}\n        </li>\n    {/each}\n    </ul>\n{/if}\n"
+            },
+            {
+              "ReplaceString": "[CODE_BLOCK_3]",
+              "Type": "bash",
+              "Content": "npm run dev\n"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "content": {
+      "ID": 157,
       "source_type": "issue",
       "Author": "MidoriKami",
       "SourceURL": "https://chat.openai.com/share/d11de125-fb2f-4cc3-940a-fb02f7bfbc71",
