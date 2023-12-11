@@ -1,6 +1,9 @@
 [
   {
     "Contains_version": true,
+    "version_found": [
+      false
+    ],
     "content": {
       "ID": 17,
       "source_type": "issue",
@@ -30,6 +33,9 @@
   },
   {
     "Contains_version": true,
+    "version_found": [
+      "127.0.0"
+    ],
     "content": {
       "ID": 29,
       "source_type": "issue",
@@ -351,6 +357,9 @@
   },
   {
     "Contains_version": true,
+    "version_found": [
+      "127.0.0"
+    ],
     "content": {
       "ID": 30,
       "source_type": "issue",
@@ -672,6 +681,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 32,
       "source_type": "issue",
@@ -927,6 +937,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 62,
       "source_type": "issue",
@@ -1502,6 +1513,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 63,
       "source_type": "issue",
@@ -1577,6 +1589,9 @@
   },
   {
     "Contains_version": true,
+    "version_found": [
+      false
+    ],
     "content": {
       "ID": 69,
       "source_type": "issue",
@@ -1636,6 +1651,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 96,
       "source_type": "issue",
@@ -2107,6 +2123,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 100,
       "source_type": "issue",
@@ -2557,6 +2574,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 118,
       "source_type": "issue",
@@ -3311,6 +3329,9 @@
   },
   {
     "Contains_version": true,
+    "version_found": [
+      false
+    ],
     "content": {
       "ID": 131,
       "source_type": "issue",
@@ -3345,6 +3366,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 137,
       "source_type": "issue",
@@ -3466,6 +3488,9 @@
   },
   {
     "Contains_version": true,
+    "version_found": [
+      false
+    ],
     "content": {
       "ID": 144,
       "source_type": "issue",
@@ -3495,6 +3520,9 @@
   },
   {
     "Contains_version": true,
+    "version_found": [
+      false
+    ],
     "content": {
       "ID": 145,
       "source_type": "issue",
@@ -3524,6 +3552,9 @@
   },
   {
     "Contains_version": true,
+    "version_found": [
+      "1.109.0"
+    ],
     "content": {
       "ID": 174,
       "source_type": "issue",
@@ -3644,6 +3675,9 @@
   },
   {
     "Contains_version": true,
+    "version_found": [
+      "1.109.0"
+    ],
     "content": {
       "ID": 175,
       "source_type": "issue",
@@ -3764,6 +3798,9 @@
   },
   {
     "Contains_version": true,
+    "version_found": [
+      "192.168.1"
+    ],
     "content": {
       "ID": 195,
       "source_type": "issue",

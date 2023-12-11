@@ -24,21 +24,26 @@ def extract_info(file_path):
     
     for entry in data:
         conversations = entry.get('Conversation', [])
-        
+        found = False
         for conversation in conversations:
             # print("entering!!!")
             prompt = conversation.get('Prompt', '')
             answer = conversation.get('Answer', '')
             list_of_code = conversation.get('ListOfCode', [])
-             
+            version_match = []
             if ((capture_version(answer) or capture_version(prompt))):
                 version_obtained = capture_version(answer)
+                version_match.append(version_obtained)
                 print(version_obtained)
-                relevant_data.append({
-                    'Contains_version': True,
-                    'content': entry
-                })
-                break
+                found= True
+               
+        if found:
+            relevant_data.append({
+                'Contains_version': True,
+                'version_found':version_match,
+                'content': entry
+
+            })
 
 
                     

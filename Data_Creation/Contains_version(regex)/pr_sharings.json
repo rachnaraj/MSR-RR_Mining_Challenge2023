@@ -1,6 +1,7 @@
 [
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 11,
       "source_type": "pull request",
@@ -78,6 +79,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 15,
       "source_type": "pull request",
@@ -151,6 +153,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 17,
       "source_type": "pull request",
@@ -424,6 +427,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 30,
       "source_type": "pull request",
@@ -692,6 +696,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 32,
       "source_type": "pull request",
@@ -2968,6 +2973,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 67,
       "source_type": "pull request",
@@ -3050,6 +3056,9 @@
   },
   {
     "Contains_version": true,
+    "version_found": [
+      "1.2.3"
+    ],
     "content": {
       "ID": 75,
       "source_type": "pull request",
@@ -3117,6 +3126,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 77,
       "source_type": "pull request",
@@ -3162,6 +3172,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 86,
       "source_type": "pull request",
@@ -3206,6 +3217,9 @@
   },
   {
     "Contains_version": true,
+    "version_found": [
+      false
+    ],
     "content": {
       "ID": 88,
       "source_type": "pull request",
@@ -3255,6 +3269,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 93,
       "source_type": "pull request",
@@ -3299,6 +3314,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 98,
       "source_type": "pull request",

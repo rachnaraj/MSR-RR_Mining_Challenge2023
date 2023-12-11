@@ -1,6 +1,7 @@
 [
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 1,
       "source_type": "commit",
@@ -69,6 +70,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 20,
       "source_type": "commit",
@@ -149,6 +151,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 26,
       "source_type": "commit",
@@ -359,6 +362,9 @@
   },
   {
     "Contains_version": true,
+    "version_found": [
+      false
+    ],
     "content": {
       "ID": 29,
       "source_type": "commit",
@@ -533,6 +539,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 35,
       "source_type": "commit",
@@ -607,6 +614,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 52,
       "source_type": "commit",
@@ -681,6 +689,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 53,
       "source_type": "commit",
@@ -723,6 +732,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 55,
       "source_type": "commit",
@@ -765,6 +775,9 @@
   },
   {
     "Contains_version": true,
+    "version_found": [
+      false
+    ],
     "content": {
       "ID": 57,
       "source_type": "commit",
@@ -811,6 +824,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 59,
       "source_type": "commit",
@@ -853,6 +867,7 @@
   },
   {
     "Contains_version": true,
+    "version_found": [],
     "content": {
       "ID": 62,
       "source_type": "commit",
