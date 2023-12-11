@@ -2,7 +2,7 @@
   {
     "Contains_version": true,
     "version_found": [
-      false
+      "117.0.0"
     ],
     "content": {
       "ID": 17,
@@ -34,6 +34,10 @@
   {
     "Contains_version": true,
     "version_found": [
+      "127.0.0",
+      "127.0.0",
+      "127.0.0",
+      "127.0.0",
       "127.0.0"
     ],
     "content": {
@@ -358,6 +362,10 @@
   {
     "Contains_version": true,
     "version_found": [
+      "127.0.0",
+      "127.0.0",
+      "127.0.0",
+      "127.0.0",
       "127.0.0"
     ],
     "content": {
@@ -681,7 +689,9 @@
   },
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "4.11.0"
+    ],
     "content": {
       "ID": 32,
       "source_type": "issue",
@@ -937,7 +947,11 @@
   },
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "4.29.2",
+      "0.0.4",
+      "0.0.4"
+    ],
     "content": {
       "ID": 62,
       "source_type": "issue",
@@ -1513,7 +1527,10 @@
   },
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "0.0.0",
+      "0.0.0"
+    ],
     "content": {
       "ID": 63,
       "source_type": "issue",
@@ -1590,7 +1607,7 @@
   {
     "Contains_version": true,
     "version_found": [
-      false
+      "1.0.0"
     ],
     "content": {
       "ID": 69,
@@ -1651,7 +1668,17 @@
   },
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "2.0.1",
+      "2.0.1",
+      "0.0.53",
+      "3.5.1",
+      "4.32.0",
+      "127.0.0",
+      "127.0.0",
+      "127.0.0",
+      "4.32.0"
+    ],
     "content": {
       "ID": 96,
       "source_type": "issue",
@@ -2123,7 +2150,11 @@
   },
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "2.6.2",
+      "127.0.0",
+      "127.0.0"
+    ],
     "content": {
       "ID": 100,
       "source_type": "issue",
@@ -2574,7 +2605,16 @@
   },
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "5.2.2",
+      "2022.3.1",
+      "2022.3.1",
+      "9.0.1",
+      "8.4.0",
+      "1.21.6",
+      "2022.3.1",
+      "1.20.3"
+    ],
     "content": {
       "ID": 118,
       "source_type": "issue",
@@ -3330,7 +3370,7 @@
   {
     "Contains_version": true,
     "version_found": [
-      false
+      "0.0.1"
     ],
     "content": {
       "ID": 131,
@@ -3366,7 +3406,10 @@
   },
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "3.0.2",
+      "3.1.0"
+    ],
     "content": {
       "ID": 137,
       "source_type": "issue",
@@ -3489,7 +3532,7 @@
   {
     "Contains_version": true,
     "version_found": [
-      false
+      "0.0.0"
     ],
     "content": {
       "ID": 144,
@@ -3521,7 +3564,7 @@
   {
     "Contains_version": true,
     "version_found": [
-      false
+      "0.0.0"
     ],
     "content": {
       "ID": 145,
@@ -3799,6 +3842,18 @@
   {
     "Contains_version": true,
     "version_found": [
+      "192.0.2",
+      "0.0.0",
+      "192.0.2",
+      "0.0.0",
+      "0.0.0",
+      "192.0.2",
+      "192.168.1",
+      "192.168.1",
+      "192.168.1",
+      "192.168.1",
+      "192.168.1",
+      "0.0.0",
       "192.168.1"
     ],
     "content": {

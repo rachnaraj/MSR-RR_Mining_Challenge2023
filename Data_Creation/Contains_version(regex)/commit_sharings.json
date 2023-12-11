@@ -1,7 +1,9 @@
 [
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "13.2.0"
+    ],
     "content": {
       "ID": 1,
       "source_type": "commit",
@@ -70,7 +72,9 @@
   },
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "7.5.0"
+    ],
     "content": {
       "ID": 20,
       "source_type": "commit",
@@ -151,7 +155,9 @@
   },
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "16.10.2"
+    ],
     "content": {
       "ID": 26,
       "source_type": "commit",
@@ -363,7 +369,9 @@
   {
     "Contains_version": true,
     "version_found": [
-      false
+      "0.0.1",
+      "^10.4.14",
+      "18.5.0"
     ],
     "content": {
       "ID": 29,
@@ -539,7 +547,9 @@
   },
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "18.5.0"
+    ],
     "content": {
       "ID": 35,
       "source_type": "commit",
@@ -614,7 +624,9 @@
   },
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "3.5.1"
+    ],
     "content": {
       "ID": 52,
       "source_type": "commit",
@@ -689,7 +701,9 @@
   },
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "3.5.1"
+    ],
     "content": {
       "ID": 53,
       "source_type": "commit",
@@ -732,7 +746,9 @@
   },
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "3.5.1"
+    ],
     "content": {
       "ID": 55,
       "source_type": "commit",
@@ -776,7 +792,7 @@
   {
     "Contains_version": true,
     "version_found": [
-      false
+      "3.5.1"
     ],
     "content": {
       "ID": 57,
@@ -824,7 +840,9 @@
   },
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "3.5.1"
+    ],
     "content": {
       "ID": 59,
       "source_type": "commit",
@@ -867,7 +885,12 @@
   },
   {
     "Contains_version": true,
-    "version_found": [],
+    "version_found": [
+      "3.5.1",
+      "1.0.0",
+      "1.0.0",
+      "1.0.0"
+    ],
     "content": {
       "ID": 62,
       "source_type": "commit",

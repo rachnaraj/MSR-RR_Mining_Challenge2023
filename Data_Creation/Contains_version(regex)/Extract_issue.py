@@ -19,7 +19,7 @@ def capture_version(input_text):
 def extract_info(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         data = json.load(file)
-
+    
     relevant_data = []
     
     for entry in data:
@@ -31,11 +31,19 @@ def extract_info(file_path):
             prompt = conversation.get('Prompt', '')
             answer = conversation.get('Answer', '')
             list_of_code = conversation.get('ListOfCode', [])
+            
             if ((capture_version(answer) or capture_version(prompt))):
                 version_obtained = capture_version(answer)
-                version_match.append(version_obtained)
-                print(version_obtained)
-                found= True
+                version_obtained_1 = capture_version(prompt)
+                if version_obtained:
+                    found= True
+                    version_match.append(version_obtained)
+                elif version_obtained_1:
+                    found= True
+                    version_match.append(version_obtained_1)
+                print(version_match)
+                
+                
                
         if found:
             relevant_data.append({
@@ -49,6 +57,7 @@ def extract_info(file_path):
                     
             # print(relevant_data)
     return relevant_data
+
 
 
 
