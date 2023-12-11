@@ -23,6 +23,7 @@ def extract_info(file_path):
     relevant_data = []
     
     for entry in data:
+        version_match = []
         conversations = entry.get('Conversation', [])
         found = False
         for conversation in conversations:
@@ -30,7 +31,6 @@ def extract_info(file_path):
             prompt = conversation.get('Prompt', '')
             answer = conversation.get('Answer', '')
             list_of_code = conversation.get('ListOfCode', [])
-            version_match = []
             if ((capture_version(answer) or capture_version(prompt))):
                 version_obtained = capture_version(answer)
                 version_match.append(version_obtained)
