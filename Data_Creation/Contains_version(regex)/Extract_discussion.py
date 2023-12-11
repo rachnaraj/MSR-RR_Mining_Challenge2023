@@ -3,7 +3,7 @@ import re
 import os
 
 def capture_version(input_text):
-    pattern = r'"(\d+\.\d+\.\d+(?:[^"]*\\)?)\"'  # For versions within double quotes
+    pattern = r"'?(\d{2}\.\d+\.\d+)'?"   # For versions within double quotes
     match = re.search(pattern, input_text)
     
     if match:
