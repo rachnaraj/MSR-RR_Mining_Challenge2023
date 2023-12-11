@@ -44,7 +44,7 @@ def extract_info(file_path):
             answer = conversation.get('Answer', '')
             list_of_code = conversation.get('ListOfCode', [])
              
-            if (re.search(r'\bversion\b',answer) or re.search(r'\bversion\b', answer)):
+            if (re.search(r'\bversion\b',answer) or re.search(r'\bversion\b', prompt)):
                 print("yes!!")
                 
                 if ((capture_version(answer) or capture_version(prompt))):

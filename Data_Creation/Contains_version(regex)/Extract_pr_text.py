@@ -46,7 +46,7 @@ def extract_info(file_path):
              
             if re.search(r'\bversion\b',answer):
                 # print("yes!!")
-                if (re.search(r'\bversion\b', answer) or re.search(r'\bversion\b', answer)):
+                if (re.search(r'\bversion\b', answer) or re.search(r'\bversion\b', prompt)):
                     if ((capture_version(answer) or capture_version(prompt))):
                         version_obtained = capture_version(answer)
                         print(version_obtained)

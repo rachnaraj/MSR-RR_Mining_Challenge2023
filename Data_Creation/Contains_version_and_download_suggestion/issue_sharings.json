@@ -1,13 +1,14 @@
 [
   {
     "content": {
-      "ID": 8,
+      "ID": 17,
       "source_type": "issue",
       "Author": "michael-navazhylau-vu",
       "SourceURL": "https://chat.openai.com/share/3206c648-1ee9-449f-ab38-96e68501096b",
       "RepoName": "VU-Code-For-Good/farmersmarkets-for-all",
       "Title": "[FEATURE REQUEST] Your Feature Title",
       "Body": "https://chat.openai.com/share/3206c648-1ee9-449f-ab38-96e68501096b\r\n\r\nScrape data into the backend from this link:\r\nwww.usdalocalfoodportal.com",
+      "issueURL": "https://github.com/VU-Code-For-Good/farmersmarkets-for-all/issues/82",
       "State": "OPEN",
       "NumberOfPrompts": 1,
       "gpt_model_version": "Default (GPT-3.5)",
@@ -28,13 +29,14 @@
   },
   {
     "content": {
-      "ID": 38,
+      "ID": 69,
       "source_type": "issue",
       "Author": "civsiv",
       "SourceURL": "https://chat.openai.com/share/b8e2bc63-1ea1-4503-aa6f-15f668355932",
       "RepoName": "openactive/dataset-utils",
       "Title": "Add tests to https://github.com/openactive/dataset-utils and publish to NPM",
       "Body": "See example tests here: https://chat.openai.com/share/b8e2bc63-1ea1-4503-aa6f-15f668355932",
+      "issueURL": "https://github.com/openactive/dataset-utils/issues/2",
       "State": "CLOSED",
       "NumberOfPrompts": 1,
       "gpt_model_version": "GPT-4",

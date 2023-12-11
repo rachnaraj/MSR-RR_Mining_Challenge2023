@@ -1,0 +1,85 @@
+import json
+import os
+import glob
+import re
+# Global variable for unique ID
+id_counter = 0
+
+def generate_unique_id():
+    global id_counter
+    id_counter += 1
+    return id_counter
+def extract_info(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+        relevant_conversations = []
+        for source in data.get('Sources', []):
+            source_type = source.get('Type', '')
+            Author = source.get('Author', '')
+            RepoName = source.get('RepoName', '')
+            Message = source.get('Message', '')
+            commitURL = source.get('URL','')
+            sha = source.get('SHA', ''),
+            Title = source.get('Title', '')
+
+       
+            
+            
+            for chatgpt_sharing in source.get('ChatgptSharing', []):
+                if chatgpt_sharing.get('Conversations'):
+                    gpt_URL = chatgpt_sharing.get('URL', '')
+                    NumberOfPrompts = chatgpt_sharing.get('NumberOfPrompts', '')
+                    gpt_model_version = chatgpt_sharing.get('Model', '')
+                    for conversation in chatgpt_sharing['Conversations']:
+                        if conversation.get('ListOfCode') != []:
+                            
+                            
+                            unique_id = generate_unique_id()
+                            relevant_conversations.append({
+                                'ID': unique_id,
+                                'source_type': source_type,
+                                'Author': Author,
+                                'SourceURL' : gpt_URL,
+                                'RepoName' : RepoName,
+                                'NumberOfPrompts' : NumberOfPrompts,
+                                'gpt_model_version' : gpt_model_version,
+                                'Message': Message,
+                                'commitURL' : commitURL,
+                                'sha' :sha,
+                                'Title' : Title,
+                                'Conversation':  chatgpt_sharing['Conversations']
+                            })
+                            break
+                            
+    return relevant_conversations
+
+def save_to_json(data, output_folder, filename):
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)  # Create the output folder if it doesn't exist
+
+    output_file_name = f"{filename}_.json"
+    output_file_path = os.path.join(output_folder, output_file_name)
+
+    with open(output_file_path, 'w', encoding='utf-8') as output_json:
+        json.dump(data, output_json, indent=2)
+    
+    print(f"Data saved to {output_file_path}")
+
+# ...
+
+def process_files(output_folder):
+    file_path = r"D:\Me\concordia\Notes\Prof-Diego\MSR-DataChallenge\Implementation\Dataset_v9\DevGPT\snapshot_20231012\20231012_230826_commit_sharings.json"
+   
+    relevant_data = extract_info(file_path)
+    # print("&&&&&&&&&&&&&&&&&&&&&&&&&&" , relevant_data)
+    if relevant_data:
+        print("count is:",len(relevant_data))
+        save_to_json(relevant_data, output_folder, 'commit_sharings')
+    else:
+        print("No relevant data found!")
+    print(f"All files processed.")
+
+
+if __name__ == "__main__":
+    output_folder_path = r'D:\Me\concordia\Notes\Prof-Diego\MSR-DataChallenge\Implementation\git-folder-MSR\MSR-RR_Mining_Challenge2023\Data_Creation\contains_conversations_on_code_general'
+    process_files(output_folder_path)
