@@ -8,6 +8,7 @@
       "RepoName": "maxoja/jampify-core",
       "Title": "[VID] Animated visualiser",
       "Body": "https://chat.openai.com/share/632ba3ef-537d-4048-955c-fd61d77f25c7",
+      "issueURL": "https://github.com/maxoja/jampify-core/issues/69",
       "State": "OPEN",
       "NumberOfPrompts": 1,
       "gpt_model_version": "Default (GPT-3.5)",
@@ -40,6 +41,7 @@
       "RepoName": "ariel1985/aipages",
       "Title": "Before production: rasa URL needs to be a global environment variable",
       "Body": "https://chat.openai.com/share/e5079f09-2835-4952-a0e6-b1b26823b7e0 \n\n",
+      "issueURL": "https://github.com/ariel1985/aipages/issues/4",
       "State": "OPEN",
       "NumberOfPrompts": 1,
       "gpt_model_version": "GPT-4",
@@ -82,6 +84,7 @@
       "RepoName": "VU-Code-For-Good/farmersmarkets-for-all",
       "Title": "[FEATURE REQUEST] Your Feature Title",
       "Body": "https://chat.openai.com/share/3206c648-1ee9-449f-ab38-96e68501096b\r\n\r\nScrape data into the backend from this link:\r\nwww.usdalocalfoodportal.com",
+      "issueURL": "https://github.com/VU-Code-For-Good/farmersmarkets-for-all/issues/82",
       "State": "OPEN",
       "NumberOfPrompts": 1,
       "gpt_model_version": "Default (GPT-3.5)",
@@ -109,6 +112,7 @@
       "RepoName": "Takuzen/notan",
       "Title": "feat: search engine implementation",
       "Body": "leverage Algolia\r\n\r\nhttps://chat.openai.com/share/f44fdac2-da91-428b-b0dc-b7dcbcfbb605\r\nhttps://github.com/algolia/autocomplete\r\nhttps://www.codegrid.net/articles/2019-algolia-1/\r\nhttps://shinodogg.com/2021/11/11/graphql-search-and-indexing-with-algolia/\r\n\r\nGraphQL \r\nhttps://www.engilaboo.com/nextjs-graphql/",
+      "issueURL": "https://github.com/Takuzen/notan/issues/1",
       "State": "OPEN",
       "NumberOfPrompts": 4,
       "gpt_model_version": "Default (GPT-3.5)",
@@ -154,38 +158,6 @@
   },
   {
     "content": {
-      "ID": 47,
-      "source_type": "issue",
-      "Author": "moom0o",
-      "SourceURL": "https://chat.openai.com/share/0bcad0f9-29fc-4caa-bed5-a8717d4d8808",
-      "RepoName": "moom0o/PhotoSphereStudio",
-      "Title": "Need implementation of writing metadata",
-      "Body": "Google requires at least one or two exif tags to be accepted as a 360 photo.\r\n\r\nI've been able to upload a 360 drone photo just by using\r\n```\r\nPS D:\\cs\\cghgcvfhgfv> .\\exiftool.exe -ProjectionType=equirectangular .\\360.jpg\r\n    1 image files updated\r\nPS D:\\cs\\cghgcvfhgfv> .\\exiftool.exe -UsePanoramaViewer=true .\\360.jpg\r\n    1 image files updated\r\n```\r\n\r\nIt'd be great if someone could find a better way to implement this, ideally client side, otherwise I'm just going to start running shell commands...\r\n\r\n@WinsDominoes @j-calvert Thanks in advance if you are able to find anything.\r\n\r\nMore info: https://developers.google.com/streetview/spherical-metadata",
-      "State": "OPEN",
-      "NumberOfPrompts": 2,
-      "gpt_model_version": "GPT-4",
-      "Conversation": [
-        {
-          "Prompt": "Is there a way to write exif data to a jpg using javascript.",
-          "Answer": "ChatGPTYes, you can manipulate EXIF data in a JPG file using JavaScript. You need to use a library such as exif-js or piexifjs. Here's an example using the piexifjs library:Firstly, install the library using npm:[CODE_BLOCK_0]And here's an example of how you can use it:[CODE_BLOCK_1]Remember to replace path_to_your_image.jpg and path_to_output_image.jpg with the appropriate paths for your use case.Please note, however, that the above code is designed for server-side use with Node.js. If you need to manipulate EXIF data client-side, for example in a web browser, you will need to work with the File API and ArrayBuffer, and then convert to a Blob for download or upload. Make sure the library you choose is compatible with the environment you're using.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "bash",
-              "Content": "npm install piexifjs\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "javascript",
-              "Content": "const fs = require('fs');\nconst piexif = require(\"piexifjs\");\n\nlet jpeg = fs.readFileSync(\"path_to_your_image.jpg\");\nlet data = jpeg.toString(\"binary\");\n\nlet zeroth = {};\nlet exif = {};\nlet gps = {};\n\nzeroth[piexif.ImageIFD.Make] = \"Canon\";\nexif[piexif.ExifIFD.DateTimeOriginal] = \"2023:07:28 09:00:00\";\ngps[piexif.GPSIFD.GPSVersionID] = [7, 1, 3, 0];\nlet exifObj = {\"0th\":zeroth, \"Exif\":exif, \"GPS\":gps};\n\nlet exifbytes = piexif.dump(exifObj);\ndata = piexif.insert(exifbytes, data);\nlet newData = Buffer.from(data, \"binary\");\n\nfs.writeFileSync(\"path_to_output_image.jpg\", newData);\n"
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "content": {
       "ID": 55,
       "source_type": "issue",
       "Author": "Dawinartor",
@@ -193,6 +165,7 @@
       "RepoName": "Xenon2k7/dlr23",
       "Title": "Setup CesiumJS core application",
       "Body": "",
+      "issueURL": "https://github.com/Xenon2k7/dlr23/issues/2",
       "State": "OPEN",
       "NumberOfPrompts": 3,
       "gpt_model_version": "Plugins",
@@ -246,6 +219,7 @@
       "RepoName": "Ratescale/Satellite-Instrument-Info-Manager",
       "Title": "\u30c7\u30fc\u30bf\u53ce\u96c6\u3068\u7ba1\u7406\u306e\u4ed5\u7d44\u307f\u306e\u69cb\u7bc9",
       "Body": "## \u30c7\u30fc\u30bf\u53ce\u96c6\u3068\u7ba1\u7406\u306e\u4ed5\u7d44\u307f\u306e\u69cb\u7bc9\r\n\r\n1. **\u30c7\u30fc\u30bf\u53ce\u96c6\u30b9\u30af\u30ea\u30d7\u30c8\u306e\u4f5c\u6210**\r\n\r\n    - \u307e\u305a\u3001\u975e\u69cb\u9020\u5316\u30c6\u30ad\u30b9\u30c8\u304b\u3089\u885b\u661f\u3068\u8a08\u6e2c\u5668\u5177\u306e\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u62bd\u51fa\u3059\u308b\u30b9\u30af\u30ea\u30d7\u30c8\u3092\u4f5c\u6210\u3057\u307e\u3059\u3002\u3053\u306e\u30b9\u30af\u30ea\u30d7\u30c8\u306f\u3001\u5165\u529b\u3068\u3057\u3066\u975e\u69cb\u9020\u5316\u30c6\u30ad\u30b9\u30c8\uff08\u4f8b\u3048\u3070\u3001\u30cb\u30e5\u30fc\u30b9\u8a18\u4e8b\u3084\u30ec\u30dd\u30fc\u30c8\uff09\u3092\u53d7\u3051\u53d6\u308a\u3001\u305d\u306e\u30c6\u30ad\u30b9\u30c8\u3092\u300csatellite-instrument-roberta-NER\u300d\u307e\u305f\u306f\u300csatellite-instrument-bert-NER\u300d\u30e2\u30c7\u30eb\u306b\u6e21\u3057\u307e\u3059\u3002\u305d\u3057\u3066\u3001\u30e2\u30c7\u30eb\u306e\u51fa\u529b\uff08\u3064\u307e\u308a\u3001\u691c\u51fa\u3055\u308c\u305f\u885b\u661f\u3068\u8a08\u6e2c\u5668\u5177\u306e\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\uff09\u3092\u53ce\u96c6\u3057\u307e\u3059\u3002\r\n\r\n2. **\u30c7\u30fc\u30bf\u7ba1\u7406\u30b9\u30af\u30ea\u30d7\u30c8\u306e\u4f5c\u6210**\r\n\r\n    - \u6b21\u306b\u3001\u53ce\u96c6\u3057\u305f\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u6574\u7406\u3057\u3001\u5fc5\u8981\u306b\u5fdc\u3058\u3066\u66f4\u65b0\u3001\u524a\u9664\u3001\u691c\u7d22\u3067\u304d\u308b\u3088\u3046\u306b\u3059\u308b\u30b9\u30af\u30ea\u30d7\u30c8\u3092\u4f5c\u6210\u3057\u307e\u3059\u3002\u3053\u306e\u30b9\u30af\u30ea\u30d7\u30c8\u306f\u3001\u30c7\u30fc\u30bf\u30d9\u30fc\u30b9\u3084\u30d5\u30a1\u30a4\u30eb\u30b7\u30b9\u30c6\u30e0\u306a\u3069\u3092\u4f7f\u7528\u3057\u3066\u3001\u30a8\u30f3\u30c6\u30a3\u30c6\u30a3\u3092\u52b9\u7387\u7684\u306b\u7ba1\u7406\u3057\u307e\u3059\u3002\r\n\r\n",
+      "issueURL": "https://github.com/Ratescale/Satellite-Instrument-Info-Manager/issues/2",
       "State": "OPEN",
       "NumberOfPrompts": 51,
       "gpt_model_version": "Default (GPT-3.5)",
@@ -819,6 +793,7 @@
       "RepoName": "openactive/dataset-utils",
       "Title": "Add tests to https://github.com/openactive/dataset-utils and publish to NPM",
       "Body": "See example tests here: https://chat.openai.com/share/b8e2bc63-1ea1-4503-aa6f-15f668355932",
+      "issueURL": "https://github.com/openactive/dataset-utils/issues/2",
       "State": "CLOSED",
       "NumberOfPrompts": 1,
       "gpt_model_version": "GPT-4",
@@ -869,43 +844,6 @@
   },
   {
     "content": {
-      "ID": 77,
-      "source_type": "issue",
-      "Author": "niwanowa",
-      "SourceURL": "https://chat.openai.com/share/62824c33-eb32-44c9-89fb-8e85c42749da",
-      "RepoName": "niwanowa/niwanowa-ideas",
-      "Title": "Actions\u3067Issue\u304c\u8ffd\u52a0\u3055\u308c\u308b\u305f\u3073\u306bREADME\u3092\u66f4\u65b0\u3057\u305f\u3044",
-      "Body": "Actions\u3067Issue\u304c\u8ffd\u52a0\u3055\u308c\u308b\u305f\u3073\u306bREADME\u3092\u66f4\u65b0\u3057\u305f\u3044\r\n\r\nIssue\u304c\u66f4\u65b0\u3055\u308c\u308b\u3068Actions\u304c\u52d5\u304d\u3001README\u306bIssue\u306e\u5185\u5bb9\u3092\u8ffd\u52a0\u3057\u305f\u3044\u3002\r\nREADME\u3067\u306fIssue\u306e\u4e00\u89a7\u3092\u8868\u793a\u3059\u308b\u3088\u3046\u306b\u3057\u305f\u3044\u3002",
-      "State": "CLOSED",
-      "NumberOfPrompts": 1,
-      "gpt_model_version": "Default (GPT-3.5)",
-      "Conversation": [
-        {
-          "Prompt": "github\u30a2\u30af\u30b7\u30e7\u30f3\u3092\u7528\u3044\u3066\u3001issue\u304c\u8ffd\u52a0\u3055\u308c\u308b\u305f\u3073\u306bREADME.md\u3092\u66f4\u65b0\u3057\nissue\u306e\u4e00\u89a7\u3092\u8868\u793a\u3055\u305b\u305f\u3044\u3067\u3059\u3002",
-          "Answer": "ChatGPTGitHub Actions\u3092\u4f7f\u7528\u3057\u3066\u3001\u65b0\u3057\u3044Issue\u304c\u8ffd\u52a0\u3055\u308c\u308b\u305f\u3073\u306bREADME.md\u3092\u66f4\u65b0\u3057\u3001Issue\u306e\u4e00\u89a7\u3092\u8868\u793a\u3059\u308b\u306b\u306f\u3001\u4ee5\u4e0b\u306e\u624b\u9806\u3092\u8e0f\u307f\u307e\u3059\u3002\u30ea\u30dd\u30b8\u30c8\u30ea\u5185\u306b.github/workflows\u30c7\u30a3\u30ec\u30af\u30c8\u30ea\u3092\u4f5c\u6210\u3057\u307e\u3059\u3002\u305d\u306e\u30c7\u30a3\u30ec\u30af\u30c8\u30ea\u5185\u306b\u3001\u4f8b\u3048\u3070update_readme.yml\u3068\u3044\u3046\u540d\u524d\u306eYAML\u30d5\u30a1\u30a4\u30eb\u3092\u4f5c\u6210\u3057\u307e\u3059\u3002\u4ee5\u4e0b\u306e\u30b3\u30fc\u30c9\u3092update_readme.yml\u306b\u8ffd\u52a0\u3057\u307e\u3059\u3002[CODE_BLOCK_0]\u30ea\u30dd\u30b8\u30c8\u30ea\u5185\u306bupdate_readme.js\u3068\u3044\u3046\u540d\u524d\u306eNode.js\u30b9\u30af\u30ea\u30d7\u30c8\u3092\u4f5c\u6210\u3057\u307e\u3059\u3002\u4ee5\u4e0b\u306e\u30b3\u30fc\u30c9\u3092update_readme.js\u306b\u8ffd\u52a0\u3057\u307e\u3059\u3002[CODE_BLOCK_1]README.md\u5185\u3067Issue\u306e\u4e00\u89a7\u3092\u8868\u793a\u3055\u305b\u308b\u90e8\u5206\u3092\u4ee5\u4e0b\u306e\u3088\u3046\u306b\u30b3\u30e1\u30f3\u30c8\u3067\u56f2\u307f\u307e\u3059\u3002[CODE_BLOCK_2]\u5909\u66f4\u3092\u30b3\u30df\u30c3\u30c8\u3057\u3001\u30ea\u30dd\u30b8\u30c8\u30ea\u306b\u30d7\u30c3\u30b7\u30e5\u3057\u307e\u3059\u3002\u3053\u308c\u306b\u3088\u308a\u3001\u65b0\u3057\u3044Issue\u304c\u8ffd\u52a0\u3055\u308c\u308b\u305f\u3073\u306b\u3001GitHub Actions\u304c\u30c8\u30ea\u30ac\u30fc\u3055\u308c\u3001update_readme.js\u304c\u5b9f\u884c\u3055\u308c\u3066README.md\u304c\u66f4\u65b0\u3055\u308c\u307e\u3059\u3002\u66f4\u65b0\u3055\u308c\u308b\u90e8\u5206\u306f<!-- ISSUE_LIST_START -->\u304b\u3089<!-- ISSUE_LIST_END -->\u307e\u3067\u306e\u9593\u3067\u3059\u3002\u6ce8\u610f\u4e8b\u9805\uff1a\u3053\u306e\u624b\u6cd5\u306f\u65b0\u3057\u3044Issue\u304c\u4f5c\u6210\u307e\u305f\u306f\u7de8\u96c6\u3055\u308c\u305f\u3068\u304d\u306b\u306e\u307f\u52d5\u4f5c\u3057\u307e\u3059\u3002\u30a4\u30d9\u30f3\u30c8\u30c7\u30fc\u30bf\u304cJSON\u5f62\u5f0f\u3067\u63d0\u4f9b\u3055\u308c\u3001\u30b9\u30af\u30ea\u30d7\u30c8\u5185\u3067process.env.GITHUB_EVENT_PATH\u3092\u4f7f\u7528\u3057\u3066\u3044\u307e\u3059\u3002\u3053\u308c\u306b\u3088\u308a\u3001Issue\u306e\u4e00\u89a7\u304c\u81ea\u52d5\u7684\u306bREADME.md\u306b\u8868\u793a\u3055\u308c\u308b\u3088\u3046\u306b\u306a\u308a\u307e\u3059\u3002",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "yaml",
-              "Content": "name: Update README with Issue List\non:\n  issues:\n    types:\n      - opened\n      - edited\n\njobs:\n  update_readme:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Checkout Repository\n        uses: actions/checkout@v2\n\n      - name: Set up Node.js\n        uses: actions/setup-node@v2\n        with:\n          node-version: '14'\n\n      - name: Install Dependencies\n        run: npm install\n\n      - name: Update README\n        run: node update_readme.js\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "javascript",
-              "Content": "const fs = require('fs');\n\nconst issues = JSON.parse(process.env.GITHUB_EVENT_PATH);\n\nlet readmeContent = fs.readFileSync('README.md', 'utf-8');\n\nconst issueList = issues.map(issue => `- [${issue.title}](${issue.html_url})`);\n\nreadmeContent = readmeContent.replace(/<!-- ISSUE_LIST_START -->[\\s\\S]*<!-- ISSUE_LIST_END -->/, `<!-- ISSUE_LIST_START -->\\n${issueList.join('\\n')}\\n<!-- ISSUE_LIST_END -->`);\n\nfs.writeFileSync('README.md', readmeContent);\n\nconsole.log('README.md updated with the latest issues.');\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_2]",
-              "Type": "markdown",
-              "Content": "<!-- ISSUE_LIST_START -->\n<!-- This section will be automatically updated by the GitHub Action -->\n<!-- ISSUE_LIST_END -->\n"
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "content": {
       "ID": 85,
       "source_type": "issue",
       "Author": "liyongsea",
@@ -913,6 +851,7 @@
       "RepoName": "liyongsea/parallel_corpus_mnbvc",
       "Title": "\u628amnbvc\u505a\u6210\u4e00\u4e2a\u53ef\u4ee5\u7528pip install \u7684\u5f62\u5f0f",
       "Body": "https://chat.openai.com/share/be5a2fa0-b8da-41d5-9e87-8f4beec691e6",
+      "issueURL": "https://github.com/liyongsea/parallel_corpus_mnbvc/issues/45",
       "State": "CLOSED",
       "NumberOfPrompts": 1,
       "gpt_model_version": "Default (GPT-3.5)",
@@ -953,314 +892,6 @@
   },
   {
     "content": {
-      "ID": 86,
-      "source_type": "issue",
-      "Author": "CakeCrusher",
-      "SourceURL": "https://chat.openai.com/share/cda16915-b97e-48de-836b-62501ab93041",
-      "RepoName": "jaredhanson/passport-oauth2",
-      "Title": "How could I modify the strategy so that it has the ability to vary the content-type beyond application/x-www-form-urlencoded",
-      "Body": "Here is everything I have tried: https://chat.openai.com/share/cda16915-b97e-48de-836b-62501ab93041\r\n\r\n`Content-Type` is decided in the `oauth` package here https://github.com/ciaranj/node-oauth/blob/0749d671f04b684ca255d6ff5340ae3efe711d9a/lib/oauth2.js#L191\r\n\r\nThe goal is to give the third party I'm authenticating, the ability to indicate content-type of they their tokenURL,, therefore changing the way the request is made.\r\n\r\nThe most promising solution thus far has been something along the lines of this (it did not work):\r\n```ts\r\nimport { OAuth2Strategy as OriginalOAuth2Strategy } from 'passport-oauth2';\r\n\r\nclass DynamicContentTypeOAuth2Strategy extends OriginalOAuth2Strategy {\r\n  contentType: string;\r\n\r\n  constructor(options: any, verify: any) {\r\n    super(options, verify);\r\n    this.contentType = options.contentType || 'application/x-www-form-urlencoded';\r\n  }\r\n\r\n  getOAuthAccessToken(code: string, params: any, callback: any) {\r\n    let post_data;\r\n    if (this.contentType === 'application/json') {\r\n      post_data = JSON.stringify({\r\n        ...params,\r\n        code: code,\r\n      });\r\n    } else {\r\n      post_data = new URLSearchParams({\r\n        ...params,\r\n        code: code,\r\n      }).toString();\r\n    }\r\n\r\n    const post_headers = {\r\n      'Content-Type': this.contentType,\r\n      'Content-Length': Buffer.byteLength(post_data),\r\n    };\r\n\r\n    this._oauth2._request(\r\n      'POST',\r\n      this._oauth2._getAccessTokenUrl(),\r\n      post_headers,\r\n      post_data,\r\n      null,\r\n      (err, data, response) => {\r\n        if (err) return callback(err);\r\n        let results;\r\n        try {\r\n          results = JSON.parse(data);\r\n        } catch (e) {\r\n          return callback(e);\r\n        }\r\n        const accessToken = results.access_token;\r\n        const refreshToken = results.refresh_token;\r\n        delete results.refresh_token;\r\n        callback(null, accessToken, refreshToken, results);\r\n      }\r\n    );\r\n  }\r\n}\r\n\r\n```",
-      "State": "OPEN",
-      "NumberOfPrompts": 21,
-      "gpt_model_version": "Plugins",
-      "Conversation": [
-        {
-          "Prompt": "I am following this documentation https://www.passportjs.org/packages/passport-oauth2/",
-          "Answer": "ChatGPTUsed WebPilotThe documentation you provided is for passport-oauth2, which is a general-purpose OAuth 2.0 authentication strategy for Passport.js. Here's a brief summary:Description: This module allows you to authenticate using OAuth 2.0 in your Node.js applications. By integrating with Passport, OAuth 2.0-based sign-in can be easily and unobtrusively added to any application or framework that supports Connect-style middleware, such as Express. While this strategy offers generic OAuth 2.0 support, in many situations, a provider-specific strategy might be more suitable as it reduces unnecessary configuration and handles any provider-specific quirks.Installation:[CODE_BLOCK_0]Usage:Configure Strategy: The OAuth 2.0 authentication strategy authenticates users using a third-party account and OAuth 2.0 tokens. You need to specify the provider's OAuth 2.0 endpoints, client identifier, and secret as options. A verify callback is also required.[CODE_BLOCK_1]Authenticate Requests: Use passport.authenticate(), specifying the 'oauth2' strategy, to authenticate requests. For instance, as route middleware in an Express application:[CODE_BLOCK_2]Related Modules:passport-oauth1: OAuth 1.0 authentication strategy.passport-http-bearer: Bearer token authentication strategy for APIs.OAuth2orize: OAuth 2.0 authorization server toolkit.Contributing: The documentation mentions that all new features should have corresponding test cases. It also provides details on how to run tests and view coverage reports.Thought-Provoking Questions/Insights:Provider-Specific Strategy: While the generic OAuth 2.0 strategy is versatile, have you considered using a provider-specific strategy for your application? It might simplify the configuration and handle any unique behaviors of the provider.Security: OAuth 2.0 is a widely used protocol for authorization. Are you ensuring that your application follows best practices to keep user data secure during the authentication process?Extensibility: Developers are encouraged to subclass this strategy for OAuth 2.0 providers not yet supported. If you're working with a unique provider, have you thought about creating and open-sourcing a new provider-specific strategy for the community?Would you like more details or assistance with a specific part of the documentation?",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "bash",
-              "Content": "$ npm install passport-oauth2\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "javascript",
-              "Content": "passport.use(new OAuth2Strategy({\n  authorizationURL: 'https://www.example.com/oauth2/authorize',\n  tokenURL: 'https://www.example.com/oauth2/token',\n  clientID: EXAMPLE_CLIENT_ID,\n  clientSecret: EXAMPLE_CLIENT_SECRET,\n  callbackURL: \"http://localhost:3000/auth/example/callback\"\n},\nfunction(accessToken, refreshToken, profile, cb) {\n  User.findOrCreate({ exampleId: profile.id }, function (err, user) {\n    return cb(err, user);\n  });\n}));\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_2]",
-              "Type": "javascript",
-              "Content": "app.get('/auth/example',\n  passport.authenticate('oauth2'));\napp.get('/auth/example/callback',\n  passport.authenticate('oauth2', { failureRedirect: '/login' }),\n  function(req, res) {\n    // Successful authentication, redirect home.\n    res.redirect('/');\n  });\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "what are the imports",
-          "Answer": "ChatGPTUsed WebPilotThe GitHub repository for passport-oauth2 provides usage examples and details about the package. However, the specific imports required to use the package are not explicitly mentioned in the content retrieved.Typically, for using passport-oauth2, you would need to import the necessary modules in your Node.js application. A common import for using passport-oauth2 would look something like this:[CODE_BLOCK_0]The OAuth2Strategy is the main strategy provided by the passport-oauth2 package, and passport is the core Passport.js module.If you need detailed information about other possible imports or specific functionalities, you might want to check the actual source code files in the GitHub repository or refer to more detailed documentation or examples provided by the package maintainers. Would you like assistance with anything else related to this?",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "javascript",
-              "Content": "const OAuth2Strategy = require('passport-oauth2');\nconst passport = require('passport');\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "what does this line do and how to i import user:\n    User.findOrCreate({ exampleId: profile.id }, function (err, user) {\n      return cb(err, user);\n    });",
-          "Answer": "ChatGPTThe line of code you provided:[CODE_BLOCK_0]Here's a breakdown of what it does:User.findOrCreate({ exampleId: profile.id }, function (err, user) {...}: This is a method call on the User model. It attempts to find a user in the database with the given exampleId. If such a user doesn't exist, it creates a new user with that exampleId.{ exampleId: profile.id }: This is the search criteria. It's looking for a user with an exampleId that matches profile.id.function (err, user) {...}: This is a callback function that gets executed after the findOrCreate operation is completed.err: If there was an error during the findOrCreate operation, this variable will contain details about the error. Otherwise, it will be null.user: This is the user object that was either found or created in the database.return cb(err, user);: This line calls another callback function cb with the err and user as its arguments. This is likely the verification callback for the Passport strategy, which Passport uses to continue its authentication process.To use the User model, you typically need to import it. The exact way to import it depends on how your application and database models are structured. If you're using a framework like Mongoose with MongoDB, the import might look something like this:[CODE_BLOCK_1]If you're using another ORM or database, the import might be different. You'd need to refer to your application's structure or the documentation of the ORM you're using.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "javascript",
-              "Content": "User.findOrCreate({ exampleId: profile.id }, function (err, user) {\n  return cb(err, user);\n});\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "javascript",
-              "Content": "const User = require('./models/User');  // Assuming User model is in a 'models' directory\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "I currently just want to demo it and thus dont have any database functionality ",
-          "Answer": "ChatGPTIf you're just looking to demo the functionality without integrating a database, you can mock the User.findOrCreate method to simulate its behavior. Here's how you can do it:Mock the User Model:\nYou can create a mock User object with a findOrCreate method that doesn't interact with a database but simulates its behavior.[CODE_BLOCK_0]Use the Mock in Your Strategy:\nNow, when you set up your Passport strategy, you can use this mock User object:[CODE_BLOCK_1]With this setup, when the findOrCreate method is called, it will just log the criteria and return a simulated user object without interacting with any database. This allows you to demo and test the OAuth2 authentication flow without the need for a database.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "javascript",
-              "Content": "const User = {\n  findOrCreate: function(criteria, callback) {\n    console.log(\"Simulating findOrCreate with criteria:\", criteria);\n    \n    // Simulate no error and a user object\n    const err = null;\n    const user = {\n      id: 1,\n      exampleId: criteria.exampleId,\n      name: \"Demo User\"\n    };\n\n    // Call the callback with the simulated data\n    callback(err, user);\n  }\n};\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "javascript",
-              "Content": "passport.use(new OAuth2Strategy({\n  // ... other strategy options ...\n},\nfunction(accessToken, refreshToken, profile, cb) {\n  User.findOrCreate({ exampleId: profile.id }, function (err, user) {\n    return cb(err, user);\n  });\n}));\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "I am building this in nextjs api here is my code:\nimport { NextApiRequest, NextApiResponse } from 'next';\nimport OAuth2Strategy from 'passport-oauth2';\nimport passport from 'passport';\n\nconst User = {\n  findOrCreate: function(criteria, callback) {\n    console.log(\"Simulating findOrCreate with criteria:\", criteria);\n    \n    // Simulate no error and a user object\n    const err = null;\n    const user = {\n      id: 1,\n      exampleId: criteria.exampleId,\n      name: \"Demo User\"\n    };\n\n    // Call the callback with the simulated data\n    callback(err, user);\n  }\n};\n\n\nexport default async function handler(\n  req: NextApiRequest,\n  res: NextApiResponse,\n) {\n  passport.use(new OAuth2Strategy({\n    authorizationURL: 'https://www.example.com/oauth2/authorize',\n    tokenURL: 'https://www.example.com/oauth2/token',\n    clientID: EXAMPLE_CLIENT_ID,\n    clientSecret: EXAMPLE_CLIENT_SECRET,\n    callbackURL: \"http://localhost:3000/auth/example/callback\"\n  },\n  function(accessToken, refreshToken, profile, cb) {\n    User.findOrCreate({ exampleId: profile.id }, function (err, user) {\n      return cb(err, user);\n    });\n  }\n));\n}\n",
-          "Answer": "ChatGPTYour code sets up a Next.js API route that configures the passport-oauth2 strategy. However, there are a few things to note and potentially adjust:Constants: You have EXAMPLE_CLIENT_ID and EXAMPLE_CLIENT_SECRET in your code. These should be replaced with actual values or environment variables.Handler Functionality: Your handler function currently only sets up the Passport strategy but doesn't handle any incoming requests. Depending on what you want this API route to do (e.g., initiate the OAuth2 authentication flow, handle the callback from the OAuth2 provider, etc.), you'll need to add the appropriate logic.Middleware: Passport is typically used as middleware in Express.js. With Next.js, you'll need to handle the integration a bit differently. You might want to use the passport.authenticate method within your handler to initiate the authentication flow or handle the callback.Here's a revised version of your code with some of these considerations:[CODE_BLOCK_0]This is a basic setup and might need further adjustments based on your exact requirements. Remember to set up your environment variables (EXAMPLE_CLIENT_ID and EXAMPLE_CLIENT_SECRET) in your .env.local file or wherever you manage your environment variables in your Next.js project.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "javascript",
-              "Content": "import { NextApiRequest, NextApiResponse } from 'next';\nimport OAuth2Strategy from 'passport-oauth2';\nimport passport from 'passport';\n\nconst User = {\n  findOrCreate: function(criteria, callback) {\n    console.log(\"Simulating findOrCreate with criteria:\", criteria);\n    \n    const err = null;\n    const user = {\n      id: 1,\n      exampleId: criteria.exampleId,\n      name: \"Demo User\"\n    };\n\n    callback(err, user);\n  }\n};\n\n// Set up the Passport strategy outside the handler to avoid re-initializing on every request\npassport.use(new OAuth2Strategy({\n  authorizationURL: 'https://www.example.com/oauth2/authorize',\n  tokenURL: 'https://www.example.com/oauth2/token',\n  clientID: process.env.EXAMPLE_CLIENT_ID, // Use environment variables for sensitive data\n  clientSecret: process.env.EXAMPLE_CLIENT_SECRET,\n  callbackURL: \"http://localhost:3000/auth/example/callback\"\n},\nfunction(accessToken, refreshToken, profile, cb) {\n  User.findOrCreate({ exampleId: profile.id }, function (err, user) {\n    return cb(err, user);\n  });\n}));\n\nexport default async function handler(req: NextApiRequest, res: NextApiResponse) {\n  // Depending on the desired functionality, use Passport to authenticate or handle callbacks\n  passport.authenticate('oauth2')(req, res, (err) => {\n    if (err) {\n      res.status(500).json({ error: 'Authentication failed' });\n    } else {\n      res.status(200).json({ message: 'Authentication successful' });\n    }\n  });\n}\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "i am using typesctipy",
-          "Answer": "ChatGPTAlright, if you're using TypeScript with Next.js, you'll want to ensure that your code is type-safe and leverages TypeScript's type-checking capabilities. Here's how you can adjust your code:Type Definitions: Ensure you have the type definitions for the libraries you're using. You can install them using npm or yarn. For example:[CODE_BLOCK_0]Adjusting the Code: Here's your code with TypeScript annotations:[CODE_BLOCK_1]Environment Variables: Ensure you have a type definition for your environment variables. You can create a next-env.d.ts file (if it doesn't already exist) and add:[CODE_BLOCK_2]This will ensure that process.env.EXAMPLE_CLIENT_ID and process.env.EXAMPLE_CLIENT_SECRET are recognized by TypeScript.Remember, this is a basic setup. Depending on the complexity of your application and the libraries you're using, you might need to add more type annotations and adjust the code accordingly.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "bash",
-              "Content": "npm install --save-dev @types/passport @types/passport-oauth2\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "typescript",
-              "Content": "import { NextApiRequest, NextApiResponse } from 'next';\nimport OAuth2Strategy from 'passport-oauth2';\nimport passport from 'passport';\n\n// Define the user type\ninterface User {\n  id: number;\n  exampleId: string;\n  name: string;\n}\n\nconst mockUserDB: Record<string, User> = {};\n\nconst User = {\n  findOrCreate: function(criteria: { exampleId: string }, callback: (err: null | Error, user?: User) => void) {\n    console.log(\"Simulating findOrCreate with criteria:\", criteria);\n    \n    if (mockUserDB[criteria.exampleId]) {\n      callback(null, mockUserDB[criteria.exampleId]);\n    } else {\n      const user: User = {\n        id: 1,\n        exampleId: criteria.exampleId,\n        name: \"Demo User\"\n      };\n      mockUserDB[criteria.exampleId] = user;\n      callback(null, user);\n    }\n  }\n};\n\npassport.use(new OAuth2Strategy({\n  authorizationURL: 'https://www.example.com/oauth2/authorize',\n  tokenURL: 'https://www.example.com/oauth2/token',\n  clientID: process.env.EXAMPLE_CLIENT_ID as string,\n  clientSecret: process.env.EXAMPLE_CLIENT_SECRET as string,\n  callbackURL: \"http://localhost:3000/auth/example/callback\"\n},\nfunction(accessToken: string, refreshToken: string, profile: any, cb: (error: any, user?: any) => void) {\n  User.findOrCreate({ exampleId: profile.id }, function (err, user) {\n    return cb(err, user);\n  });\n}));\n\nexport default async function handler(req: NextApiRequest, res: NextApiResponse) {\n  passport.authenticate('oauth2', (err: Error, user: User) => {\n    if (err) {\n      res.status(500).json({ error: 'Authentication failed' });\n    } else {\n      res.status(200).json({ message: 'Authentication successful', user });\n    }\n  })(req, res);\n}\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_2]",
-              "Type": "typescript",
-              "Content": "/// <reference types=\"next\" />\n/// <reference types=\"next/types/global\" />\n\ndeclare namespace NodeJS {\n  interface ProcessEnv {\n    EXAMPLE_CLIENT_ID: string;\n    EXAMPLE_CLIENT_SECRET: string;\n  }\n}\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "I am also following this documentation https://platform.openai.com/docs/plugins/authentication",
-          "Answer": "ChatGPTUsed WebPilotThe documentation you provided is about Plugin Authentication for the OpenAI Platform. Here's a brief summary:Plugin Authentication Overview:Plugins offer various authentication schemas to accommodate different use cases.The ai-plugin.json file requires an authentication schema to be set. Even if no authentication is chosen, it's required to specify \"auth\": { \"type\": \"none\" }.Only localhost development is supported without authentication. For other types of authentication, a remote server setup is necessary.Service Level Authentication:Recommended as it gives developers control over plugin usage without introducing overhead for users.Enables OpenAI plugins to work with your API by providing a client secret during the plugin installation flow.All traffic from OpenAI plugins will be authenticated but not on a user level.The service access token is sent in the Authorization header for plugin requests.After adding the service access token in the ChatGPT UI, a verification token will be presented. This should be added to the ai-plugin.json file.OAuth Authentication:The plugin protocol is compatible with OAuth.A simple OAuth flow example is provided.OAuth requests will include specific information, such as grant_type, client_id, client_secret, code, and redirect_uri.During the user sign-in process, ChatGPT expects to receive an access token and optionally a refresh token.The state parameter is required for security reasons.No Authentication:Not recommended. Consider using service authentication instead.Suitable for open APIs that are available to everyone.User Level Authentication:Not currently allowed in the plugin store due to UI limitations, but this may change in the future.Allows user-level authentication by enabling users to copy and paste their secret API key into the ChatGPT UI during plugin installation.Thought-Provoking Questions/Insights:Security Considerations: Given the various authentication methods available, have you considered the security implications of each? For instance, while the \"no authentication\" method might be simpler, it could expose your API to unwanted traffic.User Experience: How do you plan to balance security with user experience? For example, while user-level authentication might offer more security, it might not provide the best user experience.Future-Proofing: As OpenAI's platform evolves, there might be changes in how plugins are authenticated. How do you plan to ensure that your plugin remains compatible with future updates to the platform?Would you like more details or assistance with a specific part of the documentation or its implementation?",
-          "ListOfCode": []
-        },
-        {
-          "Prompt": "I already have the plugin ready and working at https://7e78-2601-589-4d7f-7bbb-352f-7640-9964-9872.ngrok-free.app . with the following manifest:\n{\n  \"schema_version\": \"v1\",\n  \"name_for_human\": \"TODO List (OAuth)\",\n  \"name_for_model\": \"todo_oauth\",\n  \"description_for_human\": \"Manage your TODO list. You can add, remove and view your TODOs.\",\n  \"description_for_model\": \"Plugin for managing a TODO list, you can add, remove and view your TODOs.\",\n  \"auth\": {\n      \"type\": \"oauth\",\n      \"client_url\": \"PLUGIN_HOSTNAME/oauth\",\n      \"scope\": \"\",\n      \"authorization_url\": \"PLUGIN_HOSTNAME/auth/oauth_exchange\",\n      \"authorization_content_type\": \"application/json\",\n      \"verification_tokens\": {\n          \"openai\": \"VERIFICATION_TOKEN\"\n      }\n  },\n  \"api\": {\n      \"type\": \"openapi\",\n      \"url\": \"PLUGIN_HOSTNAME/openapi.yaml\"\n  },\n  \"logo_url\": \"PLUGIN_HOSTNAME/logo.png\",\n  \"contact_email\": \"contact@example.com\",\n  \"legal_info_url\": \"http://www.example.com/legal\"\n}\n\nnote that this is working and the variables are filled in upon request. please show me how I would authenticate this on the nextjs passport flow",
-          "Answer": "ChatGPTTo integrate the OAuth authentication flow for your plugin in a Next.js application using Passport, you'll need to follow these steps:Install Required Packages:\nEnsure you have the necessary packages installed:[CODE_BLOCK_0]Setup Passport Strategy:\nUse the OAuth2Strategy from passport-oauth2 to set up the OAuth authentication flow.Integrate with Next.js API Routes:\nCreate API routes in Next.js to handle the authentication flow, including initiating the OAuth flow and handling the callback.Here's a step-by-step guide:1. Setup Passport Strategy:In a file, say passport-setup.ts:[CODE_BLOCK_1]2. Create API Routes:a. Initiate OAuth Flow (auth.ts):[CODE_BLOCK_2]b. Handle OAuth Callback (auth/callback.ts):[CODE_BLOCK_3]3. Integrate with Next.js:In your _app.tsx or _app.js, you'll need to integrate Passport with Next.js. This typically involves setting up a session (using express-session or another session library) and initializing Passport.Remember, integrating Passport, which is designed for Express, with Next.js requires some workarounds, especially when dealing with sessions. Depending on your exact requirements, you might need to adjust the code and potentially use additional middleware to handle sessions and user serialization.Lastly, ensure you handle the state parameter for security reasons, as mentioned in the OpenAI documentation.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "bash",
-              "Content": "npm install passport passport-oauth2 express-session\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "typescript",
-              "Content": "import passport from 'passport';\nimport { Strategy as OAuth2Strategy } from 'passport-oauth2';\n\npassport.use(new OAuth2Strategy({\n  authorizationURL: 'https://7e78-2601-589-4d7f-7bbb-352f-7640-9964-9872.ngrok-free.app/oauth',\n  tokenURL: 'https://7e78-2601-589-4d7f-7bbb-352f-7640-9964-9872.ngrok-free.app/auth/oauth_exchange',\n  clientID: 'YOUR_CLIENT_ID', // Replace with your client ID\n  clientSecret: 'YOUR_CLIENT_SECRET', // Replace with your client secret\n  callbackURL: 'http://localhost:3000/api/auth/callback'\n}, (accessToken, refreshToken, profile, done) => {\n  // Here, you would typically find or create a user in your database\n  // For the sake of the demo, we'll just pass the profile data\n  return done(null, profile);\n}));\n\npassport.serializeUser((user, done) => {\n  done(null, user);\n});\n\npassport.deserializeUser((user, done) => {\n  done(null, user);\n});\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_2]",
-              "Type": "typescript",
-              "Content": "import passport from 'passport';\nimport { NextApiRequest, NextApiResponse } from 'next';\n\nexport default (req: NextApiRequest, res: NextApiResponse) => {\n  passport.authenticate('oauth2')(req, res, () => {\n    // Handle any internal errors here\n  });\n};\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_3]",
-              "Type": "typescript",
-              "Content": "import passport from 'passport';\nimport { NextApiRequest, NextApiResponse } from 'next';\n\nexport default (req: NextApiRequest, res: NextApiResponse) => {\n  passport.authenticate('oauth2', (err, user) => {\n    if (err) {\n      return res.redirect('/error'); // Redirect to an error page\n    }\n    // Here, you would typically create a session or JWT for the user\n    // For the sake of the demo, we'll just redirect to the home page\n    res.redirect('/');\n  })(req, res);\n};\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "I want it all in an /api/passport.ts file and in /api/callback.ts and please use a mock database",
-          "Answer": "ChatGPTCertainly! Let's structure the authentication flow in the /api/passport.ts and /api/callback.ts files using a mock database.1. Mock Database:For simplicity, we'll use an in-memory object as our mock database.2. Setup Passport Strategy:In the /api/passport.ts file, set up the OAuth2 strategy and initiate the OAuth flow.3. Handle OAuth Callback:In the /api/callback.ts file, handle the callback from the OAuth provider.Here's how you can set it up:/api/passport.ts:[CODE_BLOCK_0]/api/callback.ts:[CODE_BLOCK_1]This setup provides a basic OAuth2 authentication flow using Passport in a Next.js application with a mock database. You'll need to replace 'YOUR_CLIENT_ID' and 'YOUR_CLIENT_SECRET' with your actual client ID and secret.Remember, this is a simplified setup for demonstration purposes. In a real-world application, you'd likely want to integrate a proper database and handle sessions more securely.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "typescript",
-              "Content": "import passport from 'passport';\nimport { Strategy as OAuth2Strategy } from 'passport-oauth2';\nimport { NextApiRequest, NextApiResponse } from 'next';\n\n// Mock Database\nconst users: any = {};\n\npassport.use(new OAuth2Strategy({\n  authorizationURL: 'https://7e78-2601-589-4d7f-7bbb-352f-7640-9964-9872.ngrok-free.app/oauth',\n  tokenURL: 'https://7e78-2601-589-4d7f-7bbb-352f-7640-9964-9872.ngrok-free.app/auth/oauth_exchange',\n  clientID: 'YOUR_CLIENT_ID', // Replace with your client ID\n  clientSecret: 'YOUR_CLIENT_SECRET', // Replace with your client secret\n  callbackURL: 'http://localhost:3000/api/callback'\n}, (accessToken, refreshToken, profile, done) => {\n  // Mock database logic\n  if (!users[profile.id]) {\n    users[profile.id] = profile;\n  }\n  return done(null, profile);\n}));\n\nexport default (req: NextApiRequest, res: NextApiResponse) => {\n  passport.authenticate('oauth2')(req, res, () => {\n    // Handle any internal errors here\n  });\n};\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "typescript",
-              "Content": "import passport from 'passport';\nimport { NextApiRequest, NextApiResponse } from 'next';\n\nexport default (req: NextApiRequest, res: NextApiResponse) => {\n  passport.authenticate('oauth2', (err, user) => {\n    if (err) {\n      return res.status(500).json({ error: 'Authentication failed' });\n    }\n    // Mock session logic: For the sake of this demo, we'll just return the user data\n    res.status(200).json(user);\n  })(req, res);\n};\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "shouldn t this return a response:\nexport default (req: NextApiRequest, res: NextApiResponse) => {\n  passport.authenticate('oauth2')(req, res, () => {\n    // Handle any internal errors here\n  });\n};",
-          "Answer": "ChatGPTYes, you're right. The passport.authenticate middleware in Express typically sends a response on its own (like a redirect to the OAuth provider). However, in the context of Next.js API routes, you'll want to handle the response explicitly.For the /api/passport.ts route, which initiates the OAuth flow, you'd typically redirect the user to the OAuth provider's authorization page. If there's an error, you'd send an error response.Here's a revised version of /api/passport.ts:[CODE_BLOCK_0]In this revised version, if there's an error during authentication initiation, it sends a 500 error response. If no user is returned (which is expected since we're just initiating the OAuth flow), it redirects to the OAuth provider's authorization page.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "typescript",
-              "Content": "import passport from 'passport';\nimport { Strategy as OAuth2Strategy } from 'passport-oauth2';\nimport { NextApiRequest, NextApiResponse } from 'next';\n\n// ... (rest of the code, including the mock database and Passport strategy setup)\n\nexport default (req: NextApiRequest, res: NextApiResponse) => {\n  passport.authenticate('oauth2', (err, user, info) => {\n    if (err) {\n      return res.status(500).json({ error: 'Authentication initiation failed' });\n    }\n    if (!user) {\n      // If no user is returned, redirect to the OAuth provider\n      return res.redirect(info.redirect);\n    }\n    // Handle any other cases if necessary\n  })(req, res);\n};\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "I need authorizationURL to be passed a state as well",
-          "Answer": "ChatGPTCertainly! The state parameter is an important security feature in OAuth 2.0 to mitigate CSRF attacks. When initiating the OAuth flow, you generate a unique state value, store it on the server (or in the user's session), and send it as a parameter to the authorizationURL. When the OAuth provider redirects back to your callback URL, you should verify that the state value matches the one you generated and stored.Here's how you can integrate the state parameter into your /api/passport.ts:/api/passport.ts:[CODE_BLOCK_0]In this code:We've added a generateStateToken function that creates a random state token using the crypto module.When initiating the OAuth flow, we generate a new state token and pass it to passport.authenticate as an option.We log the generated state token for demonstration purposes. In a real application, you'd store this token securely on the server (e.g., in the user's session or a server-side cache) and later verify it in the callback handler (/api/callback.ts).In your callback handler (/api/callback.ts), you'll need to verify that the state parameter returned by the OAuth provider matches the one you generated and stored. If they don't match, it could be an indication of a CSRF attack, and you should abort the authentication process.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "typescript",
-              "Content": "import passport from 'passport';\nimport { Strategy as OAuth2Strategy } from 'passport-oauth2';\nimport { NextApiRequest, NextApiResponse } from 'next';\nimport crypto from 'crypto';\n\n// ... (rest of the code, including the mock database and Passport strategy setup)\n\n// Generate a state token\nfunction generateStateToken() {\n  return crypto.randomBytes(16).toString('hex');\n}\n\nexport default (req: NextApiRequest, res: NextApiResponse) => {\n  const state = generateStateToken();\n  // Store the state token in the session or a server-side cache for later verification\n  // For this demo, we'll just log it, but in a real application, you'd store it securely\n  console.log(`Generated state token: ${state}`);\n\n  passport.authenticate('oauth2', { state }, (err, user, info) => {\n    if (err) {\n      return res.status(500).json({ error: 'Authentication initiation failed' });\n    }\n    if (!user) {\n      // If no user is returned, redirect to the OAuth provider\n      return res.redirect(info.redirect);\n    }\n    // Handle any other cases if necessary\n  })(req, res);\n};\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "this is the type of authentication:        authenticate(\n            strategy: string | string[] | Strategy,\n            callback?: AuthenticateCallback | ((...args: any[]) => any),\n        ): AuthenticateRet;",
-          "Answer": "ChatGPTGiven the type definition for the authenticate method, it seems you're looking for a way to integrate the state parameter into the authentication flow using Passport's authenticate method in a type-safe manner.Here's how you can modify the /api/passport.ts and /api/callback.ts files to accommodate the state parameter, while adhering to the provided type definition:/api/passport.ts:[CODE_BLOCK_0]/api/callback.ts:[CODE_BLOCK_1]In this code:We've cast the strategy name 'oauth2' to Strategy to adhere to the provided type definition.We've added type annotations to the callback function parameters to ensure type safety.Remember, the actual verification of the state parameter against the stored value should be done in the callback handler (/api/callback.ts). If the values don't match, it's an indication of a potential CSRF attack, and you should abort the authentication process.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "typescript",
-              "Content": "import passport, { Strategy } from 'passport';\nimport { Strategy as OAuth2Strategy } from 'passport-oauth2';\nimport { NextApiRequest, NextApiResponse } from 'next';\nimport crypto from 'crypto';\n\n// ... (rest of the code, including the mock database and Passport strategy setup)\n\n// Generate a state token\nfunction generateStateToken(): string {\n  return crypto.randomBytes(16).toString('hex');\n}\n\nexport default (req: NextApiRequest, res: NextApiResponse) => {\n  const state = generateStateToken();\n  // Store the state token in the session or a server-side cache for later verification\n  // For this demo, we'll just log it, but in a real application, you'd store it securely\n  console.log(`Generated state token: ${state}`);\n\n  passport.authenticate('oauth2' as Strategy, { state }, (err: any, user: any, info: any) => {\n    if (err) {\n      return res.status(500).json({ error: 'Authentication initiation failed' });\n    }\n    if (!user) {\n      // If no user is returned, redirect to the OAuth provider\n      return res.redirect(info.redirect);\n    }\n    // Handle any other cases if necessary\n  })(req, res);\n};\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "typescript",
-              "Content": "import passport, { Strategy } from 'passport';\nimport { NextApiRequest, NextApiResponse } from 'next';\n\nexport default (req: NextApiRequest, res: NextApiResponse) => {\n  passport.authenticate('oauth2' as Strategy, (err: any, user: any, info: any) => {\n    if (err) {\n      return res.status(500).json({ error: 'Authentication failed' });\n    }\n    // Here, you'd also verify the state parameter against the stored value\n    // If they don't match, abort the authentication process\n    res.status(200).json(user);\n  })(req, res);\n};\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "I got the following error when it was redirected to callback:\nerr:\n InternalOAuthError: Failed to obtain access token\n    at OAuth2Strategy._createOAuthError (C:\\Projects\\OpenPlugin\\openplugin-io\\node_modules\\passport-oauth2\\lib\\strategy.js:423:17)\n    at C:\\Projects\\OpenPlugin\\openplugin-io\\node_modules\\passport-oauth2\\lib\\strategy.js:177:45\n    at C:\\Projects\\OpenPlugin\\openplugin-io\\node_modules\\oauth\\lib\\oauth2.js:191:18\n    at passBackControl (C:\\Projects\\OpenPlugin\\openplugin-io\\node_modules\\oauth\\lib\\oauth2.js:132:9)\n    at IncomingMessage.<anonymous> (C:\\Projects\\OpenPlugin\\openplugin-io\\node_modules\\oauth\\lib\\oauth2.js:157:7)    at IncomingMessage.emit (node:events:525:35)\n    at endReadableNT (node:internal/streams/readable:1359:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {\n  oauthError: {\n    statusCode: 400,\n    data: '<!doctype html>\\n' +\n      '<html lang=en>\\n' +\n      '<title>400 Bad Request</title>\\n' +\n      '<h1>Bad Request</h1>\\n' +\n      '<p>Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)</p>\\n'\n  }\n}\n\n\nthis is likely due to the fact that  tokenURL: 'https://7e78-2601-589-4d7f-7bbb-352f-7640-9964-9872.ngrok-free.app/auth/oauth_exchange' was never used, as that is what returns the access token",
-          "Answer": "ChatGPTThe error you're seeing, InternalOAuthError: Failed to obtain access token, indicates that there was an issue when Passport tried to exchange the authorization code for an access token using the tokenURL.The error message also suggests that the response from the tokenURL endpoint was not valid JSON, which is expected by Passport's OAuth2 strategy.Here are some steps to troubleshoot and resolve the issue:Verify the tokenURL Endpoint:\nEnsure that the tokenURL endpoint (https://7e78-2601-589-4d7f-7bbb-352f-7640-9964-9872.ngrok-free.app/auth/oauth_exchange) is correctly set up to handle the authorization code exchange. It should accept a POST request with the authorization code and return a valid JSON response containing the access token (and optionally the refresh token).Check the Response Format:\nThe response from the tokenURL endpoint should be in the format:[CODE_BLOCK_0]Ensure that your endpoint returns a response in this format.Handle Errors Gracefully:\nIf there's an error during the authorization code exchange (e.g., invalid authorization code), ensure that your tokenURL endpoint returns a meaningful error message in JSON format. This can help in debugging issues.Log Requests and Responses:\nTemporarily add logging to your tokenURL endpoint to capture incoming requests and outgoing responses. This can help you identify any discrepancies in the expected request format or response format.Check the tokenURL Implementation:\nEnsure that your tokenURL endpoint is correctly implementing the OAuth 2.0 authorization code exchange. It should:Receive the authorization code in the request body.Exchange the authorization code for an access token with the OAuth provider.Return the access token in the response.Ensure Correct Headers:\nMake sure that the tokenURL endpoint sets the Content-Type header to application/json when returning the JSON response.Test the Endpoint Manually:\nYou can use tools like Postman or curl to manually send a POST request to the tokenURL endpoint with an authorization code to see the response. This can help you identify any issues with the endpoint's implementation.By following these steps and ensuring that the tokenURL endpoint is correctly set up, you should be able to resolve the InternalOAuthError and successfully complete the OAuth 2.0 authentication flow.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "json",
-              "Content": "{\n  \"access_token\": \"YOUR_ACCESS_TOKEN\",\n  \"token_type\": \"bearer\",\n  \"expires_in\": 3600,\n  \"refresh_token\": \"YOUR_REFRESH_TOKEN\"\n}\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "here are my logs for my 3rd party app getting authenticated:\n127.0.0.1 - - [18/Aug/2023 16:44:38] \"GET /oauth?response_type=code&redirect_uri=http://localhost:3000/api/callback&state=stat&client_id=YOUR_CLIENT_ID HTTP/1.1\" 200 -\n127.0.0.1 - - [18/Aug/2023 16:44:40] \"POST /auth/oauth_exchange HTTP/1.1\" 400 -\n\nand here is the code for the main.py endpoint:\n@app.post(\"/auth/oauth_exchange\")\ndef oauth_exchange():\n    newRequest = request.get_json(force=True)\n\n    print(f\"oauth_exchange {newRequest=}\")\n\n    if newRequest[\"client_id\"] != OPENAI_CLIENT_ID:\n        raise RuntimeError(\"bad client ID\")\n    if newRequest[\"client_secret\"] != OPENAI_CLIENT_SECRET:\n        raise RuntimeError(\"bad client secret\")\n    if newRequest[\"code\"] != OPENAI_CODE:\n        raise RuntimeError(\"bad code\")\n\n    return {\n        \"access_token\": OPENAI_TOKEN,\n        \"token_type\": \"bearer\"\n    }\n",
-          "Answer": "ChatGPTThe logs indicate that the /auth/oauth_exchange endpoint is returning a 400 Bad Request response. This suggests that there's an issue with the request being sent to this endpoint or how the endpoint is processing the request.Given the code you provided for the oauth_exchange endpoint in main.py, there are a few potential issues that could be causing the 400 Bad Request response:Missing or Incorrect JSON Data: The endpoint expects the request body to contain JSON data with specific fields (client_id, client_secret, and code). If any of these fields are missing or have incorrect values, the endpoint will raise a RuntimeError.Error Handling: When a RuntimeError is raised, the Flask app will return a 500 Internal Server Error by default. However, it seems that the endpoint is returning a 400 Bad Request, which suggests that there might be additional error handling in place that's converting the RuntimeError to a 400 response.Content-Type Header: Ensure that the request being sent to the /auth/oauth_exchange endpoint has the Content-Type header set to application/json. If the header is missing or set to a different value, the request.get_json() method might not be able to parse the request body.To troubleshoot and resolve the issue, consider the following steps:Log Request Data: Add logging to the oauth_exchange endpoint to log the raw request data and headers. This can help you identify any discrepancies in the request format.[CODE_BLOCK_0]Improve Error Responses: Modify the error handling in the oauth_exchange endpoint to return more descriptive error messages. This can help you identify the specific issue causing the 400 response.[CODE_BLOCK_1]Test the Endpoint Manually: Use a tool like Postman or curl to manually send a POST request to the /auth/oauth_exchange endpoint with the expected JSON data. This can help you verify that the endpoint is working correctly.[CODE_BLOCK_2]By following these steps and improving the error handling and logging in the oauth_exchange endpoint, you should be able to identify and resolve the issue causing the 400 Bad Request response.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "python",
-              "Content": "print(f\"Request headers: {request.headers}\")\nprint(f\"Request data: {request.data}\")\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "python",
-              "Content": "if newRequest[\"client_id\"] != OPENAI_CLIENT_ID:\n    return {\"error\": \"bad client ID\"}, 400\nif newRequest[\"client_secret\"] != OPENAI_CLIENT_SECRET:\n    return {\"error\": \"bad client secret\"}, 400\nif newRequest[\"code\"] != OPENAI_CODE:\n    return {\"error\": \"bad code\"}, 400\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_2]",
-              "Type": "bash",
-              "Content": "curl -X POST -H \"Content-Type: application/json\" -d '{\"client_id\": \"YOUR_CLIENT_ID\", \"client_secret\": \"YOUR_CLIENT_SECRET\", \"code\": \"YOUR_CODE\"}' http://localhost:YOUR_PORT/auth/oauth_exchange\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "yes ir does not have content type how can I make passport pass in the content type:\nHeaders:  Host: 7e78-2601-589-4d7f-7bbb-352f-7640-9964-9872.ngrok-free.app\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 Edg/115.0.1901.203\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\nAccept-Encoding: gzip, deflate, br\nAccept-Language: en-US,en;q=0.9\nSec-Ch-Ua: \"Not/A)Brand\";v=\"99\", \"Microsoft Edge\";v=\"115\", \"Chromium\";v=\"115\"\nSec-Ch-Ua-Mobile: ?0\nSec-Ch-Ua-Platform: \"Windows\"\nSec-Fetch-Dest: document\nSec-Fetch-Mode: navigate\nSec-Fetch-Site: none\nSec-Fetch-User: ?1\nUpgrade-Insecure-Requests: 1\nX-Forwarded-For: 2601:589:4d7f:7bbb:352f:7640:9964:9872\nX-Forwarded-Proto: https\n\n\nOAuth key value pairs from the ChatGPT Request:  {'response_type': 'code', 'redirect_uri': 'http://localhost:3000/api/callback', 'state': 'stat', 'client_id': 'YOUR_CLIENT_ID'}\nURL:  http://localhost:3000/api/callback?code=abc123&state=stat\n127.0.0.1 - - [18/Aug/2023 16:53:10] \"GET /oauth?response_type=code&redirect_uri=http://localhost:3000/api/callback&state=stat&client_id=YOUR_CLIENT_ID HTTP/1.1\" 200 -\nRequest headers: Host: 7e78-2601-589-4d7f-7bbb-352f-7640-9964-9872.ngrok-free.app\nUser-Agent: Node-oauth\nContent-Length: 159\nContent-Type: application/x-www-form-urlencoded\nX-Forwarded-For: 2601:589:4d7f:7bbb:352f:7640:9964:9872\nX-Forwarded-Proto: https\nAccept-Encoding: gzip\n\n\nRequest data: b''\n127.0.0.1 - - [18/Aug/2023 16:53:13] \"POST /auth/oauth_exchange HTTP/1.1\" 400 -",
-          "Answer": "ChatGPTThe logs indicate that the request to /auth/oauth_exchange has the Content-Type header set to application/x-www-form-urlencoded, which is the default content type for OAuth2 requests. However, your endpoint expects the request body to be in JSON format.To make Passport send the request with a Content-Type of application/json, you can customize the OAuth2Strategy by overriding its getOAuthAccessToken method.Here's how you can modify the OAuth2Strategy to send the request with a JSON body:Extend the OAuth2Strategy:[CODE_BLOCK_0]Use the Extended Strategy:Replace the original OAuth2Strategy with the extended OAuth2Strategy in your /api/passport.ts:[CODE_BLOCK_1]By extending the OAuth2Strategy and overriding the getOAuthAccessToken method, you can customize the request to send the data as JSON with the appropriate Content-Type header. This should resolve the issue with the /auth/oauth_exchange endpoint expecting a JSON request body.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "typescript",
-              "Content": "import { OAuth2Strategy as OriginalOAuth2Strategy } from 'passport-oauth2';\n\nclass OAuth2Strategy extends OriginalOAuth2Strategy {\n  getOAuthAccessToken(code: string, params: any, callback: any) {\n    const post_data = JSON.stringify({\n      ...params,\n      code: code,\n    });\n\n    const post_headers = {\n      'Content-Type': 'application/json',\n      'Content-Length': Buffer.byteLength(post_data),\n    };\n\n    this._oauth2._request(\n      'POST',\n      this._oauth2._getAccessTokenUrl(),\n      post_headers,\n      post_data,\n      null,\n      (err, data, response) => {\n        if (err) return callback(err);\n        let results;\n        try {\n          results = JSON.parse(data);\n        } catch (e) {\n          return callback(e);\n        }\n        const accessToken = results.access_token;\n        const refreshToken = results.refresh_token;\n        delete results.refresh_token;\n        callback(null, accessToken, refreshToken, results);\n      }\n    );\n  }\n}\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "typescript",
-              "Content": "import passport from 'passport';\nimport { NextApiRequest, NextApiResponse } from 'next';\nimport crypto from 'crypto';\n\n// ... (rest of the code, including the mock database)\n\n// Use the extended OAuth2Strategy\npassport.use(new OAuth2Strategy({\n  // ... (rest of the strategy configuration)\n}));\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "the content type seems like an important part of oauth2, could it be that I am using the wrong strategy ",
-          "Answer": "ChatGPTYes, the Content-Type of application/x-www-form-urlencoded is standard for OAuth2 token requests as per the OAuth2 specification. If your endpoint expects JSON, it's a deviation from the standard OAuth2 behavior.Given that the passport-oauth2 strategy is designed to work with the standard OAuth2 flow, it sets the Content-Type to application/x-www-form-urlencoded by default.If you're working with a service that expects the token exchange to be in JSON format, you might be dealing with a non-standard implementation of OAuth2. In such cases:Adjust Your Endpoint: The simplest solution would be to adjust your /auth/oauth_exchange endpoint to accept application/x-www-form-urlencoded data instead of JSON. This would make your implementation compliant with the OAuth2 specification and compatible with most OAuth2 client libraries, including passport-oauth2.Custom Strategy: If you can't adjust the endpoint and it must accept JSON, you might need to use a custom strategy or modify an existing one, as previously demonstrated.Check for Specific Strategies: Some platforms or services have their own Passport strategies that handle these quirks. For example, if you're integrating with a well-known platform that uses a non-standard OAuth2 flow, there might already be a Passport strategy tailored for that platform. Check the Passport strategies list or npm for a specific strategy for the platform you're working with.Manual Token Exchange: As a last resort, if you don't want to modify the strategy or the endpoint, you can handle the token exchange manually. After receiving the authorization code, you can make a direct HTTP request (using a library like axios or node-fetch) to the token endpoint with the expected JSON format. This gives you full control over the request format but requires more manual setup and error handling.In summary, if you're following the standard OAuth2 specification, the token request should use application/x-www-form-urlencoded. If the service you're integrating with expects a different format, you'll need to adjust either the service or the client (in this case, the Passport strategy) to ensure they're compatible.",
-          "ListOfCode": []
-        },
-        {
-          "Prompt": "I dont have control over the 3rd party apps requested authorization_content_type:\n  \"auth\": {\n      \"type\": \"oauth\",\n      \"client_url\": \"PLUGIN_HOSTNAME/oauth\",\n      \"scope\": \"\",\n      \"authorization_url\": \"PLUGIN_HOSTNAME/auth/oauth_exchange\",\n      \"authorization_content_type\": \"application/json\",\n      \"verification_tokens\": {\n          \"openai\": \"VERIFICATION_TOKEN\"\n      }\n  },",
-          "Answer": "ChatGPTGiven that the third-party app explicitly requires the authorization_content_type to be application/json, you'll need to adjust your strategy or use a custom approach to ensure the token exchange request is sent with the correct content type.Here's how you can handle this situation:Extend the OAuth2Strategy: As previously demonstrated, you can extend the OAuth2Strategy to override the getOAuthAccessToken method, ensuring that the token exchange request is sent with a JSON body and the Content-Type header set to application/json.Use a Different Strategy: There are other Passport strategies tailored for specific platforms or non-standard OAuth2 implementations. If the third-party app you're integrating with is a well-known platform, there might already be a Passport strategy available that handles this specific requirement. Check npm or the Passport strategies list.Manual Token Exchange: If neither of the above options is suitable, you can handle the token exchange manually. After receiving the authorization code, make a direct HTTP request to the token endpoint with the expected JSON format using a library like axios or node-fetch. This approach gives you full control over the request format but requires more manual setup and error handling.Given the provided manifest and the explicit requirement for application/json, the first option (extending the OAuth2Strategy) is likely the most straightforward solution. This allows you to use the existing passport-oauth2 strategy with the necessary modifications to meet the third-party app's requirements.",
-          "ListOfCode": []
-        },
-        {
-          "Prompt": "show me how I could keep the content type dynamic for OAuth2Strategy",
-          "Answer": "ChatGPTTo keep the Content-Type dynamic for OAuth2Strategy, you can extend the strategy and modify the getOAuthAccessToken method to accept a dynamic content type. Here's how you can achieve this:Extend the OAuth2Strategy:Create a new class that extends the original OAuth2Strategy and override the getOAuthAccessToken method to allow for a dynamic Content-Type.[CODE_BLOCK_0]Use the Extended Strategy with Dynamic Content Type:When setting up the strategy, you can now pass the desired Content-Type as an option:[CODE_BLOCK_1]With this setup, the DynamicContentTypeOAuth2Strategy allows you to specify the Content-Type dynamically when you initialize the strategy. If you don't provide a contentType option, it defaults to application/x-www-form-urlencoded, which is the standard for OAuth2.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "typescript",
-              "Content": "import { OAuth2Strategy as OriginalOAuth2Strategy } from 'passport-oauth2';\n\nclass DynamicContentTypeOAuth2Strategy extends OriginalOAuth2Strategy {\n  contentType: string;\n\n  constructor(options: any, verify: any) {\n    super(options, verify);\n    this.contentType = options.contentType || 'application/x-www-form-urlencoded';\n  }\n\n  getOAuthAccessToken(code: string, params: any, callback: any) {\n    let post_data;\n    if (this.contentType === 'application/json') {\n      post_data = JSON.stringify({\n        ...params,\n        code: code,\n      });\n    } else {\n      post_data = new URLSearchParams({\n        ...params,\n        code: code,\n      }).toString();\n    }\n\n    const post_headers = {\n      'Content-Type': this.contentType,\n      'Content-Length': Buffer.byteLength(post_data),\n    };\n\n    this._oauth2._request(\n      'POST',\n      this._oauth2._getAccessTokenUrl(),\n      post_headers,\n      post_data,\n      null,\n      (err, data, response) => {\n        if (err) return callback(err);\n        let results;\n        try {\n          results = JSON.parse(data);\n        } catch (e) {\n          return callback(e);\n        }\n        const accessToken = results.access_token;\n        const refreshToken = results.refresh_token;\n        delete results.refresh_token;\n        callback(null, accessToken, refreshToken, results);\n      }\n    );\n  }\n}\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "typescript",
-              "Content": "passport.use(new DynamicContentTypeOAuth2Strategy({\n  authorizationURL: 'YOUR_AUTHORIZATION_URL',\n  tokenURL: 'YOUR_TOKEN_URL',\n  clientID: 'YOUR_CLIENT_ID',\n  clientSecret: 'YOUR_CLIENT_SECRET',\n  callbackURL: 'YOUR_CALLBACK_URL',\n  contentType: 'application/json'  // or 'application/x-www-form-urlencoded'\n}, (accessToken, refreshToken, profile, done) => {\n  // Your verify callback logic here\n}));\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "I am getting the following error:\nProperty '_request' is protected and only accessible within class 'OAuth2' and its subclasses.ts(2445)\n(method) OAuth2._request(method: string, url: string, headers: OutgoingHttpHeaders | null, post_body: any, access_token: string | null, callback: dataCallback): void",
-          "Answer": "ChatGPTThe error you're seeing is due to TypeScript's strict class property access modifiers. The _request method is marked as protected in the OAuth2 class, which means it can only be accessed within the OAuth2 class and its subclasses.To resolve this, you have a few options:Use Public Methods: Instead of accessing the _request method directly, you can use the public methods provided by the OAuth2 class. However, this might not give you the flexibility you need for customizing the request.Extend the OAuth2 Class: You can create a subclass of OAuth2 and expose the _request method as a public method in your subclass. Then, use this subclass in your custom strategy.Bypass TypeScript's Check: This is not recommended for production code, but for quick testing or prototyping, you can bypass TypeScript's strict checks using type assertions.Here's an example of the second approach:Extend the OAuth2 Class:[CODE_BLOCK_0]Use the Extended OAuth2 Class in Your Strategy:In your custom strategy, replace the _oauth2 instance with an instance of ExtendedOAuth2 and use the exposedRequest method instead of _request.[CODE_BLOCK_1]By extending the OAuth2 class and exposing the _request method as a public method, you can bypass TypeScript's access restrictions and use the method in your custom strategy. However, always be cautious when modifying or extending third-party libraries, as it can introduce unexpected behaviors or vulnerabilities.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "typescript",
-              "Content": "import { OAuth2 } from 'oauth';\n\nclass ExtendedOAuth2 extends OAuth2 {\n  public exposedRequest(\n    method: string,\n    url: string,\n    headers: any,\n    post_body: any,\n    access_token: string | null,\n    callback: any\n  ) {\n    this._request(method, url, headers, post_body, access_token, callback);\n  }\n}\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "typescript",
-              "Content": "this._oauth2 = new ExtendedOAuth2(...);\nthis._oauth2.exposedRequest(...);\n"
-            }
-          ]
-        },
-        {
-          "Prompt": "Lets take a step back I am following the documentation for https://www.passportjs.org/packages/passport-oauth2/ as I want to replicate the authentication documented here https://platform.openai.com/docs/plugins/authentication\n\nconsidering that I want to replicate the oauth solution in two nextjs typescript files C:\\Projects\\OpenPlugin\\openplugin-io\\src\\pages\\api\\passport.ts and C:\\Projects\\OpenPlugin\\openplugin-io\\src\\pages\\api\\callback.ts how do you recommend I go about doing it",
-          "Answer": "ChatGPTAlright, let's break this down step by step.Given the requirements:You're using Next.js with TypeScript.You want to implement OAuth2 authentication using the passport-oauth2 strategy.You're following the OpenAI plugin authentication documentation.Here's a recommended approach:1. Setup and ConfigurationFirst, ensure you have the necessary packages installed:[CODE_BLOCK_0]2. Create the Passport Configuration (passport.ts)In C:\\Projects\\OpenPlugin\\openplugin-io\\src\\pages\\api\\passport.ts:[CODE_BLOCK_1]3. Create the Callback Endpoint (callback.ts)In C:\\Projects\\OpenPlugin\\openplugin-io\\src\\pages\\api\\callback.ts:[CODE_BLOCK_2]4. Adjustments for JSON Content-TypeIf the third-party app expects the token exchange to be in JSON format, you'll need to adjust the passport-oauth2 strategy. This might involve extending the strategy or using a custom approach as previously discussed.5. Additional StepsEnsure you have session handling or JWT handling in place if you want to maintain user sessions.Handle routes for initiating the OAuth2 flow, e.g., a /api/login route that calls passport.authenticate('oauth2').Add error handling and logging for better debugging and user experience.This setup provides a basic structure for OAuth2 authentication in Next.js using Passport. Depending on your exact requirements and the third-party app's behavior, you might need to make further adjustments.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "bash",
-              "Content": "npm install passport passport-oauth2\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "typescript",
-              "Content": "import passport from 'passport';\nimport { Strategy as OAuth2Strategy } from 'passport-oauth2';\n\n// Mock database for demo purposes\nconst users: any = {};\n\npassport.serializeUser((user, done) => {\n  done(null, user.id);\n});\n\npassport.deserializeUser((id, done) => {\n  done(null, users[id]);\n});\n\npassport.use(new OAuth2Strategy({\n  authorizationURL: 'PLUGIN_HOSTNAME/oauth',\n  tokenURL: 'PLUGIN_HOSTNAME/auth/oauth_exchange',\n  clientID: 'YOUR_CLIENT_ID',\n  clientSecret: 'YOUR_CLIENT_SECRET',\n  callbackURL: 'http://localhost:3000/api/callback',\n  state: true // to generate a state parameter for CSRF protection\n},\n(accessToken, refreshToken, profile, done) => {\n  // Find or create user logic here\n  // For demo purposes, we'll just mock a user object\n  const user = {\n    id: '1234',\n    accessToken: accessToken\n  };\n  users[user.id] = user;\n  return done(null, user);\n}));\n\nexport default passport;\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_2]",
-              "Type": "typescript",
-              "Content": "import { NextApiRequest, NextApiResponse } from 'next';\nimport passport from './passport';\n\nexport default (req: NextApiRequest, res: NextApiResponse) => {\n  passport.authenticate('oauth2', (err, user, info) => {\n    if (err) {\n      return res.status(500).json({ error: err.message });\n    }\n    if (!user) {\n      return res.status(401).json({ error: 'Authentication failed.' });\n    }\n    // Here, you can set cookies or sessions as needed\n    // For this demo, we'll just return a success message\n    res.status(200).json({ message: 'Authentication successful', user });\n  })(req, res);\n};\n"
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "content": {
       "ID": 96,
       "source_type": "issue",
       "Author": "ymerkos",
@@ -1268,6 +899,7 @@
       "RepoName": "facebookresearch/llama",
       "Title": "B\"H Trying to run from node.js",
       "Body": "B\"H\r\n\r\nFull context: \r\nhttps://chat.openai.com/share/95f63b24-fbfb-4a3c-a179-dd74740658ac\r\n\r\nhttps://chat.openai.com/share/5aa98435-86a2-482f-ab7f-0d2c13522de3\r\n\r\nI downloaded the Llama-2-7b-chathf from huggingface after getting approved. Trying to run it now. in parent fodler I have \r\n\r\n\r\n`//B\"H\r\nimport path from \"path\";\r\nimport { AutoModelForSeq2SeqLM, AutoTokenizer } from '@xenova/transformers';\r\n var pth = path.resolve(process.cwd(), \"./Llama-2-7b-chathf\");\r\n\r\n  let tokenizer = await AutoTokenizer.from_pretrained(pth);\r\nlet model = await AutoModelForSeq2SeqLM.from_pretrained(pth);\r\n \r\n  let { input_ids } = await tokenizer('B\\\"H\\n Tell me about the Atzmus. Poem.');\r\n  let outputs = await model.generate(input_ids);\r\nlet decoded = tokenizer.decode(outputs[0], { skip_special_tokens: true });\r\nconsole.log(decoded);`\r\n\r\n\r\nI get the error (after installing transformers) \r\n \r\n ` node .\\mod.mjs\r\nfile:///C:/ai/llama/node_modules/@xenova/transformers/src/utils/hub.js:240\r\n    throw Error(`${message}: \"${remoteURL}\".`);\r\n          ^\r\n\r\nError: Could not locate file: \"https://huggingface.co/C:\\ai\\llama\\Llama-2-7b-chathf/resolve/main/tokenizer_config.json\".\r\n    at handleError (file:///C:/ai/llama/node_modules/@xenova/transformers/src/utils/hub.js:240:11)\r\n    at getModelFile (file:///C:/ai/llama/node_modules/@xenova/transformers/src/utils/hub.js:471:24)\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\r\n    at async getModelJSON (file:///C:/ai/llama/node_modules/@xenova/transformers/src/utils/hub.js:540:18)\r\n    at async Promise.all (index 1)\r\n    at async loadTokenizer (file:///C:/ai/llama/node_modules/@xenova/transformers/src/tokenizers.js:50:16)\r\n    at async AutoTokenizer.from_pretrained (file:///C:/ai/llama/node_modules/@xenova/transformers/src/tokenizers.js:3610:48)\r\n    at async file:///C:/ai/llama/mod.mjs:6:19`\r\n\r\n\r\nwhen trying to modify the soruce i get other error\r\n\r\n`throw Error(`Unsupported model type: ${config.model_type}`)\r\n                  ^\r\n\r\nError: Unsupported model type: llama\r\n    at AutoModelForSeq2SeqLM.from_pretrained (file:///C:/ai/llama/node_modules/@xenova/transformers/src/models.js:3085:19)\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\r\n    at async file:///C:/ai/llama/mod.mjs:6:13\r\n`\r\n\r\ndirectory structure:\r\n\r\n dir .\\Llama-2-7b-chathf\\\r\n\r\n\r\n    Directory: C:\\ai\\llama\\Llama-2-7b-chathf\r\n\r\n\r\nMode                 LastWriteTime         Length Name\r\n----                 -------------         ------ ----\r\nd-----          8/7/2023   7:35 PM                node_modules\r\n-a----          8/7/2023   6:18 PM            639 config.json\r\n-a----          8/7/2023   6:18 PM            176 generation_config.json\r\n-a----          8/7/2023   6:18 PM           7146 LICENSE.txt\r\n-a----          8/7/2023   6:51 PM     9976576152 model-00001-of-00002.safetensors\r\n-a----          8/7/2023   6:34 PM     3500296424 model-00002-of-00002.safetensors\r\n-a----          8/7/2023   6:18 PM          27118 model.safetensors.index.json\r\n-a----          8/7/2023   7:35 PM          42943 package-lock.json\r\n-a----          8/7/2023   7:35 PM            122 package.json\r\n-a----          8/7/2023   6:51 PM     9976634558 pytorch_model-00001-of-00002.bin\r\n-a----          8/7/2023   6:36 PM     3500315539 pytorch_model-00002-of-00002.bin\r\n-a----          8/7/2023   6:18 PM          27118 pytorch_model.bin.index.json\r\n-a----          8/7/2023   6:18 PM          10564 README.md\r\n-a----          8/7/2023   6:18 PM            437 special_tokens_map.json\r\n-a----          8/7/2023   6:18 PM        1936157 tokenizer.json\r\n-a----          8/7/2023   6:18 PM         499723 tokenizer.model\r\n-a----          8/7/2023   6:18 PM            811 tokenizer_config.json\r\n-a----          8/7/2023   6:18 PM           4816 USE_POLICY.md\r\n\r\n\r\nPS C:\\ai\\llama>\r\n\r\n\r\nThe (first) issue is that there is no such directory structure, it's assuming I'm referring to huggingface repo when I just entered the name of the directory, that directory has all of the repo files directly (see directory structure ^^), it has the template etc.\r\n\r\nThe real problem, even after I fixed some of the source code, is that there's no mechanism to actually recognize the llama model, it doesn't seem like nodejs transformers library even had anything. I tried to install also llama-nodet but wasn't sure how that even has anything to do with anything. In second ChatGPT link there you can see how I tried copying the source code to get ChatGPT to port it, not fully successful yet, also it has to redo and reinmovate a lot of the parts that dealt with with pytorch\r\n\r\nLlamaForCausalLM Is what I'm trying to port since it seems that's the class that actually does chat, and in order to do that I may need to have to port a few other classes and redo their methods, was just wondering if it's been done yet, and if not if any advice can be given (second link of ChatGPT there at the end)\r\n\r\nReferences to that class, search on page https://huggingface.co/docs/transformers/model_doc/llama2 then go to source\r\n\r\n\r\n\r\nam i missing something?",
+      "issueURL": "https://github.com/facebookresearch/llama/issues/639",
       "State": "OPEN",
       "NumberOfPrompts": 41,
       "gpt_model_version": "GPT-4",
@@ -1737,6 +1369,7 @@
       "RepoName": "OpenPluginACI/openplugin-api",
       "Title": "Task: MongoDB access",
       "Body": "## Chat\nhttps://chat.openai.com/share/0233d7e5-7286-4416-9f51-150c77dafe80\n## Description\nGive flask server access to MongoDB.\n## Tasks\nThese tasks are set up to be used as part of the ChatGPT prompts along with any additional context required. They don't need to be strictly followed but it is encouraged to use them as a guide.\n- [x] Allow flask server to read my MongoDB\n",
+      "issueURL": "https://github.com/OpenPluginACI/openplugin-api/issues/7",
       "State": "CLOSED",
       "NumberOfPrompts": 3,
       "gpt_model_version": "Plugins",
@@ -1790,6 +1423,7 @@
       "RepoName": "NVlabs/Deep_Object_Pose",
       "Title": "How to print the positation and orientation of the detection target in world frame?",
       "Body": "Hi, I'm trying to calculate the accuracy of my own dataset and want to use coordinates in the world frame. The json file from inference.py output contains 'location' and 'quaternion_xyzw', but they are based on the camera frame. I tried using the 'camera_view_matrix' from generating my own dataset to calculate back to world coordinates, but the results differ from what was set. How can we obtain world coordinates? Thank you!",
+      "issueURL": "https://github.com/NVlabs/Deep_Object_Pose/issues/313",
       "State": "OPEN",
       "NumberOfPrompts": 2,
       "gpt_model_version": "Default (GPT-3.5)",
@@ -1822,6 +1456,7 @@
       "RepoName": "eric-volz/DefichainPython",
       "Title": "Allow to run Node with different Flags",
       "Body": "If you use the new changi or testnet network you will poberly start it using the `-changi` or `-testnet` flag. The node object does not support a connection to a defichain node startet with these parameters.\r\n\r\n- [x] Research\r\n- [ ] Implementation\r\n- [ ] Test\r\n\r\n",
+      "issueURL": "https://github.com/eric-volz/DefichainPython/issues/101",
       "State": "CLOSED",
       "NumberOfPrompts": 2,
       "gpt_model_version": "Default (GPT-3.5)",
@@ -1854,6 +1489,7 @@
       "RepoName": "IfcOpenShell/IfcOpenShell",
       "Title": "Retain .ods formatting upon re-export. ",
       "Body": "Let's say you create an .ods schedule via CSV Import/Export panel. \r\n\r\nYou open it in LibreCalc and adjust the column/row widths/heights to your liking. \r\n\r\nCould there be a relatively easy way to, when exporting out the .ods again, that it retains this column/row formatting?",
+      "issueURL": "https://github.com/IfcOpenShell/IfcOpenShell/issues/3609",
       "State": "CLOSED",
       "NumberOfPrompts": 1,
       "gpt_model_version": "Default (GPT-3.5)",
@@ -1886,6 +1522,7 @@
       "RepoName": "simonw/llm",
       "Title": "Tests for OpenAI streaming responses",
       "Body": "Refs:\r\n- #284\r\n- #286\r\n\r\nThe tests at the moment all use `--no-stream` because it's easier to mock.",
+      "issueURL": "https://github.com/simonw/llm/issues/287",
       "State": "CLOSED",
       "NumberOfPrompts": 1,
       "gpt_model_version": "GPT-4",
@@ -1921,43 +1558,6 @@
   },
   {
     "content": {
-      "ID": 132,
-      "source_type": "issue",
-      "Author": "FahimMontasir",
-      "SourceURL": "https://chat.openai.com/share/3b58ad55-add3-43ef-beda-29c2070caf02",
-      "RepoName": "FahimMontasir/english-sphere",
-      "Title": "@server: auth (app & dashboard)",
-      "Body": "move timezone country logic gender detection from app to server\n\n**Secure auth routes with an API key. which will send from the app to the backend using api-key headers. store API key in the app and backend securely.**\n\n\nCheck this express guide: https://expressjs.com/en/advanced/best-practice-security.html#prevent-brute-force-attacks-against-authorization\n\nalso check firebase auth accesstoken to verify its from our app\nread this doc for security: https://stackoverflow.com/questions/64916923/react-native-storing-api-key\nchatGpt guideline: https://chat.openai.com/share/3b58ad55-add3-43ef-beda-29c2070caf02",
-      "State": "CLOSED",
-      "NumberOfPrompts": 1,
-      "gpt_model_version": "Default (GPT-3.5)",
-      "Conversation": [
-        {
-          "Prompt": "how to protect express login/register api. that can only be called  a specific react native app not anywhere else",
-          "Answer": "ChatGPTTo protect your Express login/register API so that it can only be called from a specific React Native app and not from anywhere else, you can implement an authentication mechanism that verifies the origin of the requests. One way to achieve this is by using a combination of the following techniques:API Key or Secret: Embed an API key or secret in your React Native app. This key will be sent along with the API requests as a header or a parameter.Cross-Origin Resource Sharing (CORS): Configure your Express server to only allow requests from specific origins (i.e., your React Native app's domain).User Agent Header: Check the User-Agent header in the API requests to ensure they are originating from your React Native app's user agent.Here's a step-by-step guide on how to implement these techniques:Generate and Embed API Key:Generate a unique API key or secret for your React Native app.Embed this key in your React Native app's code, either in a configuration file or as a constant within the app.Set Up CORS:Install the 'cors' package for Express if you haven't already:[CODE_BLOCK_0]Add the following code to your Express server:[CODE_BLOCK_1]Include API Key in Requests:In your React Native app's code, include the API key or secret in the request headers or parameters when making API calls to your Express server.Check User Agent Header:On the server-side, check the User-Agent header to ensure that requests are coming from your React Native app.[CODE_BLOCK_2]Secure Communication:Consider using HTTPS to secure the communication between your React Native app and the Express server to prevent potential man-in-the-middle attacks.By combining these techniques, you can ensure that your Express login/register API can only be called from your specific React Native app and not from any other origin. However, it's essential to note that no solution is entirely foolproof, and determined attackers might still attempt to mimic your app's behavior. So, while these measures add an extra layer of security, they should be complemented with proper authentication and authorization mechanisms on the server-side to ensure a robust security posture.",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "bash",
-              "Content": "npm install cors\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "javascript",
-              "Content": "const express = require('express');\nconst cors = require('cors');\nconst app = express();\n\n// Allow requests from your specific React Native app's domain\nconst allowedOrigins = ['https://your-react-native-app-domain.com'];\napp.use(cors({\n  origin: (origin, callback) => {\n    if (!origin || allowedOrigins.indexOf(origin) !== -1) {\n      callback(null, true);\n    } else {\n      callback(new Error('Not allowed by CORS'));\n    }\n  }\n}));\n\n// ... Other routes and configurations ...\n\n// Start the server\nconst port = 3000; // Replace with your desired port\napp.listen(port, () => {\n  console.log(`Server is running on port ${port}`);\n});\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_2]",
-              "Type": "javascript",
-              "Content": "// Middleware to check User-Agent\nfunction checkUserAgent(req, res, next) {\n  const userAgent = req.get('User-Agent');\n  if (userAgent && userAgent.includes('Your_React_Native_App_User_Agent')) {\n    next();\n  } else {\n    return res.status(403).json({ message: 'Unauthorized request.' });\n  }\n}\n\n// Usage\napp.post('/login', checkUserAgent, (req, res) => {\n  // Your login logic\n});\n\napp.post('/register', checkUserAgent, (req, res) => {\n  // Your register logic\n});\n\n// ... Other routes ...\n"
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "content": {
       "ID": 135,
       "source_type": "issue",
       "Author": "nghiatm341",
@@ -1965,6 +1565,7 @@
       "RepoName": "MasterPi-2124/CNWeb30-Backend",
       "Title": "Next-auth.js and MongoDB",
       "Body": "New approach: Session \r\n- https://authjs.dev/reference/adapter/mongodb\r\n- https://chat.openai.com/share/25578bff-305b-4427-8798-ec7aa6c3ec06",
+      "issueURL": "https://github.com/MasterPi-2124/CNWeb30-Backend/issues/15",
       "State": "CLOSED",
       "NumberOfPrompts": 2,
       "gpt_model_version": "Default (GPT-3.5)",
@@ -2007,6 +1608,7 @@
       "RepoName": "OpenPluginACI/openplugin-api",
       "Title": "Task: Create oauth endpoints",
       "Body": "## Chat\nhttps://chat.openai.com/share/cd181779-6d66-4e6c-9a4c-4bfd25db80b0\n## Description\nTo offer a oauth authentication in plugins this python API will need to offer two endpoints for handling the oauth exchange.\n## Tasks\nThese tasks are set up to be used as part of the ChatGPT prompts along with any additional context required. They don't need to be strictly followed but it is encouraged to use them as a guide.\n- [x] GET `/oauth_initialization` endpoint\n  - [ ] it will receive as params `{client_id: string, client_domain: string, authorization_url: string, token_url: string, openplugin_callback_url: string, authorization_content_type: string}`\n  - [ ] the session should store all of these variables so that once the user is done authenticating at the `authorization_url` this session can be retrieved\n  - [ ] use `client.prepare_authorization_request` and redirect the user to the `authorization_url`\n- [x] GET `/oauth_token` endpoint\n  - [ ] it will receive param `state` and `code`  use these to get the current session\n  - [ ] fetch the mongodb collection `openplugin-auth` by matching its `domain` with `client_domain` from the state and it will contain an object of type `OpenpluginAuth`, retrieve the client_secret from that.\n  - [ ] make a post request to the `token_url` together with the `token` information received from `client.prepare_token_request`.  The `redirect_url` will be `/oauth_token`. make sure to use the correct headers and data depending on the `authorization_content_type`.\n  - [ ] parse the response data with `client.parse_request_body_response` and redirect to `openplugin_callback_url` with the response (each of the items as URL parameters), the `client_domain`, and `oauth_token` as true passed as urlencoded params \n",
+      "issueURL": "https://github.com/OpenPluginACI/openplugin-api/issues/6",
       "State": "CLOSED",
       "NumberOfPrompts": 4,
       "gpt_model_version": "Plugins",
@@ -2060,6 +1662,7 @@
       "RepoName": "internetarchive/openlibrary",
       "Title": "106 books have explicit lccn set to null; cannot render",
       "Body": "Data cleanup task. Attached are the 106 work IDs. Iterate over their editions, find the edition with `lccn: [null]` (Note that is an array with a single value, null), and remove the lccn field entirely.\r\n\r\n[works-null-lccn.txt](https://github.com/internetarchive/openlibrary/files/11679407/works-null-lccn.txt)\r\n\r\nA lot of these books appear to be user created? So I reckon it's something to do with the add book form. Maybe allowing empty lccns.\r\n\r\n### Evidence / Screenshot (if possible)\r\nhttps://openlibrary.org/works/OL35387047W/Mesopotamian_Coronation_and_Accession_Rites\r\n\r\n### Proposal & Constraints\r\n<!-- What is the proposed solution / implementation? Is there a precedent of this approach succeeding elsewhere? -->\r\n\r\n### Related files\r\n<!-- Files related to this issue; this is super useful for new contributors who might want to help! If you're not sure, leave this blank; a maintainer will add them. -->\r\n\r\n### Stakeholders\r\n<!-- @ tag stakeholders of this bug -->\r\n",
+      "issueURL": "https://github.com/internetarchive/openlibrary/issues/7942",
       "State": "CLOSED",
       "NumberOfPrompts": 3,
       "gpt_model_version": "GPT-4",
@@ -2098,6 +1701,7 @@
       "RepoName": "tkancf/p",
       "Title": "2023/09\ud83c\udf0d",
       "Body": "# 2023\u5e749\u6708\u306e\u30e1\u30e2\r\n\r\n\u30e1\u30e2\u3042\u308b\u3044\u306fTwitter",
+      "issueURL": "https://github.com/tkancf/p/issues/1",
       "State": "CLOSED",
       "NumberOfPrompts": 2,
       "gpt_model_version": "GPT-4",
@@ -2140,6 +1744,7 @@
       "RepoName": "Bluefissure/NoKillPlugin",
       "Title": "Icon Not Square, won't display in Plugin Installer",
       "Body": "![image](https://github.com/Bluefissure/NoKillPlugin/assets/9083275/4d704a23-0305-4edf-a0ed-533fc216f583)\r\n\r\n![image](https://github.com/Bluefissure/NoKillPlugin/assets/9083275/dd71963d-5c66-4142-8eda-4b56c4efb8ec)\r\n\r\n",
+      "issueURL": "https://github.com/Bluefissure/NoKillPlugin/issues/6",
       "State": "CLOSED",
       "NumberOfPrompts": 2,
       "gpt_model_version": "Default (GPT-3.5)",

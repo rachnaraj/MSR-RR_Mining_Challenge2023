@@ -11,6 +11,14 @@
       "State": "MERGED",
       "NumberOfPrompts": 9,
       "gpt_model_version": "Default (GPT-3.5)",
+      "pr_url": "https://github.com/open-learning-exchange/myplanet/pull/2229",
+      "sha": [
+        "addd73142e988aae5ece154537a3a62fea0b8416",
+        "763f7059fd19fd455900947ab15bc057c9b9e848",
+        "e46aa6c1f3a7c425dc15a7801c8f3bf3cf5d2577",
+        "63f60b10c89022e92f8ccea1fa66dbcbfba179cf",
+        "ff12fa0de022455cf7f527a0be2f5bba19020522"
+      ],
       "Conversation": [
         {
           "Prompt": "convert string to french",
@@ -79,6 +87,10 @@
       "State": "CLOSED",
       "NumberOfPrompts": 9,
       "gpt_model_version": "Default (GPT-3.5)",
+      "pr_url": "https://github.com/open-learning-exchange/myplanet/pull/2214",
+      "sha": [
+        "addd73142e988aae5ece154537a3a62fea0b8416"
+      ],
       "Conversation": [
         {
           "Prompt": "convert string to french",
@@ -147,6 +159,10 @@
       "State": "OPEN",
       "NumberOfPrompts": 1,
       "gpt_model_version": "Default (GPT-3.5)",
+      "pr_url": "https://github.com/huozhi/bunchee/pull/266",
+      "sha": [
+        "88d369302c881c2f4f141963f3a3d5b8d4bf0a17"
+      ],
       "Conversation": [
         {
           "Prompt": "How to create a Rollup build with multiple entries where overlapping dependencies are separated in a common module?",
@@ -194,6 +210,12 @@
       "State": "MERGED",
       "NumberOfPrompts": 4,
       "gpt_model_version": "GPT-4",
+      "pr_url": "https://github.com/sarcophagus-org/sarcophagus-v2-sdk/pull/23",
+      "sha": [
+        "a7f11b8aa822146e9b8631fd38d76ec84e47ba12",
+        "0ed82774dada62c65c27e8cf0e06c8daebc295d7",
+        "e0f2219742750cc67badffb196b0fe1477c84259"
+      ],
       "Conversation": [
         {
           "Prompt": "import Bundlr from '@bundlr-network/client/build/cjs/node/bundlr';\nimport { ethers, Signer } from 'ethers';\nimport { sarcoClientInitSchema, SarcoInitParams } from '../shared/helpers/validation';\nimport { Libp2p } from 'libp2p';\nimport { bootLip2p } from '../shared/libp2p_node';\nimport { SarcoNetworkConfig } from '../shared/types';\nimport { Api } from '../shared/Api';\nimport { ArchaeologistApi } from '../shared/ArchaeologistApi';\nimport { goerliNetworkConfig, mainnetNetworkConfig, sepoliaNetworkConfig } from '../shared/networkConfig';\nimport { Token } from '../shared/Token';\n\nexport interface NodeSarcoClientConfig {\n  privateKey: string;\n  providerUrl: string;\n}\n\nexport class NodeSarcoClient {\n  api!: Api;\n  token!: Token;\n  archaeologist!: ArchaeologistApi;\n  signer: Signer;\n  bundlr!: Bundlr;\n  isInitialised: boolean = false;\n\n  private providerUrl!: string;\n  private etherscanApiKey: string = '';\n  private p2pNode!: Libp2p;\n  private networkConfig!: SarcoNetworkConfig;\n  private privateKey: string;\n\n  constructor(config: NodeSarcoClientConfig) {\n    const customProvider = new ethers.providers.JsonRpcProvider(config.providerUrl);\n    this.signer = new ethers.providers.Web3Provider(customProvider as any).getSigner();\n    this.privateKey = config.privateKey;\n  }\n\n  async init(initParams: SarcoInitParams, onInit = (_: Libp2p) => {}): Promise<void> {\n    const params = await sarcoClientInitSchema.validate(initParams);\n\n    const networkConfigByChainId = new Map<number, SarcoNetworkConfig>([\n      [1, mainnetNetworkConfig(this.providerUrl, initParams.etherscanApiKey)],\n      [5, goerliNetworkConfig(this.providerUrl, initParams.etherscanApiKey)],\n      [11155111, sepoliaNetworkConfig(this.providerUrl, initParams.etherscanApiKey)],\n    ]);\n\n    const networkConfig = networkConfigByChainId.get(params.chainId);\n    if (!networkConfig) {\n      throw new Error(`Unsupported chainId: ${params.chainId}`);\n    }\n\n    this.bundlr = new Bundlr(networkConfig.bundlr.nodeUrl, networkConfig.bundlr.currencyName, this.privateKey, {\n      providerUrl: networkConfig.bundlr.providerUrl,\n    });\n\n    this.networkConfig = networkConfig;\n    this.etherscanApiKey = params.etherscanApiKey ?? '';\n\n    this.api = new Api(this.networkConfig.diamondDeployAddress, this.signer, this.networkConfig.subgraphUrl);\n    this.token = new Token(this.networkConfig.sarcoTokenAddress, this.networkConfig.diamondDeployAddress, this.signer);\n\n    this.p2pNode = await bootLip2p();\n    // TODO: Allow client to choose when to start/stop libp2p node\n    await this.startLibp2pNode();\n\n    this.archaeologist = new ArchaeologistApi(\n      this.networkConfig.diamondDeployAddress,\n      this.signer,\n      this.networkConfig.subgraphUrl,\n      this.p2pNode\n    );\n\n    this.isInitialised = true;\n    onInit(this.p2pNode);\n  }\n\n  async startLibp2pNode() {\n    console.log(`LibP2P node starting with peerID: ${this.p2pNode.peerId.toString()}`);\n    return this.p2pNode.start();\n  }\n\n  async stopLibp2pNode() {\n    return this.p2pNode.stop();\n  }\n}\n---\nimport Bundlr from '@bundlr-network/client/build/cjs/node/bundlr';\nimport { privateKey } from './api/test-data';\nimport { ethers } from 'ethers';\nimport { NodeSarcoClient } from '../src/node/NodeSarcoClient';\n\n// Mocks\njest.mock('@bundlr-network/client/build/cjs/node/bundlr');\njest.mock('../src/shared/Api', () => {\n  // Mock class\n  return {\n    Api: jest.fn().mockImplementation(() => {\n      return { someApiMethod: jest.fn() }; // Mock the methods as needed\n    }),\n  };\n});\njest.mock('ethers', () => {\n  const ethersMock = jest.requireActual('ethers');\n  return {\n    ...ethersMock,\n    ethers: {\n      ...ethersMock.ethers,\n      providers: {\n        ...ethersMock.ethers.providers,\n        JsonRpcProvider: jest.fn(),\n        getDefaultProvider: jest.fn(),\n        Web3Provider: jest.fn().mockImplementation(() => {\n          return { getSigner: jest.fn() };\n        }),\n      },\n    },\n  };\n});\njest.mock('../src/shared/Token', () => {\n  // Mock class\n  return {\n    Token: jest.fn().mockImplementation(() => {\n      return { someTokenMethod: jest.fn() }; // Mock the methods as needed\n    }),\n  };\n});\n\nconst BundlrMock = Bundlr as jest.Mocked<typeof Bundlr>;\nconst JsonRpcProviderMock = ethers.providers.JsonRpcProvider as jest.MockedClass<\n  typeof ethers.providers.JsonRpcProvider\n>;\nconst Web3ProviderMock = ethers.providers.Web3Provider as jest.MockedClass<typeof ethers.providers.Web3Provider>;\n\n// Test setup\ndescribe('NodeSarcoClient', () => {\n  afterEach(() => {\n    jest.clearAllMocks();\n  });\n\n  describe('constructor', () => {\n    it('should initialize with a private key', () => {\n      const mockProviderUrl = 'mockProviderUrl';\n      // Set up your mocks\n      const mockJsonRpcProvider = {};\n      const mockWeb3Provider = { getSigner: jest.fn() };\n      JsonRpcProviderMock.mockReturnValue(mockJsonRpcProvider as any);\n      Web3ProviderMock.mockReturnValue(mockWeb3Provider as any);\n\n      const sarco = new NodeSarcoClient({ privateKey, providerUrl: mockProviderUrl });\n\n      expect(sarco).toBeDefined();\n      expect(JsonRpcProviderMock).toHaveBeenCalledWith(mockProviderUrl);\n      expect(Web3ProviderMock).toHaveBeenCalledWith(mockJsonRpcProvider);\n      expect(mockWeb3Provider.getSigner).toHaveBeenCalled();\n      expect(BundlrMock).toHaveBeenCalledWith('https://node1.bundlr.network', 'ethereum', privateKey, {\n        providerUrl: mockProviderUrl,\n      });\n    });\n  });\n});\n---\n FAIL  test/NodeSarcoClient.test.ts\n  \u25cf Test suite failed to run\n\n    Cannot find module 'libp2p' from 'src/shared/libp2p_node/index.ts'\n\n    Require stack:\n      src/shared/libp2p_node/index.ts\n      src/node/NodeSarcoClient.ts\n      test/NodeSarcoClient.test.ts\n\n    > 1 | import { Libp2p, createLibp2p } from 'libp2p';\n        | ^\n      2 | import { p2pNodeConfig } from './p2pNodeConfig';\n      3 |\n      4 | const idTruncateLimit = 5;\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)\n      at Object.<anonymous> (src/shared/libp2p_node/index.ts:1:1)\n      at Object.<anonymous> (src/node/NodeSarcoClient.ts:5:1)\n      at Object.<anonymous> (test/NodeSarcoClient.test.ts:4:1)\n---\nDo you have any idea why I am getting this error?",
@@ -273,6 +295,11 @@
       "State": "MERGED",
       "NumberOfPrompts": 5,
       "gpt_model_version": "Default (GPT-3.5)",
+      "pr_url": "https://github.com/app-sre/qontract-reconcile/pull/3630",
+      "sha": [
+        "00760b151fb299d2ae757e1e69bf80daba4bd951",
+        "37b2cb6b67c99e21d78efcf7eaab70541259caf8"
+      ],
       "Conversation": [
         {
           "Prompt": "hey there!\nquick question on working with the jira api, possibly even in python.\nis there a way to check is i have permissions to create a ticket on a given board programatically?",
@@ -338,6 +365,10 @@
       "State": "MERGED",
       "NumberOfPrompts": 2,
       "gpt_model_version": "Default (GPT-3.5)",
+      "pr_url": "https://github.com/livingbio/gpt-fn/pull/4",
+      "sha": [
+        "aed62633a1e3f88dc0d080df12a4a0ba6784826f"
+      ],
       "Conversation": [
         {
           "Prompt": "please complete Github Repo readme for me\n- repo: gpt-fn\n- description: a utility library for AI-powered software.our  job is to integrate AI directly into your codebase by making it look and feel like any other function. ",
@@ -375,6 +406,25 @@
       "State": "MERGED",
       "NumberOfPrompts": 1,
       "gpt_model_version": "Advanced Data Analysis",
+      "pr_url": "https://github.com/KilianFt/Adaptive-HCI/pull/3",
+      "sha": [
+        "cf3a322289c19a34778183982a11e9fd19c7d213",
+        "d70aedba023e927e2e01551da5964557c6e8a243",
+        "f2050a076c77d1bef739e75a43f60ce409249355",
+        "3427ee1cc7f4176f7609316b865ac8bf2ebff9bb",
+        "f3ea6c38cec846b1df7553fca75ab7bb91d8fec4",
+        "de6a1361c76ee5fedba2cb6cdc45cffb5df770e3",
+        "a0cfaf47f6db5ec77911ec74ad68cf70da56eb5e",
+        "444d701898f9b7f12cc61c4a4855369c93e6df56",
+        "e01d2981bd08ff2aff2337be00a72a620912752c",
+        "c925aef61cd743c825d93954ededdfbf7f743026",
+        "8e2113913dabbf7e65ab1128b49c0d7197460002",
+        "483dbf1fde4eb3e90dd1568417cb7caeda1ad029",
+        "2d0e753dbca26b02c970d05cb94419f8e153ac19",
+        "31e144a5f446468de28c85355496b25c76e092c9",
+        "52f9f9d8ed68fcc848fe67dc7dfb3ce95baca331",
+        "5e4143a7a097909136e28039d7bba48022f4ffc9"
+      ],
       "Conversation": [
         {
           "Prompt": "write code to get the middle of the screen for the current user display in python",
@@ -407,6 +457,20 @@
       "State": "CLOSED",
       "NumberOfPrompts": 1,
       "gpt_model_version": "GPT-4",
+      "pr_url": "https://github.com/microsoft/visionmetrics/pull/42",
+      "sha": [
+        "84841b05ba66643c770da6e4c1b6c0d116d450ad",
+        "4b32032578bf50b68a955be37eb8c491c67d192d",
+        "93d948497cbd34bbe57675419b6325dc7cb07758",
+        "160985c4e66e090ae4f64dfe9b5d817adf3b21dc",
+        "eb9e63bbb9716cded98502a7447423c71f73a775",
+        "1c59a7702d06dadce65203ff2ad1db66ed75bd19",
+        "13a2b5bc7c6215477923136d77c6c3b638f90a44",
+        "0611b6e5121d29b535841c01ed7245620032d235",
+        "56ae2185bbb90b60a1190754780cdae314aad296",
+        "5dbe893ab955a9e86bd5ac2e469b002b50144f1f",
+        "c040db668f16f12181c20f94ced69ed148e98076"
+      ],
       "Conversation": [
         {
           "Prompt": "what is the best python parametrized unit test",
@@ -454,6 +518,25 @@
       "State": "MERGED",
       "NumberOfPrompts": 1,
       "gpt_model_version": "Default (GPT-3.5)",
+      "pr_url": "https://github.com/SSWConsulting/SSW.Website/pull/931",
+      "sha": [
+        "62aa3f1fae479f05478d4179202c5e2061047cc8",
+        "ac56a7808766e48721afd25be8bff08a99a17100",
+        "d0b858777c85e6d95fda1fe74ffd2052ca2a4cec",
+        "dea3f82dae5f2815a11d88f9b24bd042478d9d78",
+        "50f14df131a1354b3e5e5e53d674d21d73c8d4f9",
+        "a911c6dd97652a64355b28b7477a864a051fc409",
+        "675509e6be35044dc20267f9ec789738db5123ca",
+        "ec2abed9ca6382bc476e373a06dd8f37b265b854",
+        "33bd8d728cc2245b7a77b616be6e7f0df859be85",
+        "b310712d9a7014c283a9ffd50b72cac7169b9b79",
+        "3d23f8adbd2ee06c31c8d618d8af11148c25a982",
+        "4fd5d0e19bab4d5b7338d45209559de338aed107",
+        "14277c5034505277f2a6396f24a9202e39c0454d",
+        "3d9b52471fe79b7622be59084f660ceaaaee3271",
+        "2fe3d777b7dbe72bd4637cd4edbe7719ff797ae6",
+        "8ee7882109c3b5f377f9020ce2d1fc0ff098cc99"
+      ],
       "Conversation": [
         {
           "Prompt": "Can i replicate this functionality with DayJS?\n\nmoment(event.date).format(\"Do (ddd) MMMM YYYY\")",
@@ -481,6 +564,18 @@
       "State": "MERGED",
       "NumberOfPrompts": 3,
       "gpt_model_version": "GPT-4",
+      "pr_url": "https://github.com/gradio-app/gradio/pull/5179",
+      "sha": [
+        "48908317bf24f54e971e5ff682fffa3546230707",
+        "4102946954a22f58f792fd9deb924a3564d83990",
+        "a9fca281168fafd1c5c8274b2f9f33dfe918ec6f",
+        "52ec53dffe865de996067dae160621ce888cb88e",
+        "feb7740bab18ba7f9492af6f0ea3a11a18e427ad",
+        "732d85f3f7860cb6a641b794ae53beca0affc971",
+        "7d4c9901e06250196a9f4695d7cd975724b46641",
+        "d0ebd68a112ca17bd7e80ca4d769e0fdb8980376",
+        "fca401f54390435dc50bbc4e5dd5a4f6a70e1004"
+      ],
       "Conversation": [
         {
           "Prompt": "How can I use fastapi StreamingResponse to stream several wav files as chunks?",
@@ -534,6 +629,12 @@
       "State": "MERGED",
       "NumberOfPrompts": 2,
       "gpt_model_version": "GPT-4",
+      "pr_url": "https://github.com/hoshotakamoto/banzukesurfing/pull/3",
+      "sha": [
+        "1135c061b0c6330f22b4a6d03ac33237177598bf",
+        "cbddb6ebdf03ad8c40e35da4125c9156869aef11",
+        "04aff0c608342dadbabd2dcce96b334af3fd5210"
+      ],
       "Conversation": [
         {
           "Prompt": "I have these files (below) but I can't run the unit test. Set up the files I need to run the unit test.\n\nindex.html\n<!DOCTYPE html>\n<html>\n<head>\n    <title>Banzuke Surfing Game</title>\n    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js\"></script>\n    <!-- Link to the external CSS file -->\n    <!-- Uncomment this if you have styles to include -->\n    <!-- <link rel=\"stylesheet\" href=\"styles.css\"> -->\n</head>\n<body>\n    <h1>Welcome to Banzuke Surfing Game!</h1>\n    <p>Select your Rikishi and start playing!</p>\n    <select id=\"rikishi\">\n        <option value=\"1\">Rikishi 1</option>\n        <option value=\"2\">Rikishi 2</option>\n        <!-- more options here -->\n    </select>\n    <button onclick=\"startPlaying()\">Start Playing</button>\n    <!-- Link to the external JavaScript file -->\n    <script src=\"game.js\"></script>\n</body>\n</html>\n\ngame.js\nfunction startPlaying() {\n    var rikishi = $('#rikishi').val();\n    // This is where you'd connect to your game logic\n    // For example:\n    // sendRikishiToServer(rikishi);\n    alert(\"You selected: \" + rikishi);\n}\n\ngame.test.js\nconst { startPlaying } = require('./game');\n\ntest('check if startPlaying is defined', () => {\n  expect(startPlaying).toBeDefined();\n});",
@@ -576,6 +677,10 @@
       "State": "MERGED",
       "NumberOfPrompts": 1,
       "gpt_model_version": "Default (GPT-3.5)",
+      "pr_url": "https://github.com/mdn/content/pull/27070",
+      "sha": [
+        "1c9b9929add4a3eeaf42f4e1fd09f569a299356c"
+      ],
       "Conversation": [
         {
           "Prompt": "How to program a GitHub bot that reacts to \"/format\" messages on a PR by checking out the PR branch, running `prettier -w` and committing and pushing the changes?",
@@ -618,6 +723,10 @@
       "State": "MERGED",
       "NumberOfPrompts": 1,
       "gpt_model_version": "Default (GPT-3.5)",
+      "pr_url": "https://github.com/mdn/content/pull/27070",
+      "sha": [
+        "1c9b9929add4a3eeaf42f4e1fd09f569a299356c"
+      ],
       "Conversation": [
         {
           "Prompt": "How to program a GitHub bot that reacts to \"/format\" messages on a PR by checking out the PR branch, running `prettier -w` and committing and pushing the changes?",
@@ -660,6 +769,15 @@
       "State": "MERGED",
       "NumberOfPrompts": 8,
       "gpt_model_version": "GPT-4",
+      "pr_url": "https://github.com/torrust/torrust-index-gui/pull/185",
+      "sha": [
+        "ab205ee2b0df77a387052dafd5d049df83aacdfd",
+        "ac8c5ee696e1eee409efdcf983b04b0f5ab5819a",
+        "8b5f80f340535f0852288bfbefbeeb8540f6dc7b",
+        "280959f41b0f60d7a7665da361dbf201775fda64",
+        "39b7560325640b9cbabe4fe6165b215aac30eccc",
+        "e6e30953b73fd39f68997ef1603dc432458470da"
+      ],
       "Conversation": [
         {
           "Prompt": "I need to write a test for cypress where I'm testing uploading a torrent file to a website with a multipart form. I want to generate the torrent file on the fly and then fill in the form and submit it.",
@@ -756,6 +874,15 @@
       "State": "MERGED",
       "NumberOfPrompts": 8,
       "gpt_model_version": "GPT-4",
+      "pr_url": "https://github.com/hoshotakamoto/banzukesurfing/pull/4",
+      "sha": [
+        "01e1330e760525b9a026d70501202aa803ea2085",
+        "32a038e011bb4fb03ebb162f684abdcef908143c",
+        "6362a1e8f24495c8e63bbb9d42e214f9a8451054",
+        "bdcac798cf0d7b3935ef7061098b77c51c01e831",
+        "c2f8e84ef7c99925b884c44fc32f27bfcb02330c",
+        "7f0d2e7850f8cb5f117552a17fb48e46931f2dd6"
+      ],
       "Conversation": [
         {
           "Prompt": "I want this game to rely on local storage to remember who I am and who my picks were in previous contests. A contest is January, March, May, July, September, or November of a given year. The current contest is July 2023. We will assume I am in admin mode and I can switch users to record everyone's picks (which are visible to everyone) and backfill old results. Please add at least one new test.\n\nindex.html\n<!DOCTYPE html>\n<html>\n<head>\n    <title>Banzuke Surfing Game</title>\n    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js\"></script>\n    <!-- Link to the external CSS file -->\n    <!-- Uncomment this if you have styles to include -->\n    <!-- <link rel=\"stylesheet\" href=\"styles.css\"> -->\n</head>\n<body>\n    <h1>Welcome to Banzuke Surfing Game!</h1>\n    <p>Select your Rikishi and start playing!</p>\n    <select id=\"rikishi\">\n        <option value=\"1\">Rikishi 1</option>\n        <option value=\"2\">Rikishi 2</option>\n        <!-- more options here -->\n    </select>\n    <button onclick=\"startPlaying()\">Start Playing</button>\n    <!-- Link to the external JavaScript file -->\n    <script src=\"game.js\"></script>\n</body>\n</html>\n\ngame.js\nfunction startPlaying() {\n    var rikishi = $('#rikishi').val();\n    var message = \"You selected: \" + rikishi;\n    return message;\n}\n\nmodule.exports = { startPlaying };\n\ngame.test.js\n\nglobal.$ = jest.fn(() => ({\n    val: jest.fn(() => '1')\n}));\n\nconst { startPlaying } = require('./game');\n\ntest('check if startPlaying is defined and returns expected value', () => {\n    const result = startPlaying()\n    expect(result).toBe(\"You selected: 1\");\n});",

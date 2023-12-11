@@ -3,16 +3,17 @@ import re
 import os
 
 def capture_version(input_text):
-    pattern = r'"(\d+\.\d+\.\d+(?:[^"]*\\)?)\"'  # For versions within double quotes
+    # For versions within double quotes
+    pattern = r'"(\^?\d+\.\d+\.\d+(?:[^"]*\\)?)\"'
     match = re.search(pattern, input_text)
     
     if match:
         return match.group(1)
-    
+
     # Additional cases for semantic versions in Java, Python, and JavaScript
-    java_pattern = r'\bversion\s*=\s*["\'](\d+\.\d+\.\d+)["\']'  # Java
-    python_pattern = r'\bversion\s*=\s*["\'](\d+\.\d+\.\d+)["\']'  # Python
-    js_pattern = r'\bversion\s*:\s*["\'](\d+\.\d+\.\d+)["\']'  # JavaScript
+    java_pattern = r'\bversion\s*=\s*["\'](?:\^?(\d+\.\d+\.\d+))["\']'  # Java
+    python_pattern = r'\bversion\s*=\s*["\'](?:\^?(\d+\.\d+\.\d+))["\']'  # Python
+    js_pattern = r'\bversion\s*:\s*["\'](?:\^?(\d+\.\d+\.\d+))["\']'  # JavaScript
 
     java_match = re.search(java_pattern, input_text, re.IGNORECASE)
     python_match = re.search(python_pattern, input_text, re.IGNORECASE)
