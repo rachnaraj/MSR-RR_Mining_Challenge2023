@@ -13,7 +13,6 @@ def capture_version(input_text):
     else:
         return False
     
-    
 
 
 def extract_info(file_path):

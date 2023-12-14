@@ -8,6 +8,7 @@
       "NumberOfPrompts": 1,
       "gpt_model_version": "GPT-4",
       "Title": "MetaGPT: Meta Programming for Multi-Agent Collaborative Framework",
+      "hnURL": "https://news.ycombinator.com/item?id=37076125",
       "Conversation": [
         {
           "Prompt": "Can you create a snake game in Python?",
@@ -37,6 +38,7 @@
       "NumberOfPrompts": 4,
       "gpt_model_version": "GPT-4",
       "Title": "Add an AI Code Copilot to your product using GPT-4",
+      "hnURL": "https://news.ycombinator.com/item?id=37000920",
       "Conversation": [
         {
           "Prompt": "write me a typescript node script that reads a directory of JSON files at data/, processes the files and then writes them to src/questions/<file name>",
@@ -83,6 +85,7 @@
       "NumberOfPrompts": 1,
       "gpt_model_version": "GPT-4",
       "Title": "Tips for programmers to stay ahead of generative AI",
+      "hnURL": "https://news.ycombinator.com/item?id=36586248",
       "Conversation": [
         {
           "Prompt": "Translate this PHP snippet to the equivalent JavaScript:\n\n$csv = str_getcsv(file($argv[1]))",
@@ -112,6 +115,7 @@
       "NumberOfPrompts": 2,
       "gpt_model_version": "GPT-4",
       "Title": "Maps distort how we see the world",
+      "hnURL": "https://news.ycombinator.com/item?id=36421315",
       "Conversation": [
         {
           "Prompt": "Can you write me a python script that plots countries by GDP and area?\n\nInclude code to fetch this data.",
@@ -134,85 +138,6 @@
   },
   {
     "content": {
-      "ID": 18,
-      "source_type": "hacker news",
-      "Author": "hliyan",
-      "SourceURL": "https://chat.openai.com/share/4af022b9-c58e-4ac3-87f7-a4e56cd8ea6c",
-      "NumberOfPrompts": 1,
-      "gpt_model_version": "Web Browsing",
-      "Title": "Ask HN: Is anyone else experiencing ChatGPT loops?",
-      "Conversation": [
-        {
-          "Prompt": "write a simple web application with a login page and an empty home page. use node.js, handlebars templating engine for node.js and \"sign in with google\" for the login",
-          "Answer": "ChatGPTSure, I'll outline a basic web application setup with a login page and an empty home page using Node.js, Express.js, Handlebars templating engine, and the Google Sign-In for the login.Please be aware that this is a simplified example and you may need to modify it to suit your needs.Here are the steps:Initialize a new Node.js project and install the necessary dependencies:[CODE_BLOCK_0]Create an app.js file at the root of your project and set up your Express.js application:[CODE_BLOCK_1]Now you need to create two Handlebars templates for the home and login pages. In your project root, create a views directory and two new files: home.handlebars and login.handlebars.Here's a very simple home.handlebars:[CODE_BLOCK_2]And a simple login.handlebars:[CODE_BLOCK_3]Run your application:[CODE_BLOCK_4]Now you can visit http://localhost:3000 to see your application.Please replace 'your-google-client-id' and 'your-google-client-secret' with your actual Google client ID and client secret. You can obtain these from the Google Developer Console by setting up a new OAuth 2.0 Client ID. Be sureSure, I'll outline a basic web application setup with a login page and an empty home page using Node.js, Express.js, Handlebars templating engine, and the Google Sign-In for the login.Please be aware that this is a simplified example and you may need to modify it to suit your needs.Here are the steps:Initialize a new Node.js project and install the necessary dependencies:[CODE_BLOCK_5]Create an app.js file at the root of your project and set up your Express.js application:[CODE_BLOCK_6]Now you need to create two Handlebars templates for the home and login pages. In your project root, create a views directory and two new files: home.handlebars and login.handlebars.Here's a very simple home.handlebars:[CODE_BLOCK_7]And a simple login.handlebars:[CODE_BLOCK_8]Run your application:[CODE_BLOCK_9]Now you can visit http://localhost:3000 to see your application.Please replace 'your-google-client-id' and 'your-google-client-secret' with your actual Google client ID and client secret. You can obtain these from the Google Developer Console by setting up a new OAuth 2.0 Client ID. Be sureSure, I'll outline a basic web application setup with a login page and an empty home page using Node.js, Express.js, Handlebars templating engine, and the Google Sign-In for the login.Please be aware that this is a simplified example and you may need to modify it to suit your needs.Here are the steps:Initialize a new Node.js project and install the necessary dependencies:[CODE_BLOCK_10]Create an app.js file at the root of your project and set up your Express.js application:[CODE_BLOCK_11]",
-          "ListOfCode": [
-            {
-              "ReplaceString": "[CODE_BLOCK_0]",
-              "Type": "bash",
-              "Content": "$ mkdir myapp\n$ cd myapp\n$ npm init -y\n$ npm install express express-session passport passport-google-oauth20 handlebars\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_1]",
-              "Type": "javascript",
-              "Content": "const express = require('express');\nconst session = require('express-session');\nconst passport = require('passport');\nconst GoogleStrategy = require('passport-google-oauth20').Strategy;\nconst hbs = require('express-handlebars');\n\nconst app = express();\n\napp.engine('handlebars', hbs());\napp.set('view engine', 'handlebars');\n\napp.use(session({\n  secret: 'your-secret',\n  resave: false,\n  saveUninitialized: true\n}));\n\napp.use(passport.initialize());\napp.use(passport.session());\n\n// Configure Passport for Google OAuth\npassport.use(new GoogleStrategy({\n    clientID: 'your-google-client-id',\n    clientSecret: 'your-google-client-secret',\n    callbackURL: \"http://localhost:3000/auth/google/callback\"\n  },\n  function(accessToken, refreshToken, profile, cb) {\n    // Find or create user in database, then call cb\n    // For simplicity, we're just passing the profile info\n    cb(null, profile);\n  }\n));\n\npassport.serializeUser(function(user, cb) {\n  cb(null, user);\n});\n\npassport.deserializeUser(function(obj, cb) {\n  cb(null, obj);\n});\n\n// Define routes\napp.get('/', (req, res) => {\n  res.render('home');\n});\n\napp.get('/login', (req, res) => {\n  res.render('login');\n});\n\napp.get('/auth/google',\n  passport.authenticate('google', { scope: ['profile'] }));\n\napp.get('/auth/google/callback', \n  passport.authenticate('google', { failureRedirect: '/login' }),\n  function(req, res) {\n    // Successful authentication, redirect home.\n    res.redirect('/');\n  });\n\napp.listen(3000, () => {\n  console.log('App listening on port 3000!');\n});\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_2]",
-              "Type": "html",
-              "Content": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Home</title>\n  </head>\n  <body>\n    <h1>Welcome to the home page!</h1>\n  </body>\n</html>\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_3]",
-              "Type": "html",
-              "Content": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Login</title>\n  </head>\n  <body>\n    <h1>Login Page</h1>\n    <a href=\"/auth/google\">Sign in with Google</a>\n  </body>\n</html>\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_4]",
-              "Type": "bash",
-              "Content": "$ node app.js\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_5]",
-              "Type": "bash",
-              "Content": "$ mkdir myapp\n$ cd myapp\n$ npm init -y\n$ npm install express express-session passport passport-google-oauth20 handlebars\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_6]",
-              "Type": "javascript",
-              "Content": "const express = require('express');\nconst session = require('express-session');\nconst passport = require('passport');\nconst GoogleStrategy = require('passport-google-oauth20').Strategy;\nconst hbs = require('express-handlebars');\n\nconst app = express();\n\napp.engine('handlebars', hbs());\napp.set('view engine', 'handlebars');\n\napp.use(session({\n  secret: 'your-secret',\n  resave: false,\n  saveUninitialized: true\n}));\n\napp.use(passport.initialize());\napp.use(passport.session());\n\n// Configure Passport for Google OAuth\npassport.use(new GoogleStrategy({\n    clientID: 'your-google-client-id',\n    clientSecret: 'your-google-client-secret',\n    callbackURL: \"http://localhost:3000/auth/google/callback\"\n  },\n  function(accessToken, refreshToken, profile, cb) {\n    // Find or create user in database, then call cb\n    // For simplicity, we're just passing the profile info\n    cb(null, profile);\n  }\n));\n\npassport.serializeUser(function(user, cb) {\n  cb(null, user);\n});\n\npassport.deserializeUser(function(obj, cb) {\n  cb(null, obj);\n});\n\n// Define routes\napp.get('/', (req, res) => {\n  res.render('home');\n});\n\napp.get('/login', (req, res) => {\n  res.render('login');\n});\n\napp.get('/auth/google',\n  passport.authenticate('google', { scope: ['profile'] }));\n\napp.get('/auth/google/callback', \n  passport.authenticate('google', { failureRedirect: '/login' }),\n  function(req, res) {\n    // Successful authentication, redirect home.\n    res.redirect('/');\n  });\n\napp.listen(3000, () => {\n  console.log('App listening on port 3000!');\n});\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_7]",
-              "Type": "html",
-              "Content": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Home</title>\n  </head>\n  <body>\n    <h1>Welcome to the home page!</h1>\n  </body>\n</html>\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_8]",
-              "Type": "html",
-              "Content": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Login</title>\n  </head>\n  <body>\n    <h1>Login Page</h1>\n    <a href=\"/auth/google\">Sign in with Google</a>\n  </body>\n</html>\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_9]",
-              "Type": "bash",
-              "Content": "$ node app.js\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_10]",
-              "Type": "bash",
-              "Content": "$ mkdir myapp\n$ cd myapp\n$ npm init -y\n$ npm install express express-session passport passport-google-oauth20 handlebars\n"
-            },
-            {
-              "ReplaceString": "[CODE_BLOCK_11]",
-              "Type": "javascript",
-              "Content": "const express = require('express');\nconst session = require('express-session');\nconst passport = require('passport');\nconst GoogleStrategy = require('passport-google-oauth20').Strategy;\nconst hbs = require('express-handlebars');\n\nconst\n"
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "content": {
       "ID": 19,
       "source_type": "hacker news",
       "Author": "behnamoh",
@@ -220,6 +145,7 @@
       "NumberOfPrompts": 5,
       "gpt_model_version": "GPT-4",
       "Title": "Ask HN: Is it just me or GPT-4's quality has significantly deteriorated lately?",
+      "hnURL": "https://news.ycombinator.com/item?id=36134249",
       "Conversation": [
         {
           "Prompt": "I have a pkl file named \"words.pkl\" which contains a list of objects {'word': word, 'keywords':[keyword1, keyword2]}\n\nlet's write a python script that loads the word data, then finds a word vector for each entry by computing the spherical mean of its keyword embeddings. Use sentence-transformers and the distilbert-base-nli-mean-tokens model for the keyword embeddings. Load the embeddings into a np array",

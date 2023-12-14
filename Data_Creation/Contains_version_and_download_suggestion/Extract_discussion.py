@@ -2,8 +2,16 @@ import json
 import re
 import os
 
-def is_semantic_version(version_string):
-    return re.match(r'^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$', version_string.group()) is not None
+def capture_version(input_text):
+    pattern = r'\^?\d+\.\d+\.\d+\b'
+    # pattern = r'"(\d+\.\d+\.\d+(?:[^"]*\\)?)\"'  # For versions within double quotes
+    match = re.search(pattern, input_text)
+    
+    if match:
+        print(match)
+        return match.group(0)
+    else:
+        return False
 
 def contains_install_keywords(text):
     install_keywords = ["pip install", "conda install", "npm install", "mvn install"]
@@ -18,7 +26,7 @@ def extract_info(file_path):
     
     for entry in data:
         conversations = entry.get('Conversation', [])
-        
+        found = False
         for conversation in conversations:
             # print("entering!!!")
             prompt = conversation.get('Prompt', '')
@@ -27,12 +35,15 @@ def extract_info(file_path):
             for content in list_of_code:
                 code = content.get('Content', '')
                 if (contains_install_keywords(answer) or contains_install_keywords(code)):
-                    if any(is_semantic_version(match) for match in re.finditer(r'\b\d+\.\d+\.\d+(-\w+(\.\d+)?)?\b', answer)) or any(is_semantic_version(match) for match in re.finditer(r'\b\d+\.\d+\.\d+(-\w+(\.\d+)?)?\b', prompt)) or any(is_semantic_version(match) for match in re.finditer(r'\b\d+\.\d+\.\d+(-\w+(\.\d+)?)?\b', code)):
-                        relevant_data.append({
-                            'content': entry
-                        })
+                    if capture_version(answer) or capture_version(prompt) or capture_version(code):
+                        found = True
                         break
-            continue
+            break
+        if found:
+            relevant_data.append({
+                'content': entry
+                        })
+                
 
                     
             # print(relevant_data)

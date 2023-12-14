@@ -2,28 +2,39 @@ import json
 import re
 import os
 
+# def capture_version(input_text):
+#     pattern = r"'?(\d{2}\.\d+\.\d+)'?"   # For versions within double quotes
+#     match = re.search(pattern, input_text)
+    
+#     if match:
+#         return match.group(1)
+    
+#     # Additional cases for semantic versions in Java, Python, and JavaScript
+#     java_pattern = r'\bversion\s*=\s*["\'](\d+\.\d+\.\d+)["\']'  # Java
+#     python_pattern = r'\bversion\s*=\s*["\'](\d+\.\d+\.\d+)["\']'  # Python
+#     js_pattern = r'\bversion\s*:\s*["\'](\d+\.\d+\.\d+)["\']'  # JavaScript
+
+#     java_match = re.search(java_pattern, input_text, re.IGNORECASE)
+#     python_match = re.search(python_pattern, input_text, re.IGNORECASE)
+#     js_match = re.search(js_pattern, input_text, re.IGNORECASE)
+
+#     if java_match:
+#         return java_match.group(1)
+#     elif python_match:
+#         return python_match.group(1)
+#     elif js_match:
+#         return js_match.group(1)
+#     else:
+#         return False
+
 def capture_version(input_text):
-    pattern = r"'?(\d{2}\.\d+\.\d+)'?"   # For versions within double quotes
+    pattern = r'\^?\d+\.\d+\.\d+\b'
+    # pattern = r'"(\d+\.\d+\.\d+(?:[^"]*\\)?)\"'  # For versions within double quotes
     match = re.search(pattern, input_text)
     
     if match:
-        return match.group(1)
-    
-    # Additional cases for semantic versions in Java, Python, and JavaScript
-    java_pattern = r'\bversion\s*=\s*["\'](\d+\.\d+\.\d+)["\']'  # Java
-    python_pattern = r'\bversion\s*=\s*["\'](\d+\.\d+\.\d+)["\']'  # Python
-    js_pattern = r'\bversion\s*:\s*["\'](\d+\.\d+\.\d+)["\']'  # JavaScript
-
-    java_match = re.search(java_pattern, input_text, re.IGNORECASE)
-    python_match = re.search(python_pattern, input_text, re.IGNORECASE)
-    js_match = re.search(js_pattern, input_text, re.IGNORECASE)
-
-    if java_match:
-        return java_match.group(1)
-    elif python_match:
-        return python_match.group(1)
-    elif js_match:
-        return js_match.group(1)
+        print(match)
+        return match.group(0)
     else:
         return False
     

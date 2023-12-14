@@ -2,9 +2,17 @@ import json
 import re
 import os
 
-def is_semantic_version(version_string):
-    return re.match(r'^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$', version_string.group()) is not None
-
+def capture_version(input_text):
+    pattern = r'\^?\d+\.\d+\.\d+\b'
+    # pattern = r'"(\d+\.\d+\.\d+(?:[^"]*\\)?)\"'  # For versions within double quotes
+    match = re.search(pattern, input_text)
+    
+    if match:
+        print(match)
+        return match.group(0)
+    else:
+        return False
+    
 def contains_install_keywords(text):
     install_keywords = ["pip install", "conda install", "npm install", "mvn install"]
     return any(keyword in text for keyword in install_keywords)
@@ -27,12 +35,13 @@ def extract_info(file_path):
             for content in list_of_code:
                 code = content.get('Content', '')
                 if (contains_install_keywords(answer) or contains_install_keywords(code)):
-                    if any(is_semantic_version(match) for match in re.finditer(r'\b\d+\.\d+\.\d+(-\w+(\.\d+)?)?\b', answer)) or any(is_semantic_version(match) for match in re.finditer(r'\b\d+\.\d+\.\d+(-\w+(\.\d+)?)?\b', prompt)) or any(is_semantic_version(match) for match in re.finditer(r'\b\d+\.\d+\.\d+(-\w+(\.\d+)?)?\b', code)):
+                    if any(capture_version(match.group(0)) for match in re.finditer(r'\b\d+\.\d+\.\d+(-\w+(\.\d+)?)?\b', answer)) or any(capture_version(match.group(0)) for match in re.finditer(r'\b\d+\.\d+\.\d+(-\w+(\.\d+)?)?\b', prompt)) or any(capture_version(match.group(0)) for match in re.finditer(r'\b\d+\.\d+\.\d+(-\w+(\.\d+)?)?\b', code)):
+
                         relevant_data.append({
                             'content': entry
                         })
                         break
-            break
+            # break
 
                     
             # print(relevant_data)
