@@ -25,7 +25,7 @@ Version 9 (Snapshots_20231012)
 
     ```
     
-    file_path = r'D:\Me\concordia\Notes\Prof-Diego\MSR-DataChallenge\Implementation\Dataset_v9\DevGPT\snapshot_20231012\20231012_235320_discussion_sharings.json'
+    file_path = r'D:\Me\concordia\Notes\XXX\MSR-DataChallenge\Implementation\Dataset_v9\DevGPT\snapshot_20231012\20231012_235320_discussion_sharings.json'
     
     ```
 4. Execute the python script.
