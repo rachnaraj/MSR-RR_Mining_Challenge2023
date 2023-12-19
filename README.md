@@ -1,6 +1,7 @@
 # MSR-RR_Mining_Challenge2023 
 Link: https://2024.msrconf.org/track/msr-2024-mining-challenge
-**Data Exploration task**
+
+# **Data Exploration task**
 This study aims to understand the role of library versions in developer-ChatGPT interactions. 
 To that aim, we mine the DevGPT dataset, a dataset of Developer-ChatGPT conversations with more than 2,000 conversations.  
 DevGPT was created by mining links to ChatGPT conversations shared by developers using the OpenAI sharing functionality https://help.openai.com/en/articles/7925741-chatgpt-shared-links-faq
@@ -10,10 +11,10 @@ The dataset is a collection of JSON files covering the interaction metadata, pro
 Details: https://github.com/NAIST-SE/DevGPT
 Link: https://zenodo.org/records/8304091
 
-##Dataset Version used in this project:
+## Dataset Version used in this project:
 Version 9 (Snapshots_20231012)
 
-#Steps To Execute the Project:
+# Steps To Execute the Project:
 1. Download the mentioned version, store it in the local directory.
 2. Cloan Project using the below command.
     ```bash
@@ -30,7 +31,7 @@ Version 9 (Snapshots_20231012)
     ```
 4. Execute the python script.
 
-#About files:
+# About files:
 Each file is a fileteration step of DevGPT Dataset.
 
 1. contains_conversations_on_code_general
